@@ -1,6 +1,6 @@
 # ANABADA
 
-[한글 README]([https://www.notion.so/503e00648f9d4e148496fb244b05be26](https://github.com/dgd03146/anabada-frontEnd/blob/develop/README-KOR.md))
+[한글 README](https://github.com/dgd03146/anabada-frontEnd/blob/develop/README-KOR.md)
 
 <img width="500" alt="스크린샷 2022-11-14 오후 9 39 20" src="https://user-images.githubusercontent.com/108744804/201662715-33f3cb60-eebd-4f3e-be7e-cb3fd032ea0f.png">
 
