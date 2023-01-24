@@ -1,45 +1,34 @@
 # ANABADA
 
-[한글 README](https://github.com/dgd03146/anabada-frontEnd/blob/develop/README-KOR.md)
+[Korean README](https://github.com/dgd03146/anabada-frontEnd/blob/develop/README-KOR.md)
 
 <img width="500" alt="스크린샷 2022-11-14 오후 9 39 20" src="https://user-images.githubusercontent.com/108744804/201662715-33f3cb60-eebd-4f3e-be7e-cb3fd032ea0f.png">
 
-<br/>
 
 ## 📢 Project Introduction
 
 > I'm interested in surfing, but are you afraid to do it for the first time?
->
 > Or do you want to find people to enjoy surfing with?
->
 > Do you want to share your surfing places with people?
 > Do you have any?
->
 > Everyone's surfing community for those people **<span style="background-color:rgba(0,0,0,0.2);padding:0.2rem;font-size:1rem;border-radius:5px">Anabada</span>**!
->
 > Find friends to enjoy surfing together through Anabada!
->
-> With Anavada, you can share many surfing 🍯 tips
->
+> With Anabada, you can share many surfing 🍯 tips
 > You can easily find surfing attractions all over the country!
 > Don't worry about surfing alone now!!
 
 [Project Link](https://ohanabada.com)
 
-<br/>
 
 # 🎬 Demonstration video
 
-[Youtube Link](https://youtu.be/tmT5hatY4ko)
+[Live Demo](https://youtu.be/yqPqLyo_uOw)
 
-<br/>
 
 ## 📅 Project Duration
 
 August 5, 2022 to September 15, 2022
 
-<br/>
-<br/>
 
 ## **🔨 Technology and Library**
 
@@ -47,11 +36,10 @@ August 5, 2022 to September 15, 2022
 | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :---------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://velog.velcdn.com/images/hyunjoong/post/c534bf30-87d9-4f5d-a600-71e3a09e3b75/image.png"></img> | <img src="https://velog.velcdn.com/images/chdb57/post/308a60cf-b46d-46b7-9b6e-cbb43c647bbc/firebase.png"></img> | <img  src="https://images.velog.io/images/jini_eun/post/107f5cfb-e97c-4c4c-b997-06098062e5b3/image.png"></img> | <img src="https://miro.medium.com/max/800/1*x2Y1VlQTzujsU48Lz9g2wg.jpeg"></img> | <img src="https://stomp.github.io/images/project-logo.png"></img> | <img src="https://velog.velcdn.com/images/wnduf8922/post/b3f23e4b-def8-45b7-a52a-31aab2daef76/image.png"></img> | <img src="https://play-lh.googleusercontent.com/PCpXdqvUWfCW1mXhH1Y_98yBpgsWxuTSTofy3NGMo9yBTATDyzVkqU580bfSln50bFU"></img> | <img src="https://play-lh.googleusercontent.com/MwWEBBjTzLiqWbiItGk49Yae_4dmGHHIq0iYfOjFmegIirZk5waqG4ufff24pfuUvA"></img> | <img src="https://velog.velcdn.com/images%2Ftastestar%2Fpost%2F6e43d84c-09ae-40f6-a306-10688f28975e%2Fimage.png"></img> |
 
-<br/>
 
-## 👨‍👧‍ Members
+## ✨ Role
 
-### Im Geo-jung - Team Leader
+### GeoJungIm - Team Leader
 
 | Features | Remarks |
 | :------------: | :-----------------------------------------------: |
@@ -60,24 +48,7 @@ August 5, 2022 to September 15, 2022
 | Real-time Chat | Real-time Chat with websocket and stomp |
 | Introduction Page | Use the swiper to provide convenience to users |
 
-### Kim Jonghyun
-
-| Features | Remarks |
-| :----------: | :------------------------------------------------: |
-| Post CRUD | Create Post Delete Modify |
-| Search and categorization | Search meeting posts and categorize by region |
-| Comment CRUD | Comment Generation Modify Delete |
-| My Page | Change profile pictures, gather according to the type of post meeting |
-| Introduction Page | Use the swiper to provide convenience to users |
-
-### Ahn Dong-gyu
-
-| Features | Remarks |
-| :----------------: | :-----------------------------------------------------------------------------: |
-| Map (Kakao) | React-kakao-map-sdk library to implement and surf spot search capabilities |
-| Sign up and log in | UI improvement through react-hook-form and reissue access talken using refresh talken |
-| Real-time alerts | Real-time alerts using websocket and stomp |
-
+👨‍👨‍ Frontend 3 | Backend 3 | Designer 1
 
 <br/>
 
