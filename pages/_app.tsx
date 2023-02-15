@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-query';
 import { defaultQueryClientOptions } from '../quries/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import React from 'react';
 
 export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<
   P,
@@ -35,7 +36,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
-          {getLayout(<Component {...pageProps} />)}
+          <Hydrate state={pageProps.dehydratedState}>
+            {getLayout(<Component {...pageProps} />)}
+          </Hydrate>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

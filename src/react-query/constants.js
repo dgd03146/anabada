@@ -18,6 +18,6 @@ export const queryKeys = {
   notifications: 'notifications',
 
   // 마이페이지
-  myPostsList : 'myPostsList',
-  myMeetsList : 'myMeetsList'
+  myPostsList: 'myPostsList',
+  myMeetsList: 'myMeetsList'
 };
