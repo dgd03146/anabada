@@ -3,12 +3,14 @@ import { useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
-import { Beaches } from '../../constants/contstant';
+import { Beaches } from '../../../constants/contstant';
 import React from 'react';
+import { useSpots } from '../../../quries/hooks/spots/useSpots';
+import { TMapProps } from '..';
 
-type Props = {};
+const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
+  const spots = useSpots();
 
-const MapSearch = ({ setPicker, spots }) => {
   const inputRef = useRef();
   const [inputName, setInputName] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>();
@@ -50,9 +52,9 @@ const MapSearch = ({ setPicker, spots }) => {
 
   /**
    * ul의 li를 클릭했을 때 밑에 ul 없어지면서 input 값 그걸로 바뀌게 하기
-   * @param {Event} event
+
    */
-  const handleOnclickList = (event) => {
+  const handleOnclickList = (event: React.MouseEvent<HTMLButtonElement>) => {
     setInputName(event.target.innerText);
     return setSearchResult([]);
   };

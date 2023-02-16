@@ -1,5 +1,5 @@
 import '../styles/font.css';
-import 'tailwindcss/tailwind.css';
+
 import { ReactElement, ReactNode, useState } from 'react';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
