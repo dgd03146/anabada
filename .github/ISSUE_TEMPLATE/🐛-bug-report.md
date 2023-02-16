@@ -1,6 +1,6 @@
 ---
 name: "\U0001F41B Bug Report"
-about: Please write in case of bug
+about: Templates for bug
 title: ''
 labels: 'Priority: Medium, Status: To Do, Type: Bugfix/Function, Type: Bugfix/UI'
 assignees: dgd03146
