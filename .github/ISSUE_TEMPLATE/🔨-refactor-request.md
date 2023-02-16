@@ -1,10 +1,10 @@
 ---
-name: "✨ Feature Request"
-about: Templates for features and UI, documentation and additional requests.
-title: "✨ Feature request"
-labels: 'Priority: Medium, Status: To Do, Type: Feature/Document, Type: Feature/Function,
-  Type: Feature/UI'
-assignees: dgd03146
+name: "\U0001F528 Refactor Request"
+about: Templates for refactor features and UI, documentation and additional requests.
+title: ''
+labels: 'Priority: Medium, Status: To Do, Type: Refactor/Document, Type: Refactor/Function,
+  Type: Refactor/UI'
+assignees: ''
 
 ---
 
