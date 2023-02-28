@@ -1,4 +1,6 @@
 export const QueryKeys = {
+  spots: 'spots',
+
   meets: 'meets',
   popularMeets: 'popularMeets',
   allMeets: 'allMeets',
