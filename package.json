@@ -23,6 +23,7 @@
     "firebase": "^9.9.2",
     "framer-motion": "^7.2.0",
     "import": "^0.0.6",
+    "lodash": "^4.17.21",
     "next": "latest",
     "react": "latest",
     "react-cookie": "^4.1.1",
