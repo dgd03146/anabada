@@ -1,4 +1,4 @@
-export const queryKeys = {
+export const QueryKeys = {
   meets: 'meets',
   popularMeets: 'popularMeets',
   allMeets: 'allMeets',
