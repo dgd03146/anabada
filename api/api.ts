@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { TPosts } from '../types/types';
 
 export const api = axios.create({
   baseURL: `https://${process.env.REACT_APP_API_SERVER}/api`,

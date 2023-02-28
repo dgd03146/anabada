@@ -1,54 +1,63 @@
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { postApi } from '../../../api/api';
+import { TPosts } from '../../../types/types';
 import { QueryKeys } from '../../key';
 
-const fetchPosts = async (
+export type QueryFunction<TResult> = (
   pageParam: number,
   areaSelected: string,
   search: string | null
-) => {
-  if (search) {
-    try {
-      const res = await postApi.getSearchPosts(pageParam, areaSelected, search);
+) => TResult | Promise<TResult>;
 
-      const data = res.data.content;
-      const last = res.data.last;
-      return { data, nextPage: pageParam + 1, last };
-    } catch (err) {
-      console.log(err);
-    }
-  } else {
-    try {
-      const res = await postApi.getPosts(pageParam, areaSelected);
-      const data = res.data.content;
-      const last = res.data.last;
-      return { data, nextPage: pageParam + 1, last };
-    } catch (err) {
-      console.log(err);
-      alert(err);
-    }
+export type TResponse = {
+  data: TPosts;
+  nextPage: number;
+  last: boolean;
+};
+
+export const fetchPosts: QueryFunction<TResponse> = async (
+  pageParam = 0,
+  areaSelected = 'ALL',
+  search = ''
+) => {
+  try {
+    const res = search
+      ? await postApi.getSearchPosts(pageParam, areaSelected, search)
+      : await postApi.getPosts(pageParam, areaSelected);
+    const { content: data, last } = res.data;
+    return { data, nextPage: pageParam + 1, last };
+  } catch (err) {
+    console.log(err);
+    // FIXME: toast 띄우는 걸로 바꾸자
+    throw new Error('Failed to fetch posts');
   }
 };
 
 export function usePosts() {
   const [areaSelected, setAreaSelected] = useState('ALL');
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState('');
 
-  const { data, fetchNextPage, isFetchingNextPage, isFetching, isLoading } =
-    useInfiniteQuery(
-      [QueryKeys.posts, areaSelected, search],
-      ({ pageParam = 0 }) => fetchPosts(pageParam, areaSelected, search),
-      {
-        getNextPageParam: (lastPage) =>
-          !lastPage?.last ? lastPage?.nextPage : undefined,
-        refetchOnWindowFocus: false,
-        staleTime: 600000
-      }
-    );
+  const {
+    data: posts,
+    fetchNextPage,
+    isFetchingNextPage,
+    isFetching,
+    isLoading
+  } = useInfiniteQuery(
+    [QueryKeys.posts, areaSelected, search],
+    ({ pageParam = 0 }) => fetchPosts(pageParam, areaSelected, search),
+    {
+      getNextPageParam: (lastPage) =>
+        !lastPage?.last ? lastPage?.nextPage : undefined,
+
+      refetchOnWindowFocus: false,
+      staleTime: 600000
+    }
+  );
 
   return {
-    data,
+    posts,
     isFetchingNextPage,
     fetchNextPage,
     isFetching,
@@ -57,18 +66,4 @@ export function usePosts() {
     areaSelected,
     setAreaSelected
   };
-}
-
-export function usePreFetchPosts() {
-  const queryClient = useQueryClient();
-  const [areaSelected, setAreaSelected] = useState('ALL');
-  const [search, setSearch] = useState(null);
-
-  queryClient.prefetchInfiniteQuery(
-    [QueryKeys.posts, areaSelected, search],
-    ({ pageParam = 0 }) => fetchPosts(pageParam, areaSelected, search),
-    {
-      staleTime: 600000
-    }
-  );
 }

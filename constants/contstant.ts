@@ -83,3 +83,9 @@ export const Beaches = [
   '협재 해수욕장',
   '흥남 해수욕장'
 ];
+
+export const BreakPoints = {
+  default: 3,
+  1100: 3,
+  700: 2
+};
