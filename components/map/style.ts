@@ -1,4 +1,4 @@
-import { TPicker } from './../../types/types';
+import { TSpot } from './../../types/types';
 import styled, { keyframes } from 'styled-components';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 
@@ -112,7 +112,7 @@ export const PlaceInfo = styled.div`
 `;
 
 type TInfoTitle = {
-  picker: TPicker;
+  picker: TSpot;
 };
 
 export const InfoTitle = styled.div<TInfoTitle>`

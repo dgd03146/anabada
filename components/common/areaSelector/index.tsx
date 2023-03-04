@@ -1,6 +1,5 @@
 import React, { ChangeEvent, KeyboardEvent } from 'react';
-import styled from 'styled-components';
-import { Categories } from '../categories/categories';
+import { Categories } from '../categories';
 import { CategoryContainer } from './style';
 
 type TAreaSelectorProps = {

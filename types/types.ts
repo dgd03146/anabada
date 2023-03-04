@@ -1,6 +1,6 @@
 import { Picker } from '../constants/contstant';
 
-export type TPicker = typeof Picker;
+export type TSpot = typeof Picker;
 
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type TKeyEvent = React.KeyboardEvent<HTMLInputElement>;
