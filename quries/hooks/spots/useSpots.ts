@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
-import { TPicker } from '../../../types/types';
+import { TSpot } from '../../../types/types';
 import { QueryKeys } from '../../key';
 
 export const useSpots = () => {
-  const { data: spots } = useQuery<TPicker[]>(
+  const { data: spots } = useQuery<TSpot[]>(
     [QueryKeys.spots],
     async () => {
       // TODO: API interceptor 사용해서 바꾸기
-      const response = await axios.get<TPicker[]>(
+      const response = await axios.get<TSpot[]>(
         `https://${process.env.REACT_APP_API_SERVER}/api/beach`
       );
       return response.data;

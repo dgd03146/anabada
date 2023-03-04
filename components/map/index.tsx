@@ -1,7 +1,7 @@
 // import checkedWeather from '../../styles/weather';
 import { MarkerClusterer } from 'react-kakao-maps-sdk';
 import React, { Dispatch, SetStateAction } from 'react';
-import { TPicker } from '../../types/types';
+import { TSpot } from '../../types/types';
 import { useSpots } from '../../quries/hooks/spots/useSpots';
 import {
   ExtraInfoContainer,
@@ -18,15 +18,15 @@ import checkWeather from '../../utils/checkWeather';
 import ExtraInfo from './extraInfo';
 
 export type TMapProps = {
-  picker: TPicker;
-  setPicker: Dispatch<SetStateAction<TPicker>>;
+  picker: TSpot;
+  setPicker: Dispatch<SetStateAction<TSpot>>;
 };
 
 const KakaoMap = ({ picker, setPicker }: TMapProps) => {
   const spots = useSpots();
   const isBeach = picker.beachId === -1;
 
-  const handlePicker = (pickerInfo: TPicker) => {
+  const handlePicker = (pickerInfo: TSpot) => {
     setPicker((prev) => {
       return { ...prev, ...pickerInfo };
     });

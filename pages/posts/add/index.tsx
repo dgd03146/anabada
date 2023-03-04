@@ -16,7 +16,7 @@ import useAddPost from '../../../quries/hooks/posts/useAddPost';
 import { TPost } from '../../../types/types';
 import { flatten } from 'lodash';
 import { storage } from '../../../firebase/firebase';
-import { Categories } from '../../../components/common/categories/categories';
+import { Categories } from '../../../components/common/categories';
 import {
   AmenityButton,
   Container,

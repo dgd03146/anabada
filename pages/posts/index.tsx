@@ -12,7 +12,7 @@ import Container from '../../components/posts/post/container';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';
 import { CategoryContainer, MainDiv, PostBtn, PostDiv } from './style';
-import AreaSelector from '../../components/common/areaSelector/areaSelector';
+import AreaSelector from '../../components/common/areaSelector';
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
