@@ -7,18 +7,25 @@ export type TKeyEvent = React.KeyboardEvent<HTMLInputElement>;
 export type TEvent = TInputChangeEvent | TKeyEvent;
 export type TSelectEvent = React.ChangeEvent<HTMLSelectElement>;
 
+export type TPostImg = {
+  file: File;
+  name: string;
+};
+
 export type TPost = {
-  postId: number;
+  postId?: string;
   title: string;
   area: string;
+  address?: string;
+  content?: string;
   thumbnailUrl: string;
-  nickname: string;
-  profileImg: string;
-  likeCount: number;
-  isLiked: boolean;
-
-  after: string;
-  createdAt: string;
+  nickname?: string;
+  profileImg?: string;
+  likeCount?: number;
+  isLiked?: boolean;
+  postImg?: TPostImg[];
+  after?: string;
+  createdAt?: string;
   amenity: string;
 };
 
