@@ -14,8 +14,8 @@ export type TPostImg = {
 
 export type TPost = {
   postId?: string;
-  title: string;
-  area: string;
+  title?: string;
+  area?: string;
   address?: string;
   content?: string;
   thumbnailUrl: string;
@@ -26,7 +26,28 @@ export type TPost = {
   postImg?: TPostImg[];
   after?: string;
   createdAt?: string;
-  amenity: string;
+  amenity?: string;
+  viewCount?: number;
+  totalComment?: number;
 };
 
 export type TPosts = TPost[];
+
+export type TComment = {
+  commentId?: string;
+  email?: string;
+  nickname?: string;
+  profileImg?: string;
+  content?: string;
+  after?: string;
+  createdAt?: string;
+  postId?: string;
+};
+
+export type TComments = TComment[];
+
+export type TResponse<T> = {
+  data: T;
+  nextPage: number;
+  last: boolean;
+};

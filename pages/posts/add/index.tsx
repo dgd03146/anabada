@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import { AmenityCheck } from '../../../constants/contstant';
 import { postApi } from '../../../api/api';
 import { AmenityInfo } from '../../../data/amenityinfo';
-import useAddPost from '../../../quries/hooks/posts/useAddPost';
+import useCreatePost from '../../../quries/hooks/posts/useCreatePost';
 import { TPost } from '../../../types/types';
 import { flatten } from 'lodash';
 import { storage } from '../../../firebase/firebase';
@@ -41,7 +41,7 @@ const PostAdd = () => {
   // const nickname = useSelector((state) => state.auth.nickname);
   const flattenedAmenities = flatten(AmenityInfo);
 
-  const { onAdd } = useAddPost();
+  const { onCreate } = useCreatePost();
 
   const {
     register,
@@ -141,7 +141,7 @@ const PostAdd = () => {
         thumbnailUrl: thumbnailUrl || DEFAULT_THUMBNAIL_URL
       };
 
-      onAdd({ newPost, postId });
+      onCreate({ newPost, postId });
     } catch (error) {
       console.error(error);
       // TODO: 에러 처리하기
