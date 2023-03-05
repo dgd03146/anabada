@@ -1,4 +1,4 @@
-import { TPost } from './../../../types/types';
+import { TPost } from '../../../types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';
 import { useRouter } from 'next/router';
@@ -9,7 +9,7 @@ export type TSubmitPost = (params: {
   postId?: string;
 }) => Promise<void>;
 
-const SubmitPost: TSubmitPost = async ({ newPost, postId }) => {
+const createPost: TSubmitPost = async ({ newPost, postId }) => {
   try {
     if (!postId) {
       await postApi.createPost(newPost);
@@ -22,11 +22,11 @@ const SubmitPost: TSubmitPost = async ({ newPost, postId }) => {
   }
 };
 
-const useAddPost = () => {
+const useCreatePost = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate: onAdd } = useMutation(SubmitPost, {
+  const { mutate: onCreate } = useMutation(createPost, {
     onSuccess: async () => {
       await queryClient.invalidateQueries([QueryKeys.posts]);
       await queryClient.invalidateQueries([QueryKeys.myPostsList], {
@@ -41,7 +41,7 @@ const useAddPost = () => {
     }
   });
 
-  return { onAdd };
+  return { onCreate };
 };
 
-export default useAddPost;
+export default useCreatePost;

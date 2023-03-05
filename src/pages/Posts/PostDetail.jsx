@@ -71,7 +71,6 @@ const PostDetail = () => {
     }
   };
 
-  //뮤테이션
   const {
     data: comments,
     fetchNextPage,

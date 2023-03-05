@@ -10,7 +10,7 @@ export const api = axios.create({
   }
 });
 
-export const spotsAPI = {};
+export const spotsApi = {};
 
 export const postApi = {
   uploadImages(file: FormData) {
@@ -31,9 +31,6 @@ export const postApi = {
   getPostDetail(postId: string) {
     return api.get(`/posts/${postId}`);
   },
-  getComments(pageParam: number, postId: string) {
-    return api.get(`comments/${postId}?page=${pageParam}&size=5`);
-  },
 
   createPost(newPost: TPost) {
     return api.post(`/posts`, newPost);
@@ -51,5 +48,49 @@ export const postApi = {
   },
   deleteLike(postId: string) {
     return api.delete(`/likes/${postId}`);
+  }
+};
+
+export const commentsApi = {
+  getComments(pageParam: number, postId: string) {
+    return api.get(`comments/${postId}?page=${pageParam}&size=5`);
+  },
+  createComment(postId, content) {
+    return api.post(`/comments/${postId}`, content);
+  },
+  editComment(commentId, updateContent) {
+    return api.put(`/comments/${commentId}`, updateContent);
+  },
+  deleteComment(commentId) {
+    return api.delete(`/comments/${commentId}`);
+  }
+};
+
+// 채팅
+export const chatApi = {
+  createChat(receiver) {
+    return api.post(`/rooms?receiver=${receiver}`);
+  },
+  deleteChat(roomId) {
+    return api.delete(`/rooms/${roomId}`);
+  },
+  getMessages(pageParam, roomId) {
+    return api.get(`messages/${roomId}?page=${pageParam}&size=20`);
+  },
+  getAllRooms(pageParam) {
+    return api.get(`/rooms?page=${pageParam}&size=10`);
+  }
+};
+
+// 마이페이지
+export const myApi = {
+  getMyPosts(filter, pageParam) {
+    return api.get(`myposts?filter=${filter}&page=${pageParam}&size=6`);
+  },
+  getMyMeets(filter, pageParam) {
+    return api.get(`mymeets?filter=${filter}&page=${pageParam}&size=6`);
+  },
+  uploadProfile(profileImg) {
+    return api.put('/profileimages', profileImg);
   }
 };

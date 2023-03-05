@@ -2,6 +2,7 @@ import React from 'react';
 import { memo } from 'react';
 import Post from '.';
 import { TPost } from '../../../types/types';
+// FIXME:
 // import SkeletonItem from '../../layout/SkeletonItem';
 
 type TContainerProps = {

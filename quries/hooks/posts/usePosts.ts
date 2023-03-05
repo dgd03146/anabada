@@ -1,22 +1,16 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { postApi } from '../../../api/api';
-import { TPosts } from '../../../types/types';
+import { TPosts, TResponse } from '../../../types/types';
 import { QueryKeys } from '../../key';
 
-export type QueryFunction<TResult> = (
+type TFetchPosts<TResult> = (
   pageParam: number,
   areaSelected: string,
   search: string | null
 ) => TResult | Promise<TResult>;
 
-export type TResponse = {
-  data: TPosts;
-  nextPage: number;
-  last: boolean;
-};
-
-export const fetchPosts: QueryFunction<TResponse> = async (
+export const fetchPosts: TFetchPosts<TResponse<TPosts>> = async (
   pageParam = 0,
   areaSelected = 'ALL',
   search = ''
