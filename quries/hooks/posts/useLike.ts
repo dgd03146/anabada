@@ -3,7 +3,7 @@ import { QueryKeys } from './../../key';
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import { queryClient } from '../../queryClient';
-import { postApi } from '../../../api/api';
+import { postApi } from '../../../services/api';
 
 type TToggleLikeParams = {
   post: TPost;
@@ -16,7 +16,7 @@ type TToggleLike = (params: {
 }) => Promise<void>;
 
 const toggleLike: TToggleLike = async ({ setLiked, post }) => {
-  if (post) {
+  if (post && post.postId) {
     if (post.isLiked) {
       await postApi.deleteLike(post.postId);
       setLiked(false);

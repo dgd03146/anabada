@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { postApi } from '../../../api/api';
+import { postApi } from '../../../services/api';
 import { QueryKeys } from '../../key';
 import { queryClient } from '../../queryClient';
 

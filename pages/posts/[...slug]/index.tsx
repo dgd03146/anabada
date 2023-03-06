@@ -1,19 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useInView } from 'react-intersection-observer/useInView';
 import usePost from '../../../quries/hooks/posts/usePost';
-import useComments from '../../../quries/hooks/comments/useComments';
 import useDeletePost from '../../../quries/hooks/posts/useDeletePost';
 import useLike from '../../../quries/hooks/posts/useLike';
 import styled from 'styled-components';
-import { FiEdit2, FiInbox, FiMoreHorizontal } from 'react-icons/fi';
-import useCreateComment from '../../../quries/hooks/comments/useCreateComment';
+import { FiEdit2, FiMoreHorizontal } from 'react-icons/fi';
 import Navigate from '../../../components/layout/navigate';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import AmentyInfo from '../../../components/amenties';
 import { Viewer } from '@toast-ui/react-editor';
-import { flatten } from 'lodash';
+
+import Comments from '../../../components/comments';
+import {
+  AddressBox,
+  Amenity,
+  Box,
+  ButtonContainer,
+  HeartBtn,
+  PostBox,
+  SelectContainer,
+  ThumbnailDiv,
+  TitleDiv,
+  UserBox
+} from './style';
 
 const Post = () => {
   const accessToken = localStorage.getItem('accessToken');
@@ -27,19 +37,13 @@ const Post = () => {
   // const nickname = useSelector((state) => state.auth.nickname);
   // const profileImg = useSelector((state) => state.auth.profileImg);
 
-  const [newComment, setNewComment] = useState('');
-  const [isValid, setIsValid] = useState(false);
   const [liked, setLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { ref, inView } = useInView();
-  const writeRef = useRef<HTMLInputElement>(null);
 
   const { post } = usePost(postId, liked);
-  const { comments, fetchNextPage, isFetchingNextPage } = useComments(postId);
+
   const { onDelete } = useDeletePost();
   const { onToggleLike } = useLike();
-
-  const allComments = flatten(comments?.pages.map((page) => page.data));
 
   const onNavigateChat = (nickname: string) => {
     router.push(`/chat/${nickname}`);
@@ -47,17 +51,9 @@ const Post = () => {
 
   const getAmenity = post?.amenity?.split(' ');
 
-  useEffect(() => {
-    if (inView) {
-      fetchNextPage();
-    }
-  }, [inView]);
-
   const onShowModal = () => {
     setShowModal((prev) => !prev);
   };
-
-  const { onCreateComment } = useCreateComment(writeRef);
 
   // If the last segment of the URL path is 'edit',
   // render the post edit page. Otherwise, render the
@@ -67,10 +63,11 @@ const Post = () => {
     return <h1>Post Edit Page</h1>;
   } else {
     if (!post) {
+      // FIXME: 데이터 없을때
       return <div>데이터 없음</div>;
     }
     return (
-      <Container>
+      <>
         <Navigate text={'포스트'} />
         <TitleDiv>
           <span>{post.title}</span>
@@ -242,356 +239,16 @@ const Post = () => {
           ) : null}
         </ButtonContainer>
 
-        <CommentBox>
-          <CountBox>
-            <span>댓글 {post.totalComment}개</span>
-            <span>좋아요 {post.likeCount}개</span>
-          </CountBox>
-          <Divider />
-          {accessToken && nickname && (
-            <WriteComment>
-              <img src={profileImg} alt="" />
-              <input
-                type="text"
-                placeholder="댓글 내용을 입력하세요."
-                ref={writeRef}
-                onChange={(e) => {
-                  setNewComment(e.currentTarget.value);
-                }}
-                onKeyUp={(e) => {
-                  e.currentTarget.value.length > 0
-                    ? setIsValid(true)
-                    : setIsValid(false);
-                }}
-              />
-              <button
-                type="submit"
-                disabled={isValid === false}
-                onClick={() => {
-                  const comment = {
-                    content: newComment
-                  };
-                  onCreateComment({ postId, comment });
-                }}
-              >
-                게시
-              </button>
-            </WriteComment>
-          )}
-          {allComments.map((comment) => (
-            <Comment comment={comment} key={comment.commentId} />
-          ))}
-
-          {isFetchingNextPage ? <p>스피너</p> : <div ref={ref} />}
-          {comments?.pages[0].data.length === 0 && (
-            <NoDataDiv>
-              <div>
-                <FiInbox />
-                <p>아직 댓글이 없습니다.</p>
-                <p>첫 댓글을 작성해 보세요.</p>
-              </div>
-            </NoDataDiv>
-          )}
-        </CommentBox>
-      </Container>
+        <Comments
+          accessToken={accessToken}
+          profileImg={profileImg}
+          nickname={nickname}
+          post={post}
+          postId={postId}
+        />
+      </>
     );
   }
 };
 
 export default Post;
-
-const Container = styled.div``;
-
-const Box = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-
-  .moreBtn {
-    padding: 0;
-  }
-  .chatBtn {
-    color: #007aff;
-    font-size: 1.3rem;
-  }
-`;
-
-const TitleDiv = styled.div`
-  margin-top: 0.75rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  padding: 0;
-`;
-
-const UserBox = styled.div`
-  @media screen and (max-width: 430px) {
-  }
-  display: flex;
-  align-items: center;
-
-  img {
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 50%;
-    margin-right: 0.33rem;
-    border: 1px solid #ececee;
-  }
-  span {
-    font-style: normal;
-    font-weight: 300;
-    font-size: 0.8125rem;
-    margin: 0 0.33rem;
-  }
-  button {
-    margin: 0;
-  }
-  .nickname {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.938rem;
-    line-height: 1.125rem;
-    margin-right: 0.3125rem;
-    margin-left: 0;
-    color: #000000;
-  }
-`;
-
-const ThumbnailDiv = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  img {
-    min-width: 100px;
-    max-width: 800px;
-    object-fit: cover;
-  }
-`;
-
-const AddressBox = styled.div`
-  display: flex;
-  align-items: center;
-  height: 2.875rem;
-  width: 100%;
-  padding: 0;
-  span {
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.0625rem;
-    color: #8e8e93;
-    padding: 0.53rem;
-  }
-
-  .area {
-    font-weight: 600;
-    color: black;
-  }
-
-  svg {
-    height: 0.895833rem;
-    width: 0.6875rem;
-  }
-`;
-
-const Amenity = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-
-  label {
-    height: 2.375rem;
-    width: 100%;
-    top: 44.4375rem;
-    font-weight: 600;
-    border-radius: none;
-  }
-  div {
-    display: grid;
-    text-align: center;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-
-  p {
-    font-size: 0.875rem;
-    font-weight: 600;
-    padding: 0.625rem 0.875rem;
-    border-radius: 2.875rem;
-    border: 0.0625rem solid #000000;
-  }
-`;
-
-const PostBox = styled.div`
-  margin-top: 0.5rem;
-  width: 100%;
-  top: 55.625rem;
-  padding: 0.5rem 0;
-  font-size: 0.9375rem;
-  font-weight: 400;
-`;
-
-const CommentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-`;
-
-const CountBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  left: 0rem;
-  top: 114.8125rem;
-  border-radius: 0rem;
-  padding: 0.5rem 0;
-  span {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    letter-spacing: 0rem;
-    margin-right: 1rem;
-  }
-`;
-
-const Divider = styled.div`
-  height: 1px;
-  background-color: #ececec;
-`;
-
-const WriteComment = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 3.125rem;
-  width: 100%;
-  position: relative;
-  div {
-    display: flex;
-    position: relative;
-    align-items: center;
-    flex-grow: 1;
-    justify-content: space-between;
-    background-color: #f2f2f7;
-    height: 2.125rem;
-    border-radius: 2rem;
-    padding: 0.625rem;
-    padding-right: 1rem;
-  }
-  img {
-    height: 2.125rem;
-    width: 2rem;
-    border-radius: 1rem;
-    margin-right: 0.5rem;
-  }
-  input {
-    flex: 1;
-    background-color: #f2f2f7;
-    border: none;
-    border-radius: 1rem;
-    height: 2.125rem;
-    outline: none;
-    padding-left: 0.625rem;
-    font-size: 0.75rem;
-    font-weight: 300;
-    width: 100%;
-  }
-  button {
-    position: absolute;
-    right: 1rem;
-    border-radius: 1rem;
-    border: none;
-    font-size: 0.75rem;
-    font-weight: 400;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const HeartBtn = styled.button`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  justify-content: center;
-  padding: 0.4rem 0;
-  width: 100%;
-
-  border-radius: 0.25rem;
-  background-color: #eff7ff;
-
-  label {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.25rem;
-    letter-spacing: 0rem;
-    text-align: left;
-  }
-  svg {
-    margin-right: 0.46875rem;
-  }
-`;
-const SelectContainer = styled.div`
-  position: absolute;
-  z-index: 99;
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(230, 230, 230);
-  box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
-  border-radius: 4px;
-  color: rgb(61, 61, 61);
-  bottom: auto;
-  top: 2.5rem;
-  left: auto;
-  right: 0;
-  transform: none;
-  font-weight: bold;
-  box-sizing: border-box;
-  .editBtn {
-    border-bottom: 1px solid #ececec;
-  }
-  .deleteBtn {
-    color: #f54e4e;
-  }
-  div {
-    display: flex;
-    align-items: center;
-
-    font-weight: bold;
-    color: gray;
-    white-space: nowrap;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    font-size: 0.75rem;
-    box-sizing: border-box;
-    svg {
-      margin-left: 0.5rem;
-    }
-  }
-`;
-
-const NoDataDiv = styled.div`
-  padding: 1rem 0;
-  display: flex;
-  justify-content: center;
-  div {
-    justify-content: center;
-    text-align: center;
-    color: #8e8e93;
-  }
-  p {
-    margin: 0.3rem 0;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.063rem;
-    line-height: 1.5rem;
-  }
-  svg {
-    color: #d9d9d9;
-    font-size: 3rem;
-  }
-`;

@@ -1,4 +1,5 @@
-import { TPost } from './../types/types';
+import { TComment } from './../types/types';
+import { TPost } from '../types/types';
 import axios from 'axios';
 import { TPosts } from '../types/types';
 
@@ -55,13 +56,13 @@ export const commentsApi = {
   getComments(pageParam: number, postId: string) {
     return api.get(`comments/${postId}?page=${pageParam}&size=5`);
   },
-  createComment(postId, content) {
-    return api.post(`/comments/${postId}`, content);
+  createComment(postId: string, comment: TComment) {
+    return api.post(`/comments/${postId}`, comment);
   },
-  editComment(commentId, updateContent) {
-    return api.put(`/comments/${commentId}`, updateContent);
+  editComment(commentId: string, comment: TComment) {
+    return api.put(`/comments/${commentId}`, comment);
   },
-  deleteComment(commentId) {
+  deleteComment(commentId: string) {
     return api.delete(`/comments/${commentId}`);
   }
 };
