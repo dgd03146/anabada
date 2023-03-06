@@ -10,7 +10,7 @@ import '../../App.css';
 import { Editor } from '@toast-ui/react-editor';
 import { useForm } from 'react-hook-form';
 import { AmenityCheck } from '../../../constants/contstant';
-import { postApi } from '../../../api/api';
+import { postApi } from '../../../services/api';
 import { AmenityInfo } from '../../../data/amenityinfo';
 import useCreatePost from '../../../quries/hooks/posts/useCreatePost';
 import { TPost } from '../../../types/types';

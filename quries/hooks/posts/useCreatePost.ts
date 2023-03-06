@@ -2,7 +2,7 @@ import { TPost } from '../../../types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';
 import { useRouter } from 'next/router';
-import { postApi } from '../../../api/api';
+import { postApi } from '../../../services/api';
 
 export type TSubmitPost = (params: {
   newPost: TPost;
@@ -28,11 +28,15 @@ const useCreatePost = () => {
 
   const { mutate: onCreate } = useMutation(createPost, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries([QueryKeys.posts]);
-      await queryClient.invalidateQueries([QueryKeys.myPostsList], {
-        refetchType: 'all'
-      });
-      router.push('/posts'); // Redirect to /posts
+      try {
+        await queryClient.invalidateQueries([QueryKeys.posts]);
+        await queryClient.invalidateQueries([QueryKeys.myPostsList], {
+          refetchType: 'all'
+        });
+        router.push('/posts'); // Redirect to /posts
+      } catch (err) {
+        console.log(err);
+      }
     },
     onError: (err) => {
       console.log(err);

@@ -1,4 +1,4 @@
-import { commentsApi } from './../../../api/api';
+import { commentsApi } from '../../../services/api';
 import { TComments, TResponse } from '../../../types/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';

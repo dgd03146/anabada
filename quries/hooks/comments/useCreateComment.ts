@@ -1,33 +1,28 @@
+import { TComment } from './../../../types/types';
 import { QueryKeys } from '../../key';
-import { commentsApi } from '../../../api/api';
-import { postApi } from '../../../api/api';
+import { commentsApi } from '../../../services/api';
+import { postApi } from '../../../services/api';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../../queryClient';
+import { RefObject } from 'react';
 
 type TCommentParams = {
   postId: string;
-  comment: {
-    content: string;
-  };
+  newComment: TComment;
 };
 
-type TCreateComment = (params: {
-  postId: string;
-  comment: {
-    content: string;
-  };
-}) => Promise<void>;
+type TCreateComment = (params: TCommentParams) => Promise<void>;
 
-const createComment: TCreateComment = async ({ postId, comment }) => {
+const createComment: TCreateComment = async ({ postId, newComment }) => {
   try {
-    await commentsApi.createComment(postId, comment);
+    await commentsApi.createComment(postId, newComment);
   } catch (err) {
     alert(err);
   }
 };
 
 const useCreateComment = (
-  writeRef: React.RefObject<HTMLInputElement | HTMLTextAreaElement>
+  writeRef: RefObject<HTMLInputElement | HTMLTextAreaElement>
 ) => {
   const { mutate: onCreateComment } = useMutation(
     (params: TCommentParams) => createComment(params),
@@ -37,6 +32,7 @@ const useCreateComment = (
           writeRef.current!.value = '';
           queryClient.invalidateQueries([QueryKeys.commentList]);
         } catch (err) {
+          // FIXME: ERR
           console.log(err);
         }
       },
