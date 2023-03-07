@@ -1,12 +1,23 @@
 import { Picker } from '../constants/contstant';
 
-export type TSpot = typeof Picker;
+export type TUser = {
+  userId?: string;
+  email?: string;
+  nickname?: string;
+  password?: string;
+  profileImg?: string;
+};
 
+// Event
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type TKeyEvent = React.KeyboardEvent<HTMLInputElement>;
 export type TEvent = TInputChangeEvent | TKeyEvent;
 export type TSelectEvent = React.ChangeEvent<HTMLSelectElement>;
 
+// Spot
+export type TSpot = typeof Picker;
+
+// Post
 export type TPostImg = {
   file: File;
   name: string;
@@ -33,6 +44,7 @@ export type TPost = {
 
 export type TPosts = TPost[];
 
+// Comment
 export type TComment = {
   commentId?: string;
   email?: string;
@@ -50,4 +62,8 @@ export type TResponse<T> = {
   data: T;
   nextPage: number;
   last: boolean;
+};
+
+export type TOutletContext = {
+  alertHandler: (errorMessage?: string) => void;
 };
