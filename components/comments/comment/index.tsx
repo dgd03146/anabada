@@ -1,4 +1,4 @@
-import { TComment } from '../../../types/types';
+import { TComment } from '../../../lib/types/types';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FiMoreHorizontal } from 'react-icons/fi';

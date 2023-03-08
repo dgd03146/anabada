@@ -9,11 +9,11 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import '../../App.css';
 import { Editor } from '@toast-ui/react-editor';
 import { useForm } from 'react-hook-form';
-import { AmenityCheck } from '../../../constants/contstant';
+import { AMENITY_CHECK } from '../../../constants/contstant';
 import { postApi } from '../../../services/api';
 import { AmenityInfo } from '../../../data/amenityinfo';
 import useCreatePost from '../../../quries/hooks/posts/useCreatePost';
-import { TPost } from '../../../types/types';
+import { TPost } from '../../../lib/types/types';
 import { flatten } from 'lodash';
 import { storage } from '../../../firebase/firebase';
 import { Categories } from '../../../components/common/categories';
@@ -31,7 +31,7 @@ type TPostKey = keyof TPost;
 
 const PostAdd = () => {
   const [imgSrc, setImgSrc] = useState('');
-  const [check, setCheck] = useState<{ [key: string]: boolean }>(AmenityCheck);
+  const [check, setCheck] = useState<{ [key: string]: boolean }>(AMENITY_CHECK);
   const [content, setContent] = useState('');
   const editorRef = useRef<Editor | null>(null);
   const router = useRouter();

@@ -6,7 +6,7 @@ import { Cookies } from 'react-cookie';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import styled from 'styled-components';
-import { TOutletContext, TUser } from '../../../types/types';
+import { TOutletContext, TUser } from '../../../lib/types/types';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FormBtn, FormDiv, FormWrapper } from '../style';
@@ -16,7 +16,7 @@ import { FormInput } from '../../common/input';
 import {
   emailValidationRules,
   passwordValidationRules
-} from '../../../utils/formValidation';
+} from '../../../lib/utils/formValidation';
 import { userApi } from '../../../services/api';
 
 type TFormValues = {

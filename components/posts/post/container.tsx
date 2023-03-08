@@ -1,7 +1,7 @@
 import React from 'react';
 import { memo } from 'react';
 import Post from '.';
-import { TPost } from '../../../types/types';
+import { TPost } from '../../../lib/types/types';
 // FIXME:
 // import SkeletonItem from '../../layout/SkeletonItem';
 

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
-import { TSpot } from '../../../types/types';
+import { TSpot } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 
 export const useSpots = () => {

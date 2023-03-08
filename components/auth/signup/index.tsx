@@ -4,6 +4,27 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import { Cookies } from 'react-cookie';
+import { TUser } from '../../../lib/types/types';
+import { userApi } from '../../../services/api';
+import React from 'react';
+import { FormBtn } from '../style';
+import {
+  ErrorSpan,
+  InputName,
+  PasswordBox,
+  PasswordEye,
+  SignupForm,
+  SignupWrapper
+} from './style';
+import { FormInput } from '../../common/input';
+import { useRouter } from 'next/router';
+import { ERRORS } from '../../../constants/contstant';
+import { EmailFormatError } from '../../../lib/errors';
+import EmailValidation from './emailValidation';
+import withErrorBoundary from '../../hoc/withErrorBoundary';
+import ErrorBoundary from '../../errorBoundary';
+
+// FIXME: alertHandler 다 모달로 변경하기
 
 const SignUp = () => {
   //password type 변경용 state
@@ -23,35 +44,35 @@ const SignUp = () => {
   } = useForm({
     mode: 'all'
   });
-  const [emailState, setEmailState] = useState(false);
+
   const [nicknameState, setNicknameState] = useState(false);
-  const { alertHandler } = useOutletContext();
+  const [emailState, setEmailState] = useState(false);
+  // const { alertHandler } = useOutletContext();
   const cookies = new Cookies();
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const onSumbit = (signupData) => {
+  const onSumbit = (signupData: TUser) => {
     try {
       // eslint-disable-next-line no-unused-vars
-      const getResponse = (async () => await userAuth.signup(signupData))();
-      return navigate('/signup/welcome');
+      const getResponse = (async () => await userApi.signup(signupData))();
+      return router.push('/signup/welcome');
     } catch (err) {
       console.log(err);
-      return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
+      // return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
     }
   };
-  const onError = (err) => {
-    console.log(err);
+  const onError = () => {
     if (!emailState) {
-      return alertHandler('이메일 중복확인을 해주세요.');
+      // return alertHandler('이메일 중복확인을 해주세요.');
     }
     if (!nicknameState) {
-      return alertHandler('닉네임 중복확인을 해주세요.');
+      // return alertHandler('닉네임 중복확인을 해주세요.');
     }
-    return alertHandler('유효하지 않은 형식입니다. 다시 확인해주세요.');
+    // return alertHandler('유효하지 않은 형식입니다. 다시 확인해주세요.');
   };
   // password
-  const handlePasswordType = (e) => {
+  const handlePasswordType = () => {
     setPasswordType((prev) => {
       if (prev.visible) {
         return { type: 'text', visible: false };
@@ -60,7 +81,7 @@ const SignUp = () => {
     });
   };
   // password confirm
-  const handlePasswordConfirmType = (e) => {
+  const handlePasswordConfirmType = () => {
     setPasswordConfirmType((prev) => {
       if (prev.visible) {
         return { type: 'text', visible: false };
@@ -74,70 +95,40 @@ const SignUp = () => {
     setNicknameState(!dirtyFields.nickname);
   }, [dirtyFields.email, dirtyFields.nickname]);
 
-  const handleEmailValidation = async () => {
-    if (errors.email.type === 'pattern') {
-      return alertHandler('올바른 이메일 형식이 아닙니다.');
-    }
-    try {
-      const email = getValues('email');
-      const response = await userAuth.emailValidation(email);
-      if (response.status === 200) {
-        dirtyFields.email = false;
-        setEmailState(true);
-        errors.email = null;
-        return alertHandler('계속 진행해주세요!');
-      }
-      // 중복체크 실패했을 때
-      if (response.response.status === 409) {
-        return alertHandler('존재하는 이메일 입니다!');
-      }
-    } catch (err) {
-      console.log(err);
-      // 중복체크 실패했을 때
-      if (err.response.status === 409) {
-        return alertHandler('존재하는 이메일 입니다!');
-      }
-      // 이메일 형식이 아닐 때
-      if (err.response.data === '올바른 형식의 이메일 주소여야 합니다') {
-        return alertHandler(err.response.data);
-      }
-      return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
-    }
-  };
-
   const handleNicknameValidation = async () => {
     try {
       const nickname = getValues('nickname');
-      const response = await userAuth.nicknameValidation(nickname);
+      const response = await userApi.nicknameValidation(nickname);
       if (response.status === 200) {
         dirtyFields.nickname = false;
         setNicknameState(true);
         errors.nickname = null;
-        return alertHandler('계속 진행해주세요!');
+        // return alertHandler('계속 진행해주세요!');
       }
       // 중복체크 실패했을 때
       if (response.response.status === 409) {
-        return alertHandler('존재하는 닉네임 입니다!');
+        // return alertHandler('존재하는 닉네임 입니다!');
       }
       // 공백 예외처리
       else if (response.response.data === '닉네임은 8자 이하로 설정해 주세요') {
-        return alertHandler('닉네임은 8자 이하로 설정해 주세요');
+        // return alertHandler('닉네임은 8자 이하로 설정해 주세요');
       } else if (
         response.response.data === '닉네임에 빈 칸을 사용할 수 없습니다.'
       ) {
-        return alertHandler('닉네임에 빈 칸을 사용할 수 없습니다.');
+        // return alertHandler('닉네임에 빈 칸을 사용할 수 없습니다.');
       }
     } catch (err) {
       console.log(err);
-      return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
+      // return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
   // 로그인한 상태에서 접근 시 차단
+  // FIXME: 고차 컴포넌트로
   useEffect(() => {
     if (localStorage.getItem('accessToken') && cookies.get('refreshToken')) {
-      alertHandler('비정상적인 접근입니다.');
-      return navigate('/home');
+      // alertHandler('비정상적인 접근입니다.');
+      router.push('/home');
     }
   }, []);
 
@@ -172,12 +163,11 @@ const SignUp = () => {
                 validate: () => emailState || '이메일 중복확인을 해주세요!'
               })}
             ></FormInput>
-            <div
-              className="login__wrapper-verification login__wrapper-email__verification"
-              onClick={handleEmailValidation}
-            >
-              이메일 중복체크
-            </div>
+            <EmailValidation
+              getValues={getValues}
+              emailState={emailState}
+              setEmailState={setEmailState}
+            />
             <InputName>
               <span>비밀번호</span>
             </InputName>
@@ -288,12 +278,12 @@ const SignUp = () => {
                 }
               })}
             ></FormInput>
-            <div
+            {/* <div
               className="login__wrapper-verification login__wrapper-nickname__verification"
               onClick={handleNicknameValidation}
             >
               닉네임 중복체크
-            </div>
+            </div> */}
             <FormBtn>회원가입</FormBtn>
           </form>
         </SignupForm>
@@ -303,74 +293,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-const SignupWrapper = styled(FormWrapper)`
-  margin-top: 4.375rem;
-  display: flex;
-  justify-content: center;
-`;
-
-const SignupForm = styled(FormDiv)`
-  padding: 0;
-  margin-top: 0.5rem;
-
-  @media screen and (min-width: 1024px) {
-    width: 23rem;
-  }
-
-  .login__wrapper-verification {
-    margin-bottom: 1.125rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.3125rem;
-    width: 100%;
-    height: 2.5625rem;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  .login__wrapper-email__verification {
-    background-color: ${(props) => (props.emailState ? '#E5E5EA' : '#E3F0FF')};
-    pointer-events: ${(props) => (props.emailState ? 'none' : 'auto')};
-    color: ${(props) => (props.emailState ? '#AEAEB2' : '#007aff')};
-  }
-  .login__wrapper-nickname__verification {
-    background-color: ${(props) =>
-      props.nicknameState ? '#E5E5EA' : '#E3F0FF'};
-    pointer-events: ${(props) => (props.nicknameState ? 'none' : 'auto')};
-    color: ${(props) => (props.nicknameState ? '#AEAEB2' : '#007aff')};
-  }
-  .login__wrapper__password {
-    color: black;
-    font-size: 0.75rem;
-    margin-bottom: 0.5rem;
-  }
-`;
-
-const InputName = styled.div`
-  font-weight: 500;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-`;
-
-const ErrorSpan = styled.span`
-  font-weight: 400;
-  font-size: 0.875rem;
-  color: #ff3b30;
-  margin-bottom: 0.5rem;
-`;
-
-const PasswordBox = styled.div`
-  position: relative;
-  input {
-    width: 100%;
-  }
-`;
-
-const PasswordEye = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 20%;
-  cursor: pointer;
-`;

@@ -1,7 +1,7 @@
 // import checkedWeather from '../../styles/weather';
 import { MarkerClusterer } from 'react-kakao-maps-sdk';
 import React, { Dispatch, SetStateAction } from 'react';
-import { TSpot } from '../../types/types';
+import { TSpot } from '../../lib/types/types';
 import { useSpots } from '../../quries/hooks/spots/useSpots';
 import {
   ExtraInfoContainer,
@@ -14,7 +14,7 @@ import {
   PickerInfo,
   PlaceInfo
 } from './style';
-import checkWeather from '../../utils/checkWeather';
+import checkWeather from '../../lib/utils/checkWeather';
 import ExtraInfo from './extraInfo';
 
 export type TMapProps = {

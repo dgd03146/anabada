@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { Picker } from '../constants/contstant';
+import { PICKER } from '../constants/contstant';
 import MapSearch from '../components/map/search';
 import KakaoMap from '../components/map';
 
 const Home = () => {
-  const [picker, setPicker] = useState(Picker);
+  const [picker, setPicker] = useState(PICKER);
 
   return (
     <>

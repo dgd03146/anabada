@@ -1,4 +1,4 @@
-import { TPost } from './../../../types/types';
+import { TPost } from '../../../lib/types/types';
 import { QueryKeys } from './../../key';
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';

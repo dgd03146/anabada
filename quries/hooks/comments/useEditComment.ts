@@ -1,4 +1,4 @@
-import { TComment } from './../../../types/types';
+import { TComment } from '../../../lib/types/types';
 import { commentsApi } from '../../../services/api';
 import { QueryKeys } from './../../key';
 import { useMutation } from '@tanstack/react-query';

@@ -13,7 +13,7 @@ import {
   SearchResultWrapper,
   SearchWrapper
 } from './style';
-import { TOutletContext } from '../../../types/types';
+import { TOutletContext } from '../../../lib/types/types';
 
 const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
   const spots = useSpots();

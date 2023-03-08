@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { postApi } from '../../../services/api';
-import { TPosts, TResponse } from '../../../types/types';
+import { TPosts, TResponse } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 
 type TFetchPosts<TResult> = (

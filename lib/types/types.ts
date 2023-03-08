@@ -1,4 +1,6 @@
-import { Picker } from '../constants/contstant';
+import { PICKER } from '../../constants/contstant';
+
+// TODO: Type 분기하기
 
 export type TUser = {
   userId?: string;
@@ -15,7 +17,7 @@ export type TEvent = TInputChangeEvent | TKeyEvent;
 export type TSelectEvent = React.ChangeEvent<HTMLSelectElement>;
 
 // Spot
-export type TSpot = typeof Picker;
+export type TSpot = typeof PICKER;
 
 // Post
 export type TPostImg = {
