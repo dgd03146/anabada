@@ -18,11 +18,12 @@ import {
 } from './style';
 import { FormInput } from '../../common/input';
 import { useRouter } from 'next/router';
-import { ERRORS } from '../../../constants/contstant';
+import { TOAST_MESSAGE } from '../../../constants/contstant';
 import { EmailFormatError } from '../../../lib/errors';
 import EmailValidation from './emailValidation';
 import withErrorBoundary from '../../hoc/withErrorBoundary';
 import ErrorBoundary from '../../errorBoundary';
+import NicknameValidation from './nicknameValidation';
 
 // FIXME: alertHandler 다 모달로 변경하기
 
@@ -95,34 +96,6 @@ const SignUp = () => {
     setNicknameState(!dirtyFields.nickname);
   }, [dirtyFields.email, dirtyFields.nickname]);
 
-  const handleNicknameValidation = async () => {
-    try {
-      const nickname = getValues('nickname');
-      const response = await userApi.nicknameValidation(nickname);
-      if (response.status === 200) {
-        dirtyFields.nickname = false;
-        setNicknameState(true);
-        errors.nickname = null;
-        // return alertHandler('계속 진행해주세요!');
-      }
-      // 중복체크 실패했을 때
-      if (response.response.status === 409) {
-        // return alertHandler('존재하는 닉네임 입니다!');
-      }
-      // 공백 예외처리
-      else if (response.response.data === '닉네임은 8자 이하로 설정해 주세요') {
-        // return alertHandler('닉네임은 8자 이하로 설정해 주세요');
-      } else if (
-        response.response.data === '닉네임에 빈 칸을 사용할 수 없습니다.'
-      ) {
-        // return alertHandler('닉네임에 빈 칸을 사용할 수 없습니다.');
-      }
-    } catch (err) {
-      console.log(err);
-      // return alertHandler('서버와 통신에 실패했습니다. 다시 시도해주세요.');
-    }
-  };
-
   // 로그인한 상태에서 접근 시 차단
   // FIXME: 고차 컴포넌트로
   useEffect(() => {
@@ -164,6 +137,8 @@ const SignUp = () => {
               })}
             ></FormInput>
             <EmailValidation
+              dirtyFields={dirtyFields}
+              errors={errors}
               getValues={getValues}
               emailState={emailState}
               setEmailState={setEmailState}
@@ -278,12 +253,13 @@ const SignUp = () => {
                 }
               })}
             ></FormInput>
-            {/* <div
-              className="login__wrapper-verification login__wrapper-nickname__verification"
-              onClick={handleNicknameValidation}
-            >
-              닉네임 중복체크
-            </div> */}
+            <NicknameValidation
+              errors={errors}
+              getValues={getValues}
+              dirtyFields={dirtyFields}
+              nicknameState={nicknameState}
+              setNicknameState={setNicknameState}
+            />
             <FormBtn>회원가입</FormBtn>
           </form>
         </SignupForm>

@@ -20,29 +20,6 @@ export const SignupForm = styled(FormDiv)<TSignupProps>`
     width: 23rem;
   }
 
-  /* .login__wrapper-verification {
-    margin-bottom: 1.125rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.3125rem;
-    width: 100%;
-    height: 2.5625rem;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  .login__wrapper-email__verification {
-    background-color: ${(props) => (props.emailState ? '#E5E5EA' : '#E3F0FF')};
-    pointer-events: ${(props) => (props.emailState ? 'none' : 'auto')};
-    color: ${(props) => (props.emailState ? '#AEAEB2' : '#007aff')};
-  } */
-  .login__wrapper-nickname__verification {
-    background-color: ${(props) =>
-      props.nicknameState ? '#E5E5EA' : '#E3F0FF'};
-    pointer-events: ${(props) => (props.nicknameState ? 'none' : 'auto')};
-    color: ${(props) => (props.nicknameState ? '#AEAEB2' : '#007aff')};
-  }
   .login__wrapper__password {
     color: black;
     font-size: 0.75rem;
