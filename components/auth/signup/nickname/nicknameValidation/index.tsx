@@ -1,33 +1,23 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { NicknameValidationContainer } from './style';
-import { FieldValues, UseFormGetValues } from 'react-hook-form';
-import { userApi } from '../../../../services/api';
+import { userApi } from '../../../../../services/api';
 import { toast } from 'react-toastify';
-import { TOAST_MESSAGE } from '../../../../constants/contstant';
+import { TOAST_MESSAGE } from '../../../../../constants/contstant';
 import { ApiError } from 'next/dist/server/api-utils';
+import { TSignupProps } from '../..';
 
-type FormErrors = {
-  nickname?: string | null;
+type TNicknameValidationProps = Omit<TSignupProps, 'register'> & {
+  nickname: boolean;
+  setNickname: Dispatch<SetStateAction<boolean>>;
 };
-
-type TUseFormProps = {
-  dirtyFields: Record<string, boolean>;
-  errors: FormErrors;
-};
-
-type TProps = {
-  getValues: UseFormGetValues<FieldValues>;
-  nicknameState: boolean;
-  setNicknameState: Dispatch<SetStateAction<boolean>>;
-} & TUseFormProps;
 
 const NicknameValidation = ({
   getValues,
   dirtyFields,
-  nicknameState,
-  setNicknameState,
+  nickname,
+  setNickname,
   errors
-}: TProps) => {
+}: TNicknameValidationProps) => {
   const errorMessages = {
     409: TOAST_MESSAGE.NICKNAME_ALREADY_TAKEN,
     [TOAST_MESSAGE.LENGTH_NICKNAME_MESSAGE]:
@@ -38,13 +28,13 @@ const NicknameValidation = ({
 
   const handleNicknameValidation = async () => {
     try {
-      const nickname = getValues('nickname');
-      const response = await userApi.nicknameValidation(nickname);
+      const nicknameValue = getValues('nickname');
+      const response = await userApi.nicknameValidation(nicknameValue);
 
       if (response.status === 200) {
         dirtyFields.nickname = false;
-        setNicknameState(true);
-        errors.nickname = null;
+        setNickname(true);
+        errors.nickname = undefined;
         toast.success(TOAST_MESSAGE.NICKNAME_CHECKED_MESSAGE);
       } else {
         // FIXME: response.reponse.data로 해야하나?
@@ -63,7 +53,7 @@ const NicknameValidation = ({
     <NicknameValidationContainer
       className="login__wrapper-verification login__wrapper-nickname__verification"
       onClick={handleNicknameValidation}
-      nicknameState={nicknameState}
+      nickname={nickname}
     >
       닉네임 중복체크
     </NicknameValidationContainer>

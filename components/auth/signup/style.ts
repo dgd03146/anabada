@@ -8,8 +8,8 @@ export const SignupWrapper = styled(FormWrapper)`
 `;
 
 type TSignupProps = {
-  emailState: boolean;
-  nicknameState: boolean;
+  email: boolean;
+  nickname: boolean;
 };
 
 export const SignupForm = styled(FormDiv)<TSignupProps>`
@@ -38,18 +38,4 @@ export const ErrorSpan = styled.span`
   font-size: 0.875rem;
   color: #ff3b30;
   margin-bottom: 0.5rem;
-`;
-
-export const PasswordBox = styled.div`
-  position: relative;
-  input {
-    width: 100%;
-  }
-`;
-
-export const PasswordEye = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 20%;
-  cursor: pointer;
 `;

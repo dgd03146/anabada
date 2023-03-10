@@ -1,34 +1,21 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { userApi } from '../../../../services/api';
-import { FieldErrors, FieldValues, UseFormGetValues } from 'react-hook-form';
-import { EmailFormatError } from '../../../../lib/errors';
-import { TOAST_MESSAGE } from '../../../../constants/contstant';
-import { EmailValidationContainer } from './style';
+import React from 'react';
+import { userApi } from '../../../../../services/api';
 
+import { TOAST_MESSAGE } from '../../../../../constants/contstant';
+import { EmailValidationContainer } from './style';
 import { toast } from 'react-toastify';
 import { ApiError } from 'next/dist/server/api-utils';
+import { TEmailProps } from '..';
 
-type TErrors = {
-  email: {
-    type: string;
-  } | null;
-};
-
-type TProps = {
-  getValues: UseFormGetValues<FieldValues>;
-  emailState: boolean;
-  setEmailState: Dispatch<SetStateAction<boolean>>;
-  errors: FieldErrors<Record<string, any>>;
-  dirtyFields: Record<string, boolean>;
-};
+type TEmailValidationProps = Omit<TEmailProps, 'register'>;
 
 export const EmailVaidation = ({
   getValues,
-  emailState,
-  setEmailState,
+  email,
+  setEmail,
   dirtyFields,
   errors
-}: TProps) => {
+}: TEmailValidationProps) => {
   const handleEmailValidation = async () => {
     if (errors.email?.type === 'pattern') {
       toast.error('올바른 이메일 형식이 아닙니다.');
@@ -36,12 +23,12 @@ export const EmailVaidation = ({
     }
 
     try {
-      const email = getValues('email');
-      const response = await userApi.emailValidation(email);
+      const emailValue = getValues('email');
+      const response = await userApi.emailValidation(emailValue);
 
       if (response.status === 200) {
         dirtyFields.email = false;
-        setEmailState(true);
+        setEmail(true);
         // FIXME: errors.email null로 바꿔야 하나?
         errors.email = undefined;
         toast.success(TOAST_MESSAGE.EMAIL_CHECKED_MESSAGE);
@@ -61,7 +48,7 @@ export const EmailVaidation = ({
     <EmailValidationContainer
       className="login__wrapper-verification login__wrapper-email__verification"
       onClick={handleEmailValidation}
-      emailState={emailState}
+      emailState={email}
     >
       이메일 중복체크
     </EmailValidationContainer>

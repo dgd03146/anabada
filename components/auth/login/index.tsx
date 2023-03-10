@@ -6,13 +6,13 @@ import { Cookies } from 'react-cookie';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import styled from 'styled-components';
-import { TOutletContext, TUser } from '../../../lib/types/types';
+import { TUser } from '../../../lib/types/types';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { FormBtn, FormDiv, FormWrapper } from '../style';
 import { FormSection, LoginWelcome } from './style';
 import Link from 'next/link';
-import { FormInput } from '../../common/input';
+import FormInput from '../../common/formInput';
 import {
   emailValidationRules,
   passwordValidationRules

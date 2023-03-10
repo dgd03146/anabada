@@ -10,6 +10,13 @@ export type TUser = {
   profileImg?: string;
 };
 
+export type TSignup = {
+  email: string;
+  nickname: string;
+  password: string;
+  confirmPassword: string;
+};
+
 // Event
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type TKeyEvent = React.KeyboardEvent<HTMLInputElement>;
@@ -64,8 +71,4 @@ export type TResponse<T> = {
   data: T;
   nextPage: number;
   last: boolean;
-};
-
-export type TOutletContext = {
-  alertHandler: (errorMessage?: string) => void;
 };
