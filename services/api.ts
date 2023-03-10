@@ -1,7 +1,9 @@
-import { TComment } from './../types/types';
-import { TPost } from '../types/types';
+import { TComment, TUser } from '../lib/types/types';
+import { TPost } from '../lib/types/types';
 import axios from 'axios';
-import { TPosts } from '../types/types';
+import { TPosts } from '../lib/types/types';
+
+// TODO:  API별로 관심사 분리하기
 
 export const api = axios.create({
   baseURL: `https://${process.env.REACT_APP_API_SERVER}/api`,
@@ -10,6 +12,33 @@ export const api = axios.create({
     accept: 'application/json,'
   }
 });
+
+export const userApi = {
+  login(loginData: TUser) {
+    return api.post('/login', loginData);
+  },
+  signup(signupData: TUser) {
+    return api.post('/signup', signupData);
+  },
+  emailValidation(email: string) {
+    return api.post(`/validation/email`, {
+      email
+    });
+  },
+  nicknameValidation(nickname: string) {
+    return api.post(`/validation/nickname`, {
+      nickname
+    });
+  },
+  useAccess(token: string) {
+    // 유저정보 받아오기
+    return api.get(`/info`, {
+      headers: {
+        Authorization: token
+      }
+    });
+  }
+};
 
 export const spotsApi = {};
 

@@ -1,4 +1,4 @@
-export const Picker = {
+export const PICKER = {
   beachId: -1,
   beachName: '',
   beachNum: '',
@@ -13,17 +13,37 @@ export const Picker = {
   y: 127.600667
 };
 
-export const BreakPoints = {
+export const BREAKPOINTS = {
   default: 3,
   1100: 3,
   700: 2
 };
 
-export const AmenityCheck = {
+export const AMENITY_CHECK = {
   airgun: false,
   shower: false,
   shop: false,
   cafe: false,
   park: false,
   sleep: false
+};
+
+export const TOAST_MESSAGE = {
+  EMAIL_CHECKED_MESSAGE: '이메일이 확인되었습니다. 계속 진행해주세요!',
+  EMAIL_ALREADY_TAKEN: '존재하는 이메일 입니다!',
+  INVALID_EMAIL_FORMAT: '형식에 맞게 메일 주소를 입력하세요.',
+  EMAIL_CHECK_MESSAGE: '이메일 중복확인을 해주세요.',
+
+  GENERIC_ERROR: '서버와 통신에 실패했습니다. 다시 시도해주세요.',
+
+  NICKNAME_CHECK_MESSAGE: '닉네임 중복확인을 해주세요.',
+  NICKNAME_ALREADY_TAKEN: '존재하는 닉네임 입니다!',
+  NICKNAME_CHECKED_MESSAGE: '닉네임이 확인되었습니다. 계속 진행해주세요!',
+  NICKNAME_SPACE_ERROR: '닉네임에 빈 칸을 사용할 수 없습니다.',
+  LENGTH_NICKNAME_MESSAGE: '닉네임은 8자 이하로 설정해 주세요',
+
+  INVALID_FORM_MESSAGE: '유효하지 않은 형식입니다. 다시 확인해주세요.',
+
+  PASSWORD_PATTERN_MESSAGE:
+    '영어 대문자﹒소문자﹒숫자﹒특수문자!@#$%^&*+를 포함해주세요.'
 };

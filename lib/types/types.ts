@@ -1,12 +1,32 @@
-import { Picker } from '../constants/contstant';
+import { PICKER } from '../../constants/contstant';
 
-export type TSpot = typeof Picker;
+// TODO: Type 분기하기
 
+export type TUser = {
+  userId?: string;
+  email?: string;
+  nickname?: string;
+  password?: string;
+  profileImg?: string;
+};
+
+export type TSignup = {
+  email: string;
+  nickname: string;
+  password: string;
+  confirmPassword: string;
+};
+
+// Event
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 export type TKeyEvent = React.KeyboardEvent<HTMLInputElement>;
 export type TEvent = TInputChangeEvent | TKeyEvent;
 export type TSelectEvent = React.ChangeEvent<HTMLSelectElement>;
 
+// Spot
+export type TSpot = typeof PICKER;
+
+// Post
 export type TPostImg = {
   file: File;
   name: string;
@@ -33,6 +53,7 @@ export type TPost = {
 
 export type TPosts = TPost[];
 
+// Comment
 export type TComment = {
   commentId?: string;
   email?: string;

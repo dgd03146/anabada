@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { postApi } from '../../../services/api';
-import { TPost } from '../../../types/types';
+import { TPost } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 
 type TgetPostDetail<T> = (postId: string) => T | Promise<T>;

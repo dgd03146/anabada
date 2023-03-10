@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import { TPost } from '../../../types/types';
+import { TPost } from '../../../lib/types/types';
 
 type TPostProps = {
   post: TPost;

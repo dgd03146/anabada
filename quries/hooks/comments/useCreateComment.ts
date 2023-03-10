@@ -1,4 +1,4 @@
-import { TComment } from './../../../types/types';
+import { TComment } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 import { commentsApi } from '../../../services/api';
 import { postApi } from '../../../services/api';

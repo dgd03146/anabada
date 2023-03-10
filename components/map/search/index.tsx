@@ -13,10 +13,7 @@ import {
   SearchResultWrapper,
   SearchWrapper
 } from './style';
-
-interface OutletContext {
-  alertHandler: (errorMessage?: string) => void;
-}
+import { TOutletContext } from '../../../lib/types/types';
 
 const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
   const spots = useSpots();
@@ -24,7 +21,7 @@ const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
   const inputRef = useRef(null);
   const [inputName, setInputName] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>();
-  const { alertHandler } = useOutletContext() as OutletContext;
+  const { alertHandler } = useOutletContext() as TOutletContext;
 
   const handleSubmit = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();

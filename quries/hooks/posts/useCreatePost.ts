@@ -1,4 +1,4 @@
-import { TPost } from '../../../types/types';
+import { TPost } from '../../../lib/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';
 import { useRouter } from 'next/router';

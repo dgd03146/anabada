@@ -1,4 +1,4 @@
-import { TSpot } from './../../types/types';
+import { TSpot } from '../../lib/types/types';
 import styled, { keyframes } from 'styled-components';
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk';
 

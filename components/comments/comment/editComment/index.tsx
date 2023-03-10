@@ -4,7 +4,7 @@ import React, {
   SetStateAction,
   Dispatch
 } from 'react';
-import { TComment } from '../../../../types/types';
+import { TComment } from '../../../../lib/types/types';
 
 import {
   BtnDiv,

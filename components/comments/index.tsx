@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useCreateComment from '../../quries/hooks/comments/useCreateComment';
-import { TComments, TPost } from '../../types/types';
+import { TComments, TPost } from '../../lib/types/types';
 import Comment from './comment';
 import {
   CommentBox,

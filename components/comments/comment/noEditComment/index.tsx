@@ -5,7 +5,7 @@ import { FiEdit2, FiMoreHorizontal } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import comment from '..';
 import useDeleteComment from '../../../../quries/hooks/comments/useDeleteComment';
-import { TComment } from '../../../../types/types';
+import { TComment } from '../../../../lib/types/types';
 import {
   CommentDate,
   CommentContent,
