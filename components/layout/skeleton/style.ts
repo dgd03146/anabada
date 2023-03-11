@@ -1,21 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import styled from 'styled-components';
 
-const SkeletonItem = () => {
-  return (
-    <PostInfoBox>
-      <Skeleton className="imageBox" height={"8rem"} />
-      <Skeleton />
-      <Skeleton className="postInfo" width={"5.625rem"}>
-        <Skeleton className="userInfo"></Skeleton>
-      </Skeleton>
-    </PostInfoBox>
-  );
-};
-
-const PostInfoBox = styled.div`
+export const PostInfoBox = styled.div`
   border-radius: 0.8125rem;
   margin-bottom: 1.25rem;
   box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
@@ -90,5 +75,3 @@ const PostInfoBox = styled.div`
     }
   }
 `;
-
-export default SkeletonItem;

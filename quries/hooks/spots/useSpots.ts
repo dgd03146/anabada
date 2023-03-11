@@ -4,6 +4,8 @@ import React from 'react';
 import { TSpot } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 
+// FIXME: 바꾸기
+
 export const useSpots = () => {
   const { data: spots } = useQuery<TSpot[]>(
     [QueryKeys.spots],
