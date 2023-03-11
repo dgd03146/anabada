@@ -1,8 +1,8 @@
-// import checkedWeather from '../../styles/weather';
 import { MarkerClusterer } from 'react-kakao-maps-sdk';
 import React, { Dispatch, SetStateAction } from 'react';
 import { TSpot } from '../../lib/types/types';
 import { useSpots } from '../../quries/hooks/spots/useSpots';
+import Image from 'next/image';
 import {
   ExtraInfoContainer,
   ExtraInfoWrapper,
@@ -62,13 +62,30 @@ const KakaoMap = ({ picker, setPicker }: TMapProps) => {
                   isClicked={picker.beachId === el.beachId}
                 >
                   {picker.beachId === el.beachId ? (
-                    <img src="/weatherIcons/bluebg.svg" alt=""></img>
+                    <Image
+                      src="assets/weatherIcons/bluebg.svg"
+                      alt="bluebg"
+                      width={64}
+                      height={64}
+                    />
                   ) : (
-                    <img src="/weatherIcons/whitebg.svg" alt=""></img>
+                    <Image
+                      src="assets/weatherIcons/whitebg.svg"
+                      alt="whitebg"
+                      width={64}
+                      height={64}
+                    />
                   )}
                   <PickerInfo>
                     <div>
-                      <img src={weatherIcons} alt=""></img>
+                      {weatherIcons && (
+                        <Image
+                          src={weatherIcons}
+                          alt=""
+                          width={32}
+                          height={32}
+                        />
+                      )}
                     </div>
                     <div>{el.tmp}</div>
                   </PickerInfo>
