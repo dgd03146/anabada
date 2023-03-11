@@ -10,12 +10,9 @@ export type TUser = {
   profileImg?: string;
 };
 
-export type TSignup = {
-  email: string;
-  nickname: string;
-  password: string;
-  confirmPassword: string;
-};
+export type TLogin = Pick<TUser, 'email' | 'password'>;
+
+export type TSignup = Omit<TUser, 'userId'>;
 
 // Event
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
@@ -67,8 +64,18 @@ export type TComment = {
 
 export type TComments = TComment[];
 
+// inifinite
 export type TResponse<T> = {
   data: T;
   nextPage: number;
   last: boolean;
+};
+
+// notification
+export type TNotifications = {
+  isBadge: boolean;
+};
+
+export type TPathnameProps = {
+  pathname: string;
 };

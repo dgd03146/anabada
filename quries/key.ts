@@ -1,6 +1,11 @@
 export const QueryKeys = {
+  // 유저
+  user: 'user',
+
+  // 스팟
   spots: 'spots',
 
+  // 미팅
   meets: 'meets',
   popularMeets: 'popularMeets',
   allMeets: 'allMeets',

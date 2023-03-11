@@ -1,7 +1,7 @@
+import { TLogin, TSignup } from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
 import axios from 'axios';
-import { TPosts } from '../lib/types/types';
 
 // TODO:  API별로 관심사 분리하기
 
@@ -14,29 +14,25 @@ export const api = axios.create({
 });
 
 export const userApi = {
-  login(loginData: TUser) {
-    return api.post('/login', loginData);
+  login(loginData: TLogin) {
+    return api.post<TUser>('users/login', loginData);
   },
-  signup(signupData: TUser) {
-    return api.post('/signup', signupData);
+  signup(signupData: TSignup) {
+    return api.post('users/signup', signupData);
   },
   emailValidation(email: string) {
-    return api.post(`/validation/email`, {
+    return api.post(`users/validation/email`, {
       email
     });
   },
   nicknameValidation(nickname: string) {
-    return api.post(`/validation/nickname`, {
+    return api.post(`users/validation/nickname`, {
       nickname
     });
   },
-  useAccess(token: string) {
-    // 유저정보 받아오기
-    return api.get(`/info`, {
-      headers: {
-        Authorization: token
-      }
-    });
+
+  getUser() {
+    return api.get<TUser>(`users/info`);
   }
 };
 
