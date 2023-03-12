@@ -1,4 +1,4 @@
-import { TLogin, TSignup } from './../lib/types/types';
+import { TLogin, TPosts, TResponse, TSignup } from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
 import axios from 'axios';
@@ -79,7 +79,7 @@ export const postApi = {
 
 export const commentsApi = {
   getComments(pageParam: number, postId: string) {
-    return api.get(`comments/${postId}?page=${pageParam}&size=5`);
+    return api.get(`/comments/${postId}?page=${pageParam}&size=5`);
   },
   createComment(postId: string, comment: TComment) {
     return api.post(`/comments/${postId}`, comment);
@@ -89,6 +89,15 @@ export const commentsApi = {
   },
   deleteComment(commentId: string) {
     return api.delete(`/comments/${commentId}`);
+  }
+};
+
+export const notificationsApi = {
+  getNotifications(pageParam: number) {
+    return api.patch(`/notifications?page=${pageParam}&size=10`);
+  },
+  deleteAllNotifications() {
+    return api.delete('/notifications');
   }
 };
 

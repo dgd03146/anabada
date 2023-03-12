@@ -15,7 +15,7 @@ import {
   NavElement,
   NotificationContainer
 } from './style';
-import useUser from '../../../quries/hooks/user';
+import useUser from '../../../quries/hooks/user/useUser';
 
 type THeaderProps = {
   notifications: TNotifications;
