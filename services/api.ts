@@ -1,9 +1,18 @@
-import { TLogin, TPosts, TResponse, TSignup } from './../lib/types/types';
+import {
+  TLogin,
+  TPosts,
+  TResponse,
+  TSignup,
+  TNotifications,
+  TCheckNotifications
+} from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
 import axios from 'axios';
 
 // TODO:  API별로 관심사 분리하기
+
+export const SOCKET_SERVER_URL = `https://${process.env.REACT_APP_API_SERVER}/socket`;
 
 export const api = axios.create({
   baseURL: `https://${process.env.REACT_APP_API_SERVER}/api`,
@@ -98,6 +107,9 @@ export const notificationsApi = {
   },
   deleteAllNotifications() {
     return api.delete('/notifications');
+  },
+  checkNotifications() {
+    return api.get('/notifications');
   }
 };
 
@@ -127,5 +139,11 @@ export const myApi = {
   },
   uploadProfile(profileImg) {
     return api.put('/profileimages', profileImg);
+  }
+};
+
+export const notificationApi = {
+  topicUrl(userId: string) {
+    return `/topic/notification/${userId}`;
   }
 };

@@ -7,7 +7,7 @@ import { BsFillChatDotsFill } from 'react-icons/bs';
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { TNotifications } from '../../../lib/types/types';
+import { TCheckNotifications, TNotifications } from '../../../lib/types/types';
 import {
   HeaderWrapper,
   MainHeader,
@@ -16,12 +16,17 @@ import {
   NotificationContainer
 } from './style';
 import useUser from '../../../quries/hooks/user/useUser';
+import { useNotificationStomp } from '../../../lib/hooks/socket/useNotificationStomp';
 
-type THeaderProps = {
-  notifications: TNotifications;
-};
+// type THeaderProps = {
+//   notifications: TCheckNotifications;
+// };
 
-const Header = ({ notifications }: THeaderProps) => {
+const Header = () => {
+  const { user } = useUser();
+
+  const { notificationsBadge } = useNotificationStomp(user?.userId!);
+
   const router = useRouter();
   const { pathname } = router;
   const timer = useRef(null);
@@ -30,7 +35,6 @@ const Header = ({ notifications }: THeaderProps) => {
   const [, setValueY] = useState(0);
   const gapY = useRef(0);
 
-  const { user } = useUser();
   const { profileImg } = user || {};
 
   // scroll event handler
@@ -95,7 +99,7 @@ const Header = ({ notifications }: THeaderProps) => {
               <>
                 <div className="header__user__info header__user__info-islogin">
                   <Link href="/notifications">
-                    <NotificationContainer noti={notifications?.isBadge}>
+                    <NotificationContainer noti={notificationsBadge?.isBadge}>
                       <GrNotification />
                       <div className="notification__red"></div>
                     </NotificationContainer>

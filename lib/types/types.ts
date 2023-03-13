@@ -71,9 +71,23 @@ export type TResponse<T> = {
   last: boolean;
 };
 
+export type TNotification = {
+  notificationId: string;
+  type: 'like' | 'comment';
+  user: TUser;
+  post: TPost;
+  isRead: boolean;
+  createdAt: string;
+  isBadge: boolean;
+};
+
+export type TCheckNotifications = {
+  isBadge: boolean;
+};
+
 // notification
 export type TNotifications = {
-  isBadge: boolean;
+  content: TNotification[];
 };
 
 export type TPathnameProps = {

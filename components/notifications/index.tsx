@@ -4,15 +4,20 @@ import { api } from '../../shared/api';
 import { queryKeys } from '../../react-query/constants';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { TNotification } from '../../lib/types/types';
+
+type TNotificationProps = {
+  ref?: (node?: Element | null | undefined) => void;
+} & TNotification;
 
 const Notification = ({
-  notificationType,
+  type,
   notificationId,
   post,
   user,
-  read,
-  refValue
-}) => {
+  isRead,
+  ref
+}: TNotificationProps) => {
   // 삭제 버튼 눌렀을 때 mutation
   const navigate = useNavigate();
   const queryClient = new useQueryClient();
@@ -42,9 +47,9 @@ const Notification = ({
 
   return (
     <>
-      <NotiWrapper ref={refValue}>
+      <NotiWrapper ref={ref}>
         <NotiContainer>
-          {notificationType === 'like' ? (
+          {type === 'like' ? (
             <NotiType>
               <img src="/assets/noti_isliked.svg" alt=""></img>
             </NotiType>
@@ -55,13 +60,13 @@ const Notification = ({
           )}
 
           <NotiInfo onClick={handleNotiWrapper}>
-            {notificationType === 'like' ? (
+            {type === 'like' ? (
               <NotiWho
-                isRead={read}
+                isRead={isRead}
               >{`${user?.nickname}님이 좋아요를 했습니다.`}</NotiWho>
             ) : (
               <NotiWho
-                isRead={read}
+                isRead={isRead}
               >{`${user?.nickname}님이 댓글을 남겼습니다.`}</NotiWho>
             )}
             <NotiWhat>{`${post?.title}`}</NotiWhat>

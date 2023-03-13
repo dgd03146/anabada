@@ -1,5 +1,5 @@
 import { TOAST_MESSAGE } from './../../../constants/contstant';
-import { TResponse } from './../../../lib/types/types';
+import { TResponse, TNotifications } from './../../../lib/types/types';
 import { ApiError } from 'next/dist/server/api-utils';
 import { QueryKeys } from './../../key';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -10,17 +10,8 @@ type TFetchNotifications<TResult> = (
   pageParam: number
 ) => TResult | Promise<TResult>;
 
-export type TNotification = {
-  type: 'like' | 'comment';
-  user: string;
-  post: string;
-  isRead: boolean;
-  createdAt: string;
-  isBadge: boolean;
-};
-
 const fetchNotifications: TFetchNotifications<
-  TResponse<TNotification>
+  TResponse<TNotifications>
 > = async (pageParam: number) => {
   try {
     const res = await notificationsApi.getNotifications(pageParam);
