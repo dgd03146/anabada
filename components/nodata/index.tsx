@@ -4,8 +4,8 @@ import React from 'react';
 import { NoDataDiv } from './style';
 
 type TNoData = {
-  text: string;
-  content: string;
+  text?: string;
+  content?: string;
   notification?: boolean;
   chat?: boolean;
 };

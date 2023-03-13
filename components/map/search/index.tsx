@@ -1,7 +1,5 @@
 import { ChangeEvent, useState, MouseEvent, FormEvent } from 'react';
 import { useRef } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import styled from 'styled-components';
 import { BsSearch } from 'react-icons/bs';
 import React from 'react';
 import { useSpots } from '../../../quries/hooks/spots/useSpots';
@@ -13,7 +11,7 @@ import {
   SearchResultWrapper,
   SearchWrapper
 } from './style';
-import { TOutletContext } from '../../../lib/types/types';
+import { toast } from 'react-toastify';
 
 const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
   const spots = useSpots();
@@ -21,31 +19,34 @@ const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
   const inputRef = useRef(null);
   const [inputName, setInputName] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>();
-  const { alertHandler } = useOutletContext() as TOutletContext;
 
   const handleSubmit = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (inputName === '') {
-      return alertHandler('해변을 입력해주세요!');
+    const selectedBeach = inputName.trim();
+
+    if (!selectedBeach) {
+      return toast.warn('Please enter a beach name!');
     }
 
-    if (!Beaches.includes(inputName)) {
-      if (searchResult?.length === 0) {
-        return alertHandler('일치하는 해변이 없습니다!');
+    const beachMatch = spots?.find((spot) => spot.beachName === selectedBeach);
+
+    if (!beachMatch) {
+      const firstMatch = searchResult?.[0];
+      if (!firstMatch) {
+        return toast.error('No matching beaches found!');
       }
 
-      const result = spots?.find(
-        ({ beachName }) => beachName === searchResult![0]
-      );
-      setInputName(searchResult![0]);
-      setPicker((prev) => ({ ...prev, ...result }));
-      setSearchResult([]);
+      setPicker((prev) => ({
+        ...prev,
+        ...spots?.find((spot) => spot.beachName === firstMatch)
+      }));
+      setInputName(firstMatch);
     } else {
-      const result = spots?.find((el) => el.beachName === inputName);
-      setPicker((prev) => ({ ...prev, ...result }));
-      setSearchResult([]);
+      setPicker((prev) => ({ ...prev, ...beachMatch }));
     }
+
+    setSearchResult([]);
   };
 
   const handleClickList = (event: MouseEvent<HTMLLIElement>) => {

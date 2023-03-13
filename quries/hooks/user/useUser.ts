@@ -1,4 +1,4 @@
-import { QueryKeys } from './../../key';
+import { QueryKeys } from '../../key';
 import { useQuery } from '@tanstack/react-query';
 
 import { userApi } from '../../../services/api';

@@ -1,9 +1,9 @@
-import { userApi } from '../../../../services/api';
-import { TLogin, TUser } from '../../../../lib/types/types';
+import { userApi } from '../../../services/api';
+import { TLogin, TUser } from '../../../lib/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { QueryKeys } from '../../../key';
+import { QueryKeys } from '../../key';
 import { ApiError } from 'next/dist/server/api-utils';
 
 export type TPostLogin = (params: TLogin) => Promise<TUser | undefined>;

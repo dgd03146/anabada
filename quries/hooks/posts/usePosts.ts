@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { postApi } from '../../../services/api';
 import { TPosts, TResponse } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
+import { ApiError } from 'next/dist/server/api-utils';
+import { toast } from 'react-toastify';
 
 type TFetchPosts<TResult> = (
   pageParam: number,
@@ -22,8 +24,7 @@ export const fetchPosts: TFetchPosts<TResponse<TPosts>> = async (
     const { content: data, last } = res.data;
     return { data, nextPage: pageParam + 1, last };
   } catch (err) {
-    console.log(err);
-    // FIXME: toast 띄우는 걸로 바꾸자
+    if (err instanceof ApiError) toast.error(err.message);
     throw new Error('Failed to fetch posts');
   }
 };

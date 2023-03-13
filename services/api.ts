@@ -1,9 +1,18 @@
-import { TLogin, TSignup } from './../lib/types/types';
+import {
+  TLogin,
+  TPosts,
+  TResponse,
+  TSignup,
+  TNotifications,
+  TCheckNotifications
+} from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
 import axios from 'axios';
 
 // TODO:  API별로 관심사 분리하기
+
+export const SOCKET_SERVER_URL = `https://${process.env.REACT_APP_API_SERVER}/socket`;
 
 export const api = axios.create({
   baseURL: `https://${process.env.REACT_APP_API_SERVER}/api`,
@@ -79,7 +88,7 @@ export const postApi = {
 
 export const commentsApi = {
   getComments(pageParam: number, postId: string) {
-    return api.get(`comments/${postId}?page=${pageParam}&size=5`);
+    return api.get(`/comments/${postId}?page=${pageParam}&size=5`);
   },
   createComment(postId: string, comment: TComment) {
     return api.post(`/comments/${postId}`, comment);
@@ -89,6 +98,27 @@ export const commentsApi = {
   },
   deleteComment(commentId: string) {
     return api.delete(`/comments/${commentId}`);
+  }
+};
+
+export const notificationsApi = {
+  getNotifications(pageParam: number) {
+    return api.patch(`/notifications?page=${pageParam}&size=10`);
+  },
+  deleteAllNotifications() {
+    return api.delete('/notifications');
+  },
+  deleteNotification(notifiactionId: string) {
+    return api.delete(`/notifications/${notifiactionId}`);
+  },
+  checkNotifications() {
+    return api.get('/notifications');
+  },
+  readNotification(notificationId: string) {
+    return api.put(`notifications/${notificationId}`);
+  },
+  topicUrl(userId: string) {
+    return `/topic/notification/${userId}`;
   }
 };
 
