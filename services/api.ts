@@ -108,8 +108,17 @@ export const notificationsApi = {
   deleteAllNotifications() {
     return api.delete('/notifications');
   },
+  deleteNotification(notifiactionId: string) {
+    return api.delete(`/notifications/${notifiactionId}`);
+  },
   checkNotifications() {
     return api.get('/notifications');
+  },
+  readNotification(notificationId: string) {
+    return api.put(`notifications/${notificationId}`);
+  },
+  topicUrl(userId: string) {
+    return `/topic/notification/${userId}`;
   }
 };
 
@@ -139,11 +148,5 @@ export const myApi = {
   },
   uploadProfile(profileImg) {
     return api.put('/profileimages', profileImg);
-  }
-};
-
-export const notificationApi = {
-  topicUrl(userId: string) {
-    return `/topic/notification/${userId}`;
   }
 };

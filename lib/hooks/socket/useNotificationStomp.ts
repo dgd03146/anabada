@@ -1,9 +1,8 @@
-import { notificationApi } from './../../../services/api';
 import { TNotification } from './../../types/types';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useStomp } from './useStomp';
-import { SOCKET_SERVER_URL } from '../../../services/api';
+import { notificationsApi, SOCKET_SERVER_URL } from '../../../services/api';
 
 const socketServerURL = SOCKET_SERVER_URL;
 
@@ -18,7 +17,7 @@ export const useNotificationStomp = (userId: string) => {
 
   useEffect(() => {
     if (!userId || !isConnected) return;
-    subscribe<TNotification>(notificationApi.topicUrl(userId), (body) => {
+    subscribe<TNotification>(notificationsApi.topicUrl(userId), (body) => {
       setNotificationsBadge((prev) => {
         return {
           ...prev,
@@ -29,13 +28,13 @@ export const useNotificationStomp = (userId: string) => {
 
     return () => {
       // FIXME: 안 해줘도 될지도?
-      unsubscribe(notificationApi.topicUrl(userId));
+      unsubscribe(notificationsApi.topicUrl(userId));
       disconnect();
     };
   }, [userId, isConnected]);
 
   const unsubscribeNotification = useCallback(() => {
-    unsubscribe(notificationApi.topicUrl(userId));
+    unsubscribe(notificationsApi.topicUrl(userId));
   }, []);
 
   return {

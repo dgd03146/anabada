@@ -1,10 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import styled from 'styled-components';
-import { api } from '../../shared/api';
-import { queryKeys } from '../../react-query/constants';
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import Image from 'next/image';
 import { TNotification } from '../../lib/types/types';
+import { useRouter } from 'next/router';
+import useDeleteNotification from '../../quries/hooks/notifications/useDeleteNotification';
+import { notificationsApi } from '../../services/api';
+import { toast } from 'react-toastify';
+import { TOAST_MESSAGE } from '../../constants/contstant';
+import {
+  NotifiactionPerson,
+  NotificationBox,
+  NotificationContainer,
+  NotificationDeleteButton,
+  NotificationInfo,
+  NotificationTitle,
+  NotificationType
+} from './style';
 
 type TNotificationProps = {
   ref?: (node?: Element | null | undefined) => void;
@@ -19,124 +29,58 @@ const Notification = ({
   ref
 }: TNotificationProps) => {
   // 삭제 버튼 눌렀을 때 mutation
-  const navigate = useNavigate();
-  const queryClient = new useQueryClient();
+  const router = useRouter();
 
-  const handleDeleteMutation = async (notificationId) => {
-    try {
-      return await api.delete(`notifications/${notificationId}`);
-    } catch (err) {
-      return console.log(err);
-    }
-  };
-
-  const mutation = useMutation(handleDeleteMutation, {
-    onSuccess() {
-      return queryClient.invalidateQueries([queryKeys.notifications]);
-    }
-  });
+  const { onDeleteNotification } = useDeleteNotification();
 
   const handleDelete = () => {
-    return mutation.mutate(notificationId);
+    const res = window.confirm('정말 삭제하시겠습니까?');
+    if (res) {
+      onDeleteNotification(notificationId);
+    }
   };
 
-  const handleNotiWrapper = async () => {
-    await api.put(`notifications/${notificationId}`);
-    return navigate(`/posts/${post.postId}`);
+  const handleReadNotification = async () => {
+    try {
+      await notificationsApi.readNotification(notificationId);
+      router.push(`/posts/${post.postId}`);
+    } catch (err) {
+      toast.error(TOAST_MESSAGE.GENERIC_ERROR);
+    }
   };
 
   return (
     <>
-      <NotiWrapper ref={ref}>
-        <NotiContainer>
-          {type === 'like' ? (
-            <NotiType>
-              <img src="/assets/noti_isliked.svg" alt=""></img>
-            </NotiType>
-          ) : (
-            <NotiType>
-              <img src="/assets/noti_message.svg" alt=""></img>
-            </NotiType>
-          )}
+      <NotificationContainer ref={ref}>
+        <NotificationBox>
+          <NotificationType>
+            <Image
+              src={
+                type === 'like'
+                  ? '/assets/noti_isliked.svg'
+                  : '/assets/noti_message.svg'
+              }
+              alt=""
+              width={30}
+              height={30}
+            />
+          </NotificationType>
 
-          <NotiInfo onClick={handleNotiWrapper}>
-            {type === 'like' ? (
-              <NotiWho
-                isRead={isRead}
-              >{`${user?.nickname}님이 좋아요를 했습니다.`}</NotiWho>
-            ) : (
-              <NotiWho
-                isRead={isRead}
-              >{`${user?.nickname}님이 댓글을 남겼습니다.`}</NotiWho>
-            )}
-            <NotiWhat>{`${post?.title}`}</NotiWhat>
-          </NotiInfo>
-          <NotiDel onClick={handleDelete}>
+          <NotificationInfo onClick={handleReadNotification}>
+            <NotifiactionPerson isRead={isRead}>
+              {type === 'like'
+                ? `${user?.nickname}님이 좋아요를 했습니다.`
+                : `${user?.nickname}님이 댓글을 남겼습니다.`}
+            </NotifiactionPerson>
+            <NotificationTitle>{post?.title}</NotificationTitle>
+          </NotificationInfo>
+          <NotificationDeleteButton onClick={handleDelete}>
             <span className="material-symbols-outlined">close</span>
-          </NotiDel>
-        </NotiContainer>
-      </NotiWrapper>
+          </NotificationDeleteButton>
+        </NotificationBox>
+      </NotificationContainer>
     </>
   );
 };
 
 export default Notification;
-
-const NotiWrapper = styled.div`
-  width: 100%;
-  height: 3.8125rem;
-  margin-bottom: 0.625rem;
-
-  padding: 0.625rem 0.8125rem;
-
-  box-shadow: 1px 1px 8px rgba(198, 198, 198, 0.42);
-  border-radius: 6px;
-  cursor: pointer;
-`;
-
-const NotiContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-`;
-
-const NotiType = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 0.5rem;
-  padding-bottom: 1rem;
-`;
-const NotiInfo = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  display: block; /* 블록태그로 만들어준다 */
-  overflow: hidden;
-  * > div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const NotiWho = styled.div`
-  font-weight: 600;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
-  width: 100%;
-  color: ${(props) => (props.isRead ? '#8e8e93' : 'black')};
-`;
-
-const NotiWhat = styled.div`
-  font-weight: 500;
-  font-size: 0.85rem;
-  color: #8e8e93;
-  width: 100%;
-`;
-
-const NotiDel = styled.div``;
