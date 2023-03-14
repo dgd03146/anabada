@@ -5,7 +5,7 @@ import { CategoryContainer } from './style';
 type TAreaSelectorProps = {
   areaSelected: string;
   onChangeArea: (event: ChangeEvent<HTMLSelectElement>) => void;
-  onKeyPress: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onKeyPress?: (event: KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const AreaSelector = ({
@@ -19,11 +19,13 @@ const AreaSelector = ({
         <option value="ALL">All</option>
         <Categories />
       </select>
-      <input
-        type="text"
-        placeholder="검색어를 입력해주세요"
-        onKeyPress={onKeyPress}
-      />
+      {onKeyPress && (
+        <input
+          type="text"
+          placeholder="검색어를 입력해주세요"
+          onKeyPress={onKeyPress}
+        />
+      )}
     </CategoryContainer>
   );
 };

@@ -29,6 +29,33 @@ export type TPostImg = {
   name: string;
 };
 
+export type TMeet = {
+  thunderPostId: string;
+  title: string;
+  content: string;
+  nickname: string;
+  profileImg: string;
+  area: string;
+  address: string;
+  goalMember: number;
+  currentMember: number;
+  thumbnailUrl: string;
+  likeCount: number;
+  isLiked: boolean;
+  isJoined: boolean;
+  meetDate: string;
+  startDate: string;
+  endDate: string;
+  after: string;
+  createdAt: string;
+};
+
+export type TMeets = {
+  content: TMeet[];
+};
+
+export type TAllMeets = TMeet[];
+
 export type TPost = {
   postId?: string;
   title?: string;

@@ -10,9 +10,7 @@ const postDelete = async (postId: string) => {
   try {
     await postApi.deletePost(postId);
   } catch (err) {
-    console.log(err);
-    // FIXME: 고치기
-    alert(err);
+    if (err instanceof ApiError) toast.error(err.message);
   }
 };
 

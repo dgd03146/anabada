@@ -21,7 +21,7 @@ export function useDeleteMeet() {
       queryClient.invalidateQueries([queryKeys.meets]);
       queryClient.invalidateQueries([queryKeys.allMeets]);
       navigate('/meets');
-    },
+    },a
     onError: () => {
       alert('모임 삭제에 실패하였습니다');
     }
