@@ -41,6 +41,7 @@ export type TMeet = {
   currentMember: number;
   thumbnailUrl: string;
   likeCount: number;
+  viewCount: number;
   isLiked: boolean;
   isJoined: boolean;
   meetDate: string;
@@ -48,6 +49,15 @@ export type TMeet = {
   endDate: string;
   after: string;
   createdAt: string;
+  members: TMember[];
+  liked: boolean;
+  joined: boolean;
+};
+
+export type TMember = {
+  email: string;
+  profileImg: string;
+  nickname: string;
 };
 
 export type TMeets = {

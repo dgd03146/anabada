@@ -3,12 +3,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { meetsApi } from '../../../services/api';
 
-type TToggleLikeParams = {
-  thunderPostId: string;
+export type TToggleLikeParams = {
+  thunderPostId?: string;
   setIsLiked: React.Dispatch<React.SetStateAction<boolean>>;
   isLiked: boolean;
 };
-type TToggleLike = (params: TToggleLikeParams) => Promise<void>;
+export type TToggleLike = (params: TToggleLikeParams) => Promise<void>;
 
 const toggleLike: TToggleLike = async ({
   setIsLiked,
@@ -27,7 +27,7 @@ const toggleLike: TToggleLike = async ({
 export function useLike() {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: onLike } = useMutation(toggleLike, {
+  const { mutate: onToggleLike } = useMutation(toggleLike, {
     onSuccess: async () => {
       try {
         await queryClient.invalidateQueries([QueryKeys.detailMeet]);
@@ -46,5 +46,5 @@ export function useLike() {
     }
   });
 
-  return { onLike };
+  return { onToggleLike };
 }

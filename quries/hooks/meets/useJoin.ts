@@ -4,13 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
 
-type TToggleJoinParams = {
-  thunderPostId: string;
+export type TToggleJoinParams = {
+  thunderPostId?: string;
   setIsJoined: React.Dispatch<React.SetStateAction<boolean>>;
   isJoined: boolean;
 };
 
-type TToggleJoin = (params: TToggleJoinParams) => Promise<void>;
+export type TToggleJoin = (params: TToggleJoinParams) => Promise<void>;
 
 const toggleJoin: TToggleJoin = async ({
   setIsJoined,
@@ -40,7 +40,8 @@ const toggleJoin: TToggleJoin = async ({
 export function useJoin() {
   const queryClient = useQueryClient();
 
-  const { mutate: onJoin } = useMutation(toggleJoin, {
+  // FIXME: mutate mutateAsync로 고려해보겟
+  const { mutate: onToggleJoin } = useMutation(toggleJoin, {
     onSuccess: async () => {
       try {
         await queryClient.invalidateQueries([QueryKeys.detailMeet]);
@@ -54,5 +55,5 @@ export function useJoin() {
     }
   });
 
-  return { onJoin };
+  return { onToggleJoin };
 }
