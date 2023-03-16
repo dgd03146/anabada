@@ -4,16 +4,15 @@ import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import { queryClient } from '../../queryClient';
 import { postApi } from '../../../services/api';
+import { ApiError } from 'next/dist/server/api-utils';
+import { toast } from 'react-toastify';
 
 type TToggleLikeParams = {
   post: TPost;
   setLiked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type TToggleLike = (params: {
-  setLiked: React.Dispatch<React.SetStateAction<boolean>>;
-  post?: TPost;
-}) => Promise<void>;
+type TToggleLike = (params: TToggleLikeParams) => Promise<void>;
 
 const toggleLike: TToggleLike = async ({ setLiked, post }) => {
   if (post && post.postId) {
@@ -37,11 +36,11 @@ const useLike = () => {
             refetchType: 'all'
           });
         } catch (err) {
-          console.log(err);
+          if (err instanceof ApiError) toast.error(err.message);
         }
       },
       onError: (err) => {
-        console.log(err);
+        if (err instanceof ApiError) toast.error(err.message);
       }
     }
   );

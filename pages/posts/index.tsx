@@ -14,6 +14,7 @@ import { QueryKeys } from '../../quries/key';
 import { MainDiv, PostBtn, PostDiv } from './style';
 import AreaSelector from '../../components/common/areaSelector';
 
+// FIXME: prefetch 고려해보자
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 

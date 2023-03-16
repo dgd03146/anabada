@@ -122,6 +122,36 @@ export const notificationsApi = {
   }
 };
 
+export const meetsApi = {
+  getPopularMeets: (area: string) => api.get(`/meets/hot?area=${area}`),
+
+  getMeets: (pageParam: number, area: string) =>
+    api.get(`/meets?area=${area}&page=${pageParam}&size=5`),
+
+  getSearchMeets: (pageParam: number, area: string, keyword: string) =>
+    api.get(
+      `/meets/search?area=${area}&keyword=${keyword}&page=${pageParam}&size=10`
+    ),
+
+  createMeetPost: (post) => api.post('/meets', post),
+
+  editMeetPost: (thunderPostId, post) =>
+    api.put(`/meets/${thunderPostId}`, post),
+
+  deleteMeetPost: (thunderPostId) => api.delete(`/meets/${thunderPostId}`),
+
+  getMeetDetail: (thunderPostId) => api.get(`/meets/${thunderPostId}`),
+
+  postLike: (thunderPostId) => api.post(`/meetlikes/${thunderPostId}`),
+  deleteLike: (thunderPostId) => api.delete(`/meetlikes/${thunderPostId}`),
+
+  postRequest: (thunderPostId) =>
+    api.post(`/requests/${thunderPostId}
+  `),
+
+  deleteRequest: (thunderPostId) => api.delete(`/requests/${thunderPostId}`)
+};
+
 // 채팅
 export const chatApi = {
   createChat(receiver) {
