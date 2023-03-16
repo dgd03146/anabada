@@ -17,4 +17,12 @@ const Page = () => {
   }
 };
 
+// TODO: 이게 맞나ㅕ?
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { auth: ['login'] } }, { params: { auth: ['signup'] } }],
+    fallback: false
+  };
+}
+
 export default Page;

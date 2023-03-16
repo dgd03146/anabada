@@ -5,7 +5,7 @@ import Masonry from 'react-masonry-css';
 import { TbPencil } from 'react-icons/tb';
 import { fetchPosts, usePosts } from '../../quries/hooks/posts/usePosts';
 import { TEvent, TKeyEvent, TPost, TSelectEvent } from '../../lib/types/types';
-import { BREAKPOINTS } from '../../constants/contstant';
+import { BREAK_POINTS } from '../../constants/contstant';
 import Loading from '../../components/loading';
 import NoData from '../../components/nodata';
 import Container from '../../components/posts/post/container';
@@ -80,7 +80,7 @@ const Posts = () => {
             <NoData text={'게시물'} content={'게시물'} />
           )}
           <Masonry
-            breakpointCols={BREAKPOINTS}
+            breakpointCols={BREAK_POINTS}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
           >

@@ -13,7 +13,7 @@ export const PICKER = {
   y: 127.600667
 };
 
-export const BREAKPOINTS = {
+export const BREAK_POINTS = {
   default: 3,
   1100: 3,
   700: 2
@@ -46,4 +46,42 @@ export const TOAST_MESSAGE = {
 
   PASSWORD_PATTERN_MESSAGE:
     '영어 대문자﹒소문자﹒숫자﹒특수문자!@#$%^&*+를 포함해주세요.'
+};
+
+export const MY_PAGES = {
+  myWritePost: {
+    label: '작성 피드',
+    iconSrc: '/assets/icons/write.svg',
+    iconAlt: 'My Write',
+    iconWidth: 24,
+    iconHeight: 24
+  },
+  myLikePost: {
+    label: '좋아요 피드',
+    iconSrc: '/assets/icons/like.svg',
+    iconAlt: 'My Like',
+    iconWidth: 25,
+    iconHeight: 24
+  },
+  myHostMeet: {
+    label: '주최 모임',
+    iconSrc: '',
+    iconAlt: '',
+    iconWidth: 0,
+    iconHeight: 0
+  },
+  myJoinMeet: {
+    label: '참석 모임',
+    iconSrc: '/assets/icons/join.svg',
+    iconAlt: 'Join',
+    iconWidth: 24,
+    iconHeight: 24
+  },
+  myLikeMeet: {
+    label: '좋아요 모임',
+    iconSrc: '/assets/icons/likeMeets.svg',
+    iconAlt: 'Join',
+    iconWidth: 24,
+    iconHeight: 24
+  }
 };
