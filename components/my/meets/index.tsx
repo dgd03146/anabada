@@ -9,10 +9,11 @@ import { NoDataMyPage } from '../../layout/noData/myPage';
 
 import React from 'react';
 import { BtnDiv, MeetAllContainer } from './style';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import useMyMeets from '../../../quries/hooks/mypage/meets/useMyMeets';
 
 const MyMeets = () => {
+  const router = useRouter();
   const query = router.query;
   const state = query.state as string;
 

@@ -4,11 +4,11 @@ import { Container } from './style';
 
 type TNoDataProps = {
   text: string;
-  content: string;
-  chat: boolean;
-  notification: boolean;
-  meet: boolean;
-  post: boolean;
+  content?: string;
+  chat?: boolean;
+  notification?: boolean;
+  meet?: boolean;
+  post?: boolean;
 };
 
 const NoData = ({

@@ -148,3 +148,11 @@ export type TNotifications = {
 export type TPathnameProps = {
   pathname: string;
 };
+
+export type TMessage = {
+  nickname: String;
+  content: string;
+  createdAt: string;
+};
+
+export type TMessages = TMessage[];
