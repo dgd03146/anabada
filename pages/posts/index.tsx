@@ -7,7 +7,7 @@ import { fetchPosts, usePosts } from '../../quries/hooks/posts/usePosts';
 import { TEvent, TKeyEvent, TPost, TSelectEvent } from '../../lib/types/types';
 import { BREAK_POINTS } from '../../constants/contstant';
 import Loading from '../../components/loading';
-import NoData from '../../components/nodata';
+import NoData from '../../components/layout/noData/chat-notification';
 import Container from '../../components/posts/post/container';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';

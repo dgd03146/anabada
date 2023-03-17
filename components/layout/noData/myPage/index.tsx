@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiInbox } from 'react-icons/fi';
-import { NoDataDiv } from '../style';
+import { NoDataDiv } from '../chat-notification/style';
 
 type TNoDataMyPage = {
   text?: string;

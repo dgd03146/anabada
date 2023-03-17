@@ -64,6 +64,19 @@ export type TMeets = {
   content: TMeet[];
 };
 
+export type TMyMeets = Pick<
+  TMeet,
+  | 'title'
+  | 'nickname'
+  | 'goalMember'
+  | 'currentMember'
+  | 'thumbnailUrl'
+  | 'startDate'
+  | 'endDate'
+  | 'createdAt'
+> &
+  { thunderpostId: string }[];
+
 export type TAllMeets = TMeet[];
 
 export type TPost = {

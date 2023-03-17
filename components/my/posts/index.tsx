@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../loading';
 import Post from '../../posts/post';
-import { NoDataMyPage } from '../../nodata/myPage';
+import { NoDataMyPage } from '../../layout/noData/myPage';
 
 import Masonry from 'react-masonry-css';
 import { useRouter } from 'next/router';
