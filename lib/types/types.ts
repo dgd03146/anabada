@@ -64,6 +64,19 @@ export type TMeets = {
   content: TMeet[];
 };
 
+export type TMyMeets = Pick<
+  TMeet,
+  | 'title'
+  | 'nickname'
+  | 'goalMember'
+  | 'currentMember'
+  | 'thumbnailUrl'
+  | 'startDate'
+  | 'endDate'
+  | 'createdAt'
+> &
+  { thunderpostId: string }[];
+
 export type TAllMeets = TMeet[];
 
 export type TPost = {
@@ -84,6 +97,11 @@ export type TPost = {
   viewCount?: number;
   totalComment?: number;
 };
+
+export type TMyPosts = Pick<
+  TPost,
+  'postId' | 'title' | 'nickname' | 'thumbnailUrl'
+>[];
 
 export type TPosts = TPost[];
 

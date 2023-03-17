@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import Meet from '../../components/meets';
 import PopularMeets from '../../components/meets/popularMeets';
-import NoData from '../../components/nodata';
+import NoData from '../../components/layout/noData/chat-notification';
 import { TbPencil } from 'react-icons/tb';
 import { usePopularMeets } from '../../quries/hooks/meets/usePopularMeets';
 import AreaSelector from '../../components/common/areaSelector';

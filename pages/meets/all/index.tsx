@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import Loading from '../../../components/loading';
 import { TbPencil } from 'react-icons/tb';
 import Link from 'next/link';
-import NoData from '../../../components/nodata';
+import NoData from '../../../components/layout/noData/chat-notification';
 import { useAllMeets } from '../../../quries/hooks/meets/useAllMeets';
 import AreaSelector from '../../../components/common/areaSelector';
 import { TEvent, TKeyEvent, TSelectEvent } from '../../../lib/types/types';

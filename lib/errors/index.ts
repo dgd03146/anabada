@@ -1,3 +1,4 @@
+// FIXME: APIError 생각해보자
 // export class ApiError extends Error {
 //   response: {
 //     statusCode: number;
