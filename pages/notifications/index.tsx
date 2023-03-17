@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import Notification from '../../components/notifications';
 import Navigate from '../../components/layout/navigate';
-import NoData from '../../components/layout/noData/chat-notification';
+import NoData from '../../components/layout/noData';
+
 import React from 'react';
 import { useInView } from 'react-intersection-observer/useInView';
 import useDeleteAllnotifications from '../../quries/hooks/notifications/useDeleteAllnotifications';

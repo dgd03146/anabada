@@ -154,29 +154,29 @@ export const meetsApi = {
 
 // 채팅
 export const chatApi = {
-  createChat(receiver) {
+  createChat(receiver: string) {
     return api.post(`/rooms?receiver=${receiver}`);
   },
-  deleteChat(roomId) {
+  deleteChat(roomId: string) {
     return api.delete(`/rooms/${roomId}`);
   },
-  getMessages(pageParam, roomId) {
+  getMessages(pageParam: number, roomId: string) {
     return api.get(`messages/${roomId}?page=${pageParam}&size=20`);
   },
-  getAllRooms(pageParam) {
+  getAllRooms(pageParam: number) {
     return api.get(`/rooms?page=${pageParam}&size=10`);
   }
 };
 
 // 마이페이지
 export const myApi = {
-  getMyPosts(filter, pageParam) {
+  getMyPosts(filter: string, pageParam: number) {
     return api.get(`myposts?filter=${filter}&page=${pageParam}&size=6`);
   },
-  getMyMeets(filter, pageParam) {
+  getMyMeets(filter: string, pageParam: number) {
     return api.get(`mymeets?filter=${filter}&page=${pageParam}&size=6`);
   },
-  uploadProfile(profileImg) {
+  uploadProfile(profileImg: string) {
     return api.put('/profileimages', profileImg);
   }
 };
