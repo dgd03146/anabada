@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { TInputChangeEvent } from '../../../lib/types/types';
 import useUser from '../../../quries/hooks/user/useUser';
+import useChat from '../../../lib/hooks/socket/useChat';
 
 const Chat = () => {
   const router = useRouter();
@@ -27,131 +28,33 @@ const Chat = () => {
   const clientRef = useRef<Client | null>(null);
   const { ref, inView } = useInView();
 
-  const [roomId, setRoomId] = useState(null);
-  const [chatMessages, setChatMessages] = useState<
-    { nickname: string; message: string }[] | null
-  >([]);
-  const [senderProfileImg, setSenderProfileImg] = useState('');
-  const [receiverProfileImg, setReceiverProfileImg] = useState('');
-  const [message, setMessage] = useState('');
   const [prevScrollHeight, setPrevScrollHeight] = useState<number | null>();
-
-  const isMessage = message !== '';
-
-  // FIXME: class로 변경
-  const token = localStorage.getItem('accessToken');
-  const accessToken = token ?? '';
-  const headers: StompHeaders = { accessToken };
 
   const { messages, fetchNextPage, isFetchingNextPage, __setRoomId } =
     useMessages();
+  const {
+    message,
+    setMessage,
+    handlePublish,
+    chatMessages,
+    senderProfileImg,
+    receiverProfileImg
+  } = useChat(clientRef, senderNickname, __setRoomId);
+
+  const isMessage = message !== '';
 
   const onChange = useCallback((e: TInputChangeEvent) => {
     setMessage(e.target.value);
   }, []);
-
-  const connect = () => {
-    // client객체를 만들기
-
-    clientRef.current = new Client({
-      brokerURL: `ws://${process.env.REACT_APP_API_SERVER}/socket`, // 웹소켓 서버로 직접 접속
-      webSocketFactory: () =>
-        new SockJS(`https://${process.env.REACT_APP_API_SERVER}/socket`), // proxy를 통한 접속
-      connectHeaders: headers,
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000, //자동 재 연결
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-
-      onConnect: () => {
-        // 구독
-        subscribe();
-      },
-      onStompError: (frame) => {
-        // error message 출력
-        console.error(frame);
-      }
-    });
-
-    // 클라이언트 활성화
-    clientRef.current.activate();
-  };
-
-  const disconnect = () => {
-    clientRef.current?.deactivate();
-  };
-
-  const subscribe = () => {
-    clientRef.current?.subscribe(`/sub/rooms/${roomId}`, (message) => {
-      const getMessage = JSON.parse(message.body).content;
-      const getNickname = JSON.parse(message.body).nickname;
-
-      setChatMessages((_chatMessages) => [
-        ...(_chatMessages || []),
-        { nickname: getNickname, message: getMessage }
-      ]);
-    });
-  };
-
-  const publish = (message: string) => {
-    if (!clientRef.current || !clientRef.current.connected) {
-      return;
-    }
-
-    clientRef.current.publish({
-      destination: `/pub/messages/${roomId}`,
-      headers: {
-        accessToken
-      },
-      body: JSON.stringify({ content: message })
-    });
-
-    setMessage(''); // 메세지 초기화
-  };
 
   const scrollToBottom = () => {
     if (scrollRef && scrollRef.current)
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   };
 
-  useEffect(() => {
-    async function getRoomId() {
-      try {
-        const res = await chatApi.createChat(senderNickname);
-
-        let getRoomId, getSenderProfileImg, getReceiverProfileImg;
-        if (res.status === 200) {
-          getRoomId = res.data.roomId;
-
-          getSenderProfileImg = res.data.senderProfileImg;
-          getReceiverProfileImg = res.data.receiverProfileImg;
-        } else {
-          getRoomId = res.data.roomId;
-          getSenderProfileImg = res.data.senderProfileImg;
-          getReceiverProfileImg = res.data.receiverProfileImg;
-        }
-
-        setReceiverProfileImg(getReceiverProfileImg);
-        setSenderProfileImg(getSenderProfileImg);
-        setRoomId(getRoomId);
-
-        __setRoomId(getRoomId);
-      } catch (error) {
-        console.log(error, 'error');
-      }
-    }
-    getRoomId();
-
-    return () => disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (roomId) {
-      connect();
-    }
-  }, [roomId]);
+  const onScrollTo = (y: number) => {
+    if (scrollRef && scrollRef.current) scrollRef.current.scrollTop = y;
+  };
 
   useEffect(() => {
     scrollToBottom();
@@ -168,21 +71,17 @@ const Chat = () => {
     );
   }, [messages?.pages]);
 
-  const onFetchMessages = useCallback(() => {
-    setPrevScrollHeight(scrollRef.current?.scrollHeight);
-
-    fetchNextPage();
-  }, []);
-
-  const onScrollTo = (y: number) => {
-    if (scrollRef && scrollRef.current) scrollRef.current.scrollTop = y;
-  };
-
   useEffect(() => {
     if (inView && messages) {
       onFetchMessages();
     }
   }, [inView]);
+
+  const onFetchMessages = useCallback(() => {
+    setPrevScrollHeight(scrollRef.current?.scrollHeight);
+
+    fetchNextPage();
+  }, []);
 
   return (
     <Container>
@@ -266,13 +165,13 @@ const Chat = () => {
               onKeyPress={(e) =>
                 (e.target as HTMLInputElement).value &&
                 e.which === 13 &&
-                publish(message)
+                handlePublish(message)
               }
             />
             <MessageButton
               disabled={!isMessage}
               isMessage={isMessage}
-              onClick={() => publish(message)}
+              onClick={() => handlePublish(message)}
             >
               Send
             </MessageButton>

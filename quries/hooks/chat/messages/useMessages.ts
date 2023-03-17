@@ -30,7 +30,7 @@ const fetchMessages: TFetchMessages<TResponse<TMessages>> = async (
 };
 
 export function useMessages() {
-  const [__roomId, __setRoomId] = useState(null);
+  const [__roomId, __setRoomId] = useState<string | null>(null);
 
   const {
     data: messages,
