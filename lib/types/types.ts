@@ -85,6 +85,11 @@ export type TPost = {
   totalComment?: number;
 };
 
+export type TMyPosts = Pick<
+  TPost,
+  'postId' | 'title' | 'nickname' | 'thumbnailUrl'
+>[];
+
 export type TPosts = TPost[];
 
 // Comment

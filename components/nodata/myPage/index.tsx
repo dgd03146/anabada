@@ -1,11 +1,11 @@
 import React from 'react';
 import { FiInbox } from 'react-icons/fi';
-import { NoDataDiv } from './style';
+import { NoDataDiv } from '../style';
 
 type TNoDataMyPage = {
-  text: string;
-  meet: boolean;
-  post: boolean;
+  text?: string;
+  meet?: boolean;
+  post?: boolean;
 };
 
 export const NoDataMyPage = ({ text, meet, post }: TNoDataMyPage) => {

@@ -12,6 +12,7 @@ type TProps = {
 
 const FeedList = ({ type }: TProps) => {
   const router = useRouter();
+
   const handleBtnClick = (state: string) => {
     router.push({
       pathname: type === 'posts' ? '/my/posts' : '/my/meets',
