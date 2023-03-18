@@ -15,9 +15,9 @@ const toggleLike: TToggleLike = async ({
   isLiked,
   thunderPostId
 }) => {
-  const mutationFn = isLiked ? meetsApi.deleteLike : meetsApi.postLike;
+  const mutationFn = isLiked ? meetsApi.deleteMeetLike : meetsApi.meetLike;
   try {
-    await mutationFn(thunderPostId);
+    thunderPostId && (await mutationFn(thunderPostId));
     setIsLiked((prev) => !prev);
   } catch (error) {
     toast.error('북마크 저장에 실패하였습니다');
