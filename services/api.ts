@@ -1,11 +1,4 @@
-import {
-  TLogin,
-  TPosts,
-  TResponse,
-  TSignup,
-  TNotifications,
-  TCheckNotifications
-} from './../lib/types/types';
+import { TLogin, TSignup, TMeet } from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
 import axios from 'axios';
@@ -133,23 +126,25 @@ export const meetsApi = {
       `/meets/search?area=${area}&keyword=${keyword}&page=${pageParam}&size=10`
     ),
 
-  createMeetPost: (post) => api.post('/meets', post),
+  createMeetPost: (meet: TMeet) => api.post('/meets', meet),
 
-  editMeetPost: (thunderPostId, post) =>
-    api.put(`/meets/${thunderPostId}`, post),
+  editMeetPost: (thunderPostId: string, meet: TMeet) =>
+    api.put(`/meets/${thunderPostId}`, meet),
 
-  deleteMeetPost: (thunderPostId) => api.delete(`/meets/${thunderPostId}`),
+  deleteMeetPost: (thunderPostId: string) =>
+    api.delete(`/meets/${thunderPostId}`),
 
-  getMeetDetail: (thunderPostId) => api.get(`/meets/${thunderPostId}`),
+  getMeetDetail: (thunderPostId: string) => api.get(`/meets/${thunderPostId}`),
+  meetLike: (thunderPostId: string) => api.post(`/meetlikes/${thunderPostId}`),
+  deleteMeetLike: (thunderPostId: string) =>
+    api.delete(`/meetlikes/${thunderPostId}`),
 
-  postLike: (thunderPostId) => api.post(`/meetlikes/${thunderPostId}`),
-  deleteLike: (thunderPostId) => api.delete(`/meetlikes/${thunderPostId}`),
-
-  postRequest: (thunderPostId) =>
+  meetRequest: (thunderPostId: string) =>
     api.post(`/requests/${thunderPostId}
   `),
 
-  deleteRequest: (thunderPostId) => api.delete(`/requests/${thunderPostId}`)
+  deleteMeetRequest: (thunderPostId: string) =>
+    api.delete(`/requests/${thunderPostId}`)
 };
 
 // 채팅

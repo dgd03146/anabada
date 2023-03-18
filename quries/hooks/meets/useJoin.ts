@@ -21,7 +21,7 @@ const toggleJoin: TToggleJoin = async ({
     ? '참가를 취소하시겠습니까?'
     : '모임에 참가하시겠습니까?';
 
-  const apiCall = isJoined ? meetsApi.deleteRequest : meetsApi.postRequest;
+  const apiCall = isJoined ? meetsApi.deleteMeetRequest : meetsApi.meetRequest;
   const successMessage = isJoined
     ? '참가를 취소하였습니다'
     : '모임에 참가하였습니다';
@@ -29,7 +29,7 @@ const toggleJoin: TToggleJoin = async ({
   try {
     const result = window.confirm(confirmMessage);
     if (!result) return;
-    await apiCall(thunderPostId);
+    thunderPostId && (await apiCall(thunderPostId));
     setIsJoined((prev) => !prev);
     toast.success(successMessage);
   } catch (error) {
