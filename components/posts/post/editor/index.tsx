@@ -6,7 +6,7 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import '../../App.css';
-import { postApi } from '../../../services/api';
+import { postApi } from '../../../../services/api';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
 
@@ -48,11 +48,10 @@ const PostEditor = ({ setContent, editorRef }: TPostEditorProps) => {
         initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
         onChange={handleChangeInput}
         useCommandShortcut={true}
-        // colorSyntax 플러그인 적용
         plugins={[
           [
             colorSyntax,
-            // 기본 색상 preset 적용
+
             {
               preset: ['#1F2E3D', '#4c5864', '#ED7675']
             }

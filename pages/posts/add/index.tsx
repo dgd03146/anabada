@@ -23,7 +23,7 @@ import { toast } from 'react-toastify';
 import { ApiError } from 'next/dist/server/api-utils';
 import Image from 'next/image';
 import { Editor } from '@toast-ui/react-editor';
-import PostEditor from '../../../components/posts/editor';
+import PostEditor from '../../../components/posts/post/editor';
 import { uploadThumbnailImage } from '../../../lib/utils/uploadThubnailImage';
 import useSetPost from '../../../lib/hooks/post/useSetPost';
 
