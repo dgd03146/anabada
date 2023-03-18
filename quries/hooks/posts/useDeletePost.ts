@@ -22,6 +22,7 @@ const useDeletePost = () => {
         await queryClient.invalidateQueries([QueryKeys.myPostsList], {
           refetchType: 'all'
         });
+        toast.success('게시물이 삭제되었습니다.');
         router.push('/posts');
       } catch (err) {
         if (err instanceof ApiError) toast.error(err.message);

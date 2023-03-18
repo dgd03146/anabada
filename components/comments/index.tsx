@@ -16,8 +16,8 @@ import { FiInbox } from 'react-icons/fi';
 
 type TCommentsProps = {
   accessToken: string | null;
-  nickname: string;
-  profileImg: string;
+  nickname?: string;
+  profileImg?: string;
   post: TPost;
   postId: string;
 };
