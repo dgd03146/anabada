@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+
 import Meet from '../../../components/meets';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../components/loading';
@@ -28,7 +28,6 @@ const MeetsAll = () => {
     if (inView) {
       fetchNextPage();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   const onKeyPress = (e: TKeyEvent) => {

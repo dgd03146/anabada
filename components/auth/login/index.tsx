@@ -46,6 +46,7 @@ const Login = () => {
       // 토큰 저장
       // FIXME: Next 쿠키로 변경
       cookies.set('refreshToken', getResponse.headers.refreshtoken);
+
       localStorage.setItem('accessToken', getResponse.headers.authorization);
 
       // 유저 정보 받아오기

@@ -101,8 +101,10 @@ export const notificationsApi = {
   deleteNotification(notifiactionId: string) {
     return api.delete(`/notifications/${notifiactionId}`);
   },
-  checkNotifications() {
-    return api.get('/notifications');
+  checkNotifications(options?: { Authorization: string }) {
+    return api.get('/notifications', {
+      headers: options
+    });
   },
   readNotification(notificationId: string) {
     return api.put(`notifications/${notificationId}`);
