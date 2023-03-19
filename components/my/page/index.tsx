@@ -66,13 +66,13 @@ const MyPage = () => {
     };
     reader.readAsDataURL(image);
 
-    const profileImg = {
+    const updatedProfileImg = {
       profileImg: uploadUrl
     };
 
     const result = window.confirm('변경된 프로필 사진을 등록하시겠습니까?');
     if (result) {
-      await myApi.uploadProfile(profileImg);
+      await myApi.uploadProfile(updatedProfileImg);
     } else {
       const deleteImg = ref(storage, uploadUrl);
       deleteObject(deleteImg)

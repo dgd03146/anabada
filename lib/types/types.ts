@@ -29,6 +29,12 @@ export type TPostImg = {
   name: string;
 };
 
+type NamedBlob = Blob & { readonly name: string };
+type NamedUint8Array = Uint8Array & { readonly name: string };
+type NamedArrayBuffer = ArrayBuffer & { readonly name: string };
+
+export type ThumbnailFile = NamedBlob | NamedUint8Array | NamedArrayBuffer;
+
 export type TMeet = {
   thunderPostId: string;
   title: string;

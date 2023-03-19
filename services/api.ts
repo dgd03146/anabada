@@ -45,9 +45,6 @@ export const postApi = {
     return api.post('/posts/images', file);
   },
 
-  deleteImages(images) {
-    return api.delete('/images', images);
-  },
   getPosts(pageParam: number, areaSelected: string) {
     return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=6`);
   },
@@ -104,8 +101,10 @@ export const notificationsApi = {
   deleteNotification(notifiactionId: string) {
     return api.delete(`/notifications/${notifiactionId}`);
   },
-  checkNotifications() {
-    return api.get('/notifications');
+  checkNotifications(options?: { Authorization: string }) {
+    return api.get('/notifications', {
+      headers: options
+    });
   },
   readNotification(notificationId: string) {
     return api.put(`notifications/${notificationId}`);
@@ -171,7 +170,7 @@ export const myApi = {
   getMyMeets(filter: string, pageParam: number) {
     return api.get(`mymeets?filter=${filter}&page=${pageParam}&size=6`);
   },
-  uploadProfile(profileImg: string) {
-    return api.put('/profileimages', profileImg);
+  uploadProfile(updatedProfileImg: { profileImg?: string }) {
+    return api.put('/profileimages', updatedProfileImg);
   }
 };

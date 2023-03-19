@@ -1,12 +1,11 @@
 import Document, {
   DocumentContext,
-  Head,
   Html,
+  Head,
   Main,
   NextScript
 } from 'next/document';
 import React from 'react';
-
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -39,8 +38,8 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <head>
-          {/* <meta charSet="utf-8" />
+        <Head>
+          <meta charSet="utf-8" />
           <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link
@@ -58,8 +57,8 @@ export default class MyDocument extends Document {
           <meta
             property="og:description"
             content="모두의 서핑을 위한 커뮤니티"
-          /> */}
-        </head>
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

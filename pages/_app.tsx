@@ -1,6 +1,6 @@
 import '../styles/font.css';
 
-import { ReactElement, ReactNode, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
@@ -16,6 +16,11 @@ import {
 import { defaultQueryClientOptions } from '../quries/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
+import { Cookies } from 'react-cookie';
+import useUser from '../quries/hooks/user/useUser';
+import { useNotificationStomp } from '../lib/hooks/socket/useNotificationStomp';
+import { notificationsApi } from '../services/api';
+import withAuth from '../components/hoc/withAuth';
 
 export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<
   P,
@@ -30,9 +35,11 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+
   const [queryClient] = useState(
     () => new QueryClient({ defaultOptions: defaultQueryClientOptions })
   );
+
   return (
     <>
       <QueryClientProvider client={queryClient}>

@@ -18,6 +18,7 @@ import {
   passwordValidationRules
 } from '../../../lib/utils/formValidation';
 import { userApi } from '../../../services/api';
+import { QueryClient } from '@tanstack/react-query';
 
 type TFormValues = {
   email: string;
@@ -40,17 +41,21 @@ const Login = () => {
   // const dispatch = useDispatch();
   const cookies = new Cookies();
 
+  const queryClient = new QueryClient();
+
   const onSumbit = async (loginData: TUser) => {
     try {
       const getResponse = await userApi.login(loginData);
       // 토큰 저장
       // FIXME: Next 쿠키로 변경
       cookies.set('refreshToken', getResponse.headers.refreshtoken);
+
       localStorage.setItem('accessToken', getResponse.headers.authorization);
 
       // 유저 정보 받아오기
       const getAccessToken = localStorage.getItem('accessToken');
-      // FIXME: dispatch(userThunk(getAccessToken));
+      queryClient.setQueryData(['accessToken'], getAccessToken);
+
       router.push('/home');
       // FIXME: alert
       alert('로그인에 성공했습니다');
