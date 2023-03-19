@@ -40,8 +40,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     () => new QueryClient({ defaultOptions: defaultQueryClientOptions })
   );
 
-  // url이 my로 시작하거나 chat으로 시작하거나 notifications거나 add로 끝나거나 edit으로 끝나면 withAuth 적용
-
   return (
     <>
       <QueryClientProvider client={queryClient}>
