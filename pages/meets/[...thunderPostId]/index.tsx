@@ -31,7 +31,7 @@ const Meet = () => {
   const { user } = useUser();
 
   const nickname = user?.nickname;
-  const isCurrentUser = nickname === meet?.nickname;
+
   const thunderPostId = router.query.thunderPostId as string;
   const isEdit = thunderPostId[thunderPostId.length - 1] === 'edit';
 
@@ -39,6 +39,7 @@ const Meet = () => {
 
   const { meet, isLiked, setIsLiked, isJoined, setIsJoined } =
     useMeet(thunderPostId);
+  const isCurrentUser = nickname === meet?.nickname;
 
   useEffect(() => {
     // FIXME: useEffect에서 해줘야하나? Otpmistic UI 적용 고려

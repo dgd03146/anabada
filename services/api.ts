@@ -45,9 +45,6 @@ export const postApi = {
     return api.post('/posts/images', file);
   },
 
-  deleteImages(images) {
-    return api.delete('/images', images);
-  },
   getPosts(pageParam: number, areaSelected: string) {
     return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=6`);
   },
