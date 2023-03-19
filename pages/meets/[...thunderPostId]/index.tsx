@@ -22,20 +22,23 @@ import {
 } from './style';
 import MeetInfo from '../../../components/meets/meet/info';
 import MeetTopInfo from '../../../components/meets/meet/topInfo';
+import MeetAdd from '../add';
+import NoData from '../../../components/layout/noData';
 
 const Meet = () => {
   // TODO: NEXT.JS PRERENDERING 필요
   const router = useRouter();
-  const thunderPostId = router.query.thunderPostId as string;
-
-  const accessToken = localStorage.getItem('accessToken');
   const { user } = useUser();
-
-  const { meet, isLiked, setIsLiked, isJoined, setIsJoined } =
-    useMeet(thunderPostId);
 
   const nickname = user?.nickname;
   const isCurrentUser = nickname === meet?.nickname;
+  const thunderPostId = router.query.thunderPostId as string;
+  const isEdit = thunderPostId[thunderPostId.length - 1] === 'edit';
+
+  const accessToken = localStorage.getItem('accessToken');
+
+  const { meet, isLiked, setIsLiked, isJoined, setIsJoined } =
+    useMeet(thunderPostId);
 
   useEffect(() => {
     // FIXME: useEffect에서 해줘야하나? Otpmistic UI 적용 고려
@@ -45,44 +48,49 @@ const Meet = () => {
     }
   }, []);
 
-  // FIXME: Meet 데이터가 없다면 로딩 스피너를 보여주는 식으로.. suspense? 사용?
-  // FIXME: meet에다가 다 ? 붙이는건 별로 안 좋은 듯..
-  return (
-    <Container>
-      <Navigate text={'모임'} />
-      <MeetTopInfo
-        meet={meet}
-        accessToken={accessToken}
-        isCurrentUser={isCurrentUser}
-        nickname={nickname}
-      />
-      <ImageWrapper>
-        <img src={meet?.thumbnailUrl} alt="thumbnail" />
-      </ImageWrapper>
-      <AddressContainer>
-        <Image
-          src={'/assets/icons/address.svg'}
-          width={16}
-          height={16}
-          alt="address svg"
-        />
-        <p className="area">{meet?.area}</p>
-        <p>{meet?.address}</p>
-      </AddressContainer>
-      <MeetInfo meet={meet} />
-      <PostDescription>{meet?.content}</PostDescription>
-      {accessToken && nickname && isCurrentUser && (
-        <MeetButtons
+  if (isEdit) {
+    return <MeetAdd />;
+  } else {
+    if (!meet) {
+      return <NoData text="모임" meet={true} />;
+    }
+    return (
+      <Container>
+        <Navigate text={'모임'} />
+        <MeetTopInfo
           meet={meet}
-          isLiked={isLiked}
-          isJoined={isJoined}
-          setIsLiked={setIsLiked}
-          setIsJoined={setIsJoined}
+          accessToken={accessToken}
+          isCurrentUser={isCurrentUser}
+          nickname={nickname}
         />
-      )}
-      {meet?.members.length && <Members meet={meet} />}
-    </Container>
-  );
+        <ImageWrapper>
+          <img src={meet.thumbnailUrl} alt="thumbnail" />
+        </ImageWrapper>
+        <AddressContainer>
+          <Image
+            src={'/assets/icons/address.svg'}
+            width={16}
+            height={16}
+            alt="address svg"
+          />
+          <p className="area">{meet.area}</p>
+          <p>{meet.address}</p>
+        </AddressContainer>
+        <MeetInfo meet={meet} />
+        <PostDescription>{meet.content}</PostDescription>
+        {accessToken && nickname && isCurrentUser && (
+          <MeetButtons
+            meet={meet}
+            isLiked={isLiked}
+            isJoined={isJoined}
+            setIsLiked={setIsLiked}
+            setIsJoined={setIsJoined}
+          />
+        )}
+        {meet.members.length && <Members meet={meet} />}
+      </Container>
+    );
+  }
 };
 
 export default Meet;

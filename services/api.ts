@@ -171,7 +171,7 @@ export const myApi = {
   getMyMeets(filter: string, pageParam: number) {
     return api.get(`mymeets?filter=${filter}&page=${pageParam}&size=6`);
   },
-  uploadProfile(profileImg: string) {
-    return api.put('/profileimages', profileImg);
+  uploadProfile(updatedProfileImg: { profileImg?: string }) {
+    return api.put('/profileimages', updatedProfileImg);
   }
 };
