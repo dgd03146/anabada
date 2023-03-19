@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { AMENITY_CHECK } from '../../../constants/contstant';
 import { postApi } from '../../../services/api';
 import { AmenityInfo } from '../../../data/amenityinfo';
-import useCreatePost from '../../../quries/hooks/posts/useCreatePost';
+import useAddPost from '../../../quries/hooks/posts/useAddPost';
 import { TPost } from '../../../lib/types/types';
 import { flatten } from 'lodash';
 import { storage } from '../../../firebase/firebase';
@@ -46,7 +46,7 @@ const PostAdd = () => {
   const postId = router.query.postId as string;
   const flattenedAmenities = flatten(AmenityInfo);
 
-  const { onCreate } = useCreatePost();
+  const { onAdd } = useAddPost();
   useSetPost(setValue, setImgSrc, editorRef, postId);
 
   const handlePreviewImage = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +88,7 @@ const PostAdd = () => {
         amenity: amenity,
         thumbnailUrl: thumbnailUrl
       };
-      onCreate({ newPost, postId });
+      onAdd({ newPost, postId });
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);
     }

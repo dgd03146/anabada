@@ -11,6 +11,7 @@ import { ApiError } from 'next/dist/server/api-utils';
 import { useSetMeet } from '../../../lib/hooks/meet/useSetMeet';
 import { Categories } from '../../../components/common/categories';
 import { Container, ImageLabel } from './style';
+import { useAddMeet } from '../../../quries/hooks/meets/useAddMeet';
 
 export type TMeetWithThumbnailFile = Omit<TMeet, 'thumbnailUrl'> & {
   thumbnailUrl: ThumbnailFile[];
@@ -33,7 +34,7 @@ const MeetAdd = () => {
   const thunderPostId = router.query.thunderPostId as string;
   const { imgSrc, setImgSrc } = useSetMeet(thunderPostId, nickname, setValue);
 
-  const onAdd = useAddMeet();
+  const { onAdd } = useAddMeet();
 
   const handlePreviewImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files![0];

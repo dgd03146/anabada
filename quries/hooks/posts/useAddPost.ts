@@ -4,12 +4,12 @@ import { QueryKeys } from '../../key';
 import { useRouter } from 'next/router';
 import { postApi } from '../../../services/api';
 
-export type TSubmitPost = (params: {
+export type TAddPost = (params: {
   newPost: TPost;
   postId?: string;
 }) => Promise<void>;
 
-const createPost: TSubmitPost = async ({ newPost, postId }) => {
+const createPost: TAddPost = async ({ newPost, postId }) => {
   try {
     if (!postId) {
       await postApi.createPost(newPost);
@@ -22,11 +22,11 @@ const createPost: TSubmitPost = async ({ newPost, postId }) => {
   }
 };
 
-const useCreatePost = () => {
+const useAddPost = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate: onCreate } = useMutation(createPost, {
+  const { mutate: onAdd } = useMutation(createPost, {
     onSuccess: async () => {
       try {
         await queryClient.invalidateQueries([QueryKeys.posts]);
@@ -45,7 +45,7 @@ const useCreatePost = () => {
     }
   });
 
-  return { onCreate };
+  return { onAdd };
 };
 
-export default useCreatePost;
+export default useAddPost;
