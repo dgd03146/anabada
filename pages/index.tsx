@@ -16,7 +16,7 @@ const Home = () => {
 
   const cookies = new Cookies();
   const refreshToken = cookies.get('refreshToken');
-  const accessToken = queryClient.getQueryData([QueryKeys.accessToken]);
+  const accessToken = queryClient.getQueryData<string>([QueryKeys.accessToken]);
 
   useEffect(() => {
     // 로그인 한 유저가 아니면 유저정보를 요청하지 않음
