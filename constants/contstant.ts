@@ -28,6 +28,21 @@ export const AMENITY_CHECK = {
   sleep: false
 };
 
+export const LOGIN_MESSAGE = {
+  SUCCESS_LOGIN: '로그인에 성공했습니다.',
+  CHECK_EMAIL_PASSWORD: '이메일과 비밀번호를 확인해주세요'
+};
+
+export const EMAIL_MESSAGE = {
+  INPUT_EMAIL: '이메일을 입력해주세요.',
+  INVALID_EMAIL_FORMAT: '형식에 맞게 메일 주소를 입력하세요.'
+};
+
+export const PASSWORD_MESSAGE = {
+  INPUT_PASSWORD: '비밀번호를 입력해주세요.'
+};
+
+// 분기하기
 export const TOAST_MESSAGE = {
   EMAIL_CHECKED_MESSAGE: '이메일이 확인되었습니다. 계속 진행해주세요!',
   EMAIL_ALREADY_TAKEN: '존재하는 이메일 입니다!',

@@ -1,7 +1,9 @@
+import { QueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React, { useEffect, ComponentType } from 'react';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-toastify';
+import { QueryKeys } from '../../../quries/key';
 
 const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
   const cookies = new Cookies();
@@ -15,7 +17,10 @@ const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
     pathname.endsWith('/add') ||
     pathname.endsWith('/edit');
 
-  const accessToken = localStorage.getItem('accessToken');
+  const queryClient = new QueryClient();
+
+  const accessToken = queryClient.getQueryData([QueryKeys.accessToken]);
+
   const refreshToken = cookies.get('refreshToken');
 
   const isAuthenticated = () => {

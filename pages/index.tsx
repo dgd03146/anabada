@@ -7,13 +7,16 @@ import { useNotificationStomp } from '../lib/hooks/socket/useNotificationStomp';
 import useUser from '../quries/hooks/user/useUser';
 import { notificationsApi } from '../services/api';
 import { Cookies } from 'react-cookie';
+import { QueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../quries/key';
 
 const Home = () => {
+  const queryClient = new QueryClient();
   const [picker, setPicker] = useState(PICKER);
 
   const cookies = new Cookies();
   const refreshToken = cookies.get('refreshToken');
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = queryClient.getQueryData([QueryKeys.accessToken]);
 
   useEffect(() => {
     // 로그인 한 유저가 아니면 유저정보를 요청하지 않음

@@ -1,4 +1,7 @@
 export const QueryKeys = {
+  // accesstoken
+  accessToken: 'accessToken',
+
   // 유저
   user: 'user',
 

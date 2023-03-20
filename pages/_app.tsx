@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     () => new QueryClient({ defaultOptions: defaultQueryClientOptions })
   );
 
+  // TODO: withAuthWrapper
   return (
     <>
       <QueryClientProvider client={queryClient}>
