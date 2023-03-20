@@ -5,10 +5,10 @@ export const LoginWelcome = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    img {
+    /* img {
       height: 4.93875rem;
       width: 13rem;
-    }
+    } */
   }
 `;
 

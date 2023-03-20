@@ -19,6 +19,15 @@ import {
 } from '../../../lib/utils/formValidation';
 import { userApi } from '../../../services/api';
 import { QueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { QueryKeys } from '../../../quries/key';
+import {
+  EMAIL_MESSAGE,
+  LOGIN_MESSAGE,
+  PASSWORD_MESSAGE
+} from '../../../constants/contstant';
+import Image from 'next/image';
+import useUser from '../../../quries/hooks/user/useUser';
 
 type TFormValues = {
   email: string;
@@ -26,8 +35,6 @@ type TFormValues = {
 };
 
 const Login = () => {
-  // FIXME: 모달을 만들자
-  // const { alertHandler } = useOutletContext() as TOutletContext;
   const {
     register,
     handleSubmit,
@@ -38,60 +45,50 @@ const Login = () => {
   });
 
   const router = useRouter();
-  // const dispatch = useDispatch();
   const cookies = new Cookies();
-
   const queryClient = new QueryClient();
 
   const onSumbit = async (loginData: TUser) => {
     try {
       const getResponse = await userApi.login(loginData);
-      // 토큰 저장
-      // FIXME: Next 쿠키로 변경
+      // Save token
       cookies.set('refreshToken', getResponse.headers.refreshtoken);
+      queryClient.setQueryData(
+        [QueryKeys.accessToken],
+        getResponse.headers.authorization
+      );
 
-      localStorage.setItem('accessToken', getResponse.headers.authorization);
-
-      // 유저 정보 받아오기
-      const getAccessToken = localStorage.getItem('accessToken');
-      queryClient.setQueryData(['accessToken'], getAccessToken);
+      // Get user information
+      // TODO: accesstoken으로 유저 정보 받아오는것 같은데?
+      const { user } = useUser();
 
       router.push('/home');
-      // FIXME: alert
-      alert('로그인에 성공했습니다');
-      // return alertHandler('로그인에 성공했습니다!');
+      toast.success(LOGIN_MESSAGE.SUCCESS_LOGIN);
     } catch (err) {
-      console.log(err);
-      // FIXME: alert
-      alert('이메일과 비밀번호를 확인해주세요');
-      // return alertHandler('이메일과 비밀번호를 확인해주세요!');
+      toast.error(LOGIN_MESSAGE.CHECK_EMAIL_PASSWORD);
     }
   };
   const onError = () => {
-    // errors type에 따라 alertHandler 핸들
-    // if (errors.email?.type === 'required') {
-    //   alertHandler('이메일을 입력해주세요.');
-    // } else if (errors.email?.type === 'pattern') {
-    //   alertHandler('형식에 맞게 메일 주소를 입력하세요.');
-    // } else if (errors.password?.type === 'required') {
-    //   alertHandler('비밀번호를 입력해주세요.');
-    // }
-  };
-
-  // 로그인한 상태에서 접근 시 차단  FIXME: 고차 컴포넌트로 바꾸기
-  useEffect(() => {
-    if (localStorage.getItem('accessToken') && cookies.get('refreshToken')) {
-      // alertHandler('비정상적인 접근입니다.');
-      router.push('/home');
+    if (errors.email?.type === 'required') {
+      toast.error(EMAIL_MESSAGE.INPUT_EMAIL);
+    } else if (errors.email?.type === 'pattern') {
+      toast.error(EMAIL_MESSAGE.INVALID_EMAIL_FORMAT);
+    } else if (errors.password?.type === 'required') {
+      toast.error(PASSWORD_MESSAGE.INPUT_PASSWORD);
     }
-  }, []);
+  };
 
   return (
     <>
       <FormWrapper>
         <LoginWelcome>
           <div>
-            <img src="/assets/logo_big.svg" alt=""></img>
+            <Image
+              src={'/assets/icons/logo_big.svg'}
+              width={79}
+              height={208}
+              alt="Logo"
+            />
           </div>
         </LoginWelcome>
         <FormDiv>
