@@ -1,9 +1,18 @@
 import { TLogin, TSignup, TMeet } from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
-import axios from 'axios';
-
+import axios, { AxiosRequestHeaders } from 'axios';
+import { QueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../quries/key';
+import { AxiosRequestConfig } from 'axios';
+import { Cookies } from 'react-cookie';
 // TODO:  API별로 관심사 분리하기
+
+interface RequestConfig extends AxiosRequestConfig<any> {
+  headers?: AxiosRequestHeaders;
+}
+
+const queryClient = new QueryClient();
 
 export const SOCKET_SERVER_URL = `https://${process.env.NEXT_PUBLIC_API_SERVER}/socket`;
 
@@ -14,6 +23,64 @@ export const api = axios.create({
     accept: 'application/json,'
   }
 });
+
+api.interceptors.request.use((config: RequestConfig) => {
+  const accessToken = queryClient.getQueryData<string | null>([QueryKeys.user]);
+
+  if (config.headers && accessToken) {
+    config.headers['Authorization'] = accessToken;
+  }
+
+  return config;
+});
+
+api.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  async (err) => {
+    const {
+      config,
+      response: { status }
+    } = err;
+    // 토큰 만료됐을 때 status
+    if (status === 500) {
+      // userAxios를 쓰는 경우인데 리프레시 토큰 조차 없는 경우
+      const cookies = new Cookies();
+      if (cookies.get('refreshToken')) {
+        return err;
+      }
+
+      // 이전 작업에 대한 config저장
+      const originalReq = config;
+      // Bearer제거 작업
+      const getRefresh = cookies.get('refreshToken').split(' ')[1];
+      const accessToken = queryClient.getQueryData<string | null>([
+        QueryKeys.user
+      ]);
+      const getAccess = accessToken && accessToken.split('')[1];
+
+      // refresh요청
+      const response = await api.post(
+        '/reissue',
+        {},
+        {
+          headers: {
+            AccessToken: getAccess as string,
+            RefreshToken: getRefresh
+          }
+        }
+      );
+      const newAccess = response.headers.authorization;
+      queryClient.setQueryData<string | null>([QueryKeys.user], newAccess);
+
+      // 새로 발급 받은 토큰으로 config 변경
+      originalReq.headers.Authorization = newAccess;
+      return axios(originalReq);
+    }
+    return err;
+  }
+);
 
 export const userApi = {
   login(loginData: TLogin) {
