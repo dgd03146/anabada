@@ -6,54 +6,75 @@ const GlobalStyle = createGlobalStyle`
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	
-	font: inherit;
-	vertical-align: baseline;
-	
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-html {
-	font-family: 'Spoqa Han Sans Neo','Noto Sans KR', 'sans-serif'; 
-	font-size: 14px;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+*{
+      box-sizing: border-box;
+     
+      
+   }
+
+ body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Pretendard-Regular';
+
+ }
+
+ a, div {
+   font-family: 'Pretendard-Regular';
+    text-decoration: none;
+    color:inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+ 
+  }
+  a{
+    cursor: pointer;
+  }
+
+  button{
+   cursor: pointer;
+   outline: none;
+   border: none;
+   background-color: transparent;
+   font-family: 'Pretendard-Regular';
+  }
+  
+  ul{
+   padding-left: 0;
+   list-style: none;
+  }
+  
+  h2,p{
+    font-family: 'Pretendard-Regular';
+   margin: 0;
+  }
+
+
+
+  select{
+   border: none;
+   outline: none;
+   font-family: 'Pretendard-Regular';
+  }
+
+  input{
+   border: none;
+   font-family: 'Pretendard-Regular';
+   
+  }
+  input:focus-visible {
+      outline: 0.01rem solid #007aff;
+     
+    }
+    span{
+      font-family: 'Pretendard-Regular';
+    } 
+    textarea{
+      font-family: 'Pretendard-Regular';
+    }
+    pre{
+      font-family: 'Pretendard-Regular';
+    }
+
 `;
 
 export default GlobalStyle;

@@ -17,7 +17,7 @@ export const SearchForm = styled.div<SearchFormProps>`
   }
 `;
 
-export const SearchWrapper = styled.form`
+export const SearchWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

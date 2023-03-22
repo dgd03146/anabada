@@ -2,7 +2,6 @@ import { ChangeEvent, useState, MouseEvent, FormEvent } from 'react';
 import { useRef } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import React from 'react';
-import { useSpots } from '../../../quries/hooks/spots/useSpots';
 import { TMapProps } from '..';
 import { Beaches } from '../../../data/beaches';
 import {
@@ -13,9 +12,7 @@ import {
 } from './style';
 import { toast } from 'react-toastify';
 
-const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker'>) => {
-  const spots = useSpots();
-
+const MapSearch = ({ setPicker, spots }: Omit<TMapProps, 'picker'>) => {
   const inputRef = useRef(null);
   const [inputName, setInputName] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>();

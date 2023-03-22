@@ -23,10 +23,10 @@ const AmentyInfo = ({ amenities }: TAmenityProps) => {
             case 5:
               return <li key="accommodation">🏨 숙박시설이 있어요</li>;
             default:
-              return null;
+              return <li></li>;
           }
         } else {
-          return null;
+          return <li></li>;
         }
       })}
     </ul>
