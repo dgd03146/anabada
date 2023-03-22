@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Loading = () => {
   return (
     <Container>
-      <img src={'/assets/waterwave.gif'} alt="" />
+      <img src={'/assets/illustrations/waterwave.gif'} alt="" />
     </Container>
   );
 };

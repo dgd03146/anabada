@@ -4,25 +4,28 @@ import { useQuery } from '@tanstack/react-query';
 import { userApi } from '../../../services/api';
 
 import { toast } from 'react-toastify';
-import { ApiError } from 'next/dist/server/api-utils';
 
 const getUserData = async () => {
   try {
     const response = await userApi.getUser();
     return response.data;
   } catch (err) {
-    if (err instanceof ApiError) toast.error(err.message);
+    toast.error('유저 정보를 불러오지 못 했습니다', {
+      toastId: 'userError'
+    });
   }
 };
 
 const useUser = () => {
   const { data: user } = useQuery([QueryKeys.user], getUserData, {
-    onError: (err) => {
-      if (err instanceof ApiError) toast.error(err.message);
+    onError: () => {
+      toast.error('유저 정보를 불러오지 못 했습니다', {
+        toastId: 'userError'
+      });
     }
   });
 
-  return { user };
+  return user;
 };
 
 export default useUser;
