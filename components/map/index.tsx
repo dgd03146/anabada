@@ -1,5 +1,5 @@
 import { MarkerClusterer } from 'react-kakao-maps-sdk';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { TSpot } from '../../lib/types/types';
 import { useSpots } from '../../quries/hooks/spots/useSpots';
 import Image from 'next/image';
@@ -16,15 +16,30 @@ import {
 } from './style';
 import checkWeather from '../../lib/utils/checkWeather';
 import ExtraInfo from './extraInfo';
+import Script from 'next/script';
+import Head from 'next/head';
+
+// declare global {
+//   interface Window {
+//     kakao: any;
+//   }
+// }
+
+// const { kakao } = window;
+
+// const REACT_APP_MAP_KEY = process.env.REACT_APP_MAP_KEY;
 
 export type TMapProps = {
   picker: TSpot;
   setPicker: Dispatch<SetStateAction<TSpot>>;
+  spots: TSpot[];
 };
 
 const KakaoMap = ({ picker, setPicker }: TMapProps) => {
   const spots = useSpots();
   const isBeach = picker.beachId === -1;
+  const latitude = picker.x;
+  const longitude = picker.y;
 
   const handlePicker = (pickerInfo: TSpot) => {
     setPicker((prev) => {
@@ -35,7 +50,7 @@ const KakaoMap = ({ picker, setPicker }: TMapProps) => {
   return (
     <>
       <MapWrapper
-        center={{ lat: picker.x, lng: picker.y }}
+        center={{ lat: latitude, lng: longitude }}
         level={isBeach ? 13 : 5}
       >
         <MarkerClusterer
@@ -94,7 +109,7 @@ const KakaoMap = ({ picker, setPicker }: TMapProps) => {
             );
           })}
         </MarkerClusterer>
-        {isBeach && (
+        {!isBeach && (
           <PlaceInfo>
             <ExtraInfoWrapper>
               <InfoTitle picker={picker}>
@@ -103,7 +118,7 @@ const KakaoMap = ({ picker, setPicker }: TMapProps) => {
                 </div>
                 <ExtraInfoContainer>
                   <div>
-                    <img src="/weatherIcons/map_pin.svg" alt=""></img>
+                    <img src="/assets/weatherIcons/map_pin.svg" alt=""></img>
                   </div>
                   <div>
                     <span>{picker.beachName}</span>

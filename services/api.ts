@@ -5,10 +5,10 @@ import axios from 'axios';
 
 // TODO:  API별로 관심사 분리하기
 
-export const SOCKET_SERVER_URL = `https://${process.env.REACT_APP_API_SERVER}/socket`;
+export const SOCKET_SERVER_URL = `https://${process.env.NEXT_PUBLIC_API_SERVER}/socket`;
 
 export const api = axios.create({
-  baseURL: `https://${process.env.REACT_APP_API_SERVER}/api`,
+  baseURL: `https://${process.env.NEXT_PUBLIC_API_SERVER}/api`,
   headers: {
     'content-type': 'application/json;charset=UTF-8',
     accept: 'application/json,'
@@ -38,7 +38,11 @@ export const userApi = {
   }
 };
 
-export const spotsApi = {};
+export const spotsApi = {
+  getSpots() {
+    return api.get('/beach');
+  }
+};
 
 export const postApi = {
   uploadImages(file: FormData) {

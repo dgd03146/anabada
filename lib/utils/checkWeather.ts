@@ -7,7 +7,7 @@ const checkWeather = (sky: string, pty: string) => {
     if (Number(sky) === 1) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/clear_night.svg';
+          return '/assets/weatherIcons/clear_night.svg';
         default:
           return;
       }
@@ -16,11 +16,11 @@ const checkWeather = (sky: string, pty: string) => {
     else if (Number(sky) === 3) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/cloudy_night_normal.svg';
+          return '/assets/weatherIcons/cloudy_night_normal.svg';
         case 1:
-          return '/weatherIcons/cloudy_night_rain.svg';
+          return '/assets/weatherIcons/cloudy_night_rain.svg';
         case 3:
-          return '/weatherIcons/cloudy_night_snow.svg';
+          return '/assets/weatherIcons/cloudy_night_snow.svg';
         default:
           return;
       }
@@ -29,13 +29,13 @@ const checkWeather = (sky: string, pty: string) => {
     else if (Number(sky) === 4) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/rainy_normal.svg';
+          return '/assets/weatherIcons/rainy_normal.svg';
         case 1:
-          return '/weatherIcons/rainy_rain.svg';
+          return '/assets/weatherIcons/rainy_rain.svg';
         case 2:
-          return '/weatherIcons/rainy_snowandrain.svg';
+          return '/assets/weatherIcons/rainy_snowandrain.svg';
         case 3:
-          return '/weatherIcons/rainy_snow.svg';
+          return '/assets/weatherIcons/rainy_snow.svg';
         default:
           return;
       }
@@ -46,7 +46,7 @@ const checkWeather = (sky: string, pty: string) => {
     if (Number(sky) === 1) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/clear_day.svg';
+          return '/assets/weatherIcons/clear_day.svg';
         default:
           return;
       }
@@ -55,11 +55,11 @@ const checkWeather = (sky: string, pty: string) => {
     else if (Number(sky) === 3) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/cloudy_day_normal.svg';
+          return '/assets/weatherIcons/cloudy_day_normal.svg';
         case 1:
-          return '/weatherIcons/cloudy_day_rain.svg';
+          return '/assets/weatherIcons/cloudy_day_rain.svg';
         case 3:
-          return '/weatherIcons/rainy_snow.svg';
+          return '/assets/weatherIcons/rainy_snow.svg';
         default:
           return;
       }
@@ -68,13 +68,13 @@ const checkWeather = (sky: string, pty: string) => {
     else if (Number(sky) === 4) {
       switch (Number(pty)) {
         case 0:
-          return '/weatherIcons/rainy_normal.svg';
+          return '/assets/weatherIcons/rainy_normal.svg';
         case 1:
-          return '/weatherIcons/rainy_rain.svg';
+          return '/assets/weatherIcons/rainy_rain.svg';
         case 2:
-          return '/weatherIcons/rainy_snowandrain.svg';
+          return '/assets/weatherIcons/rainy_snowandrain.svg';
         case 3:
-          return '/weatherIcons/rainy_snow.svg';
+          return '/assets/weatherIcons/rainy_snow.svg';
         default:
           return;
       }
