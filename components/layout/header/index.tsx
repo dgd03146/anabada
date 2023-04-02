@@ -16,7 +16,7 @@ import {
   NotificationContainer
 } from './style';
 import useUser from '../../../quries/hooks/user/useUser';
-import { useNotificationStomp } from '../../../lib/hooks/socket/useNotificationStomp';
+import { useStompNotifications } from '../../../lib/hooks/socket/useStompNotifications';
 
 // type THeaderProps = {
 //   notifications: TCheckNotifications;
@@ -25,7 +25,7 @@ import { useNotificationStomp } from '../../../lib/hooks/socket/useNotificationS
 const Header = () => {
   const { user } = useUser();
 
-  const { notificationsBadge } = useNotificationStomp(user?.userId!);
+  const { notificationsBadge } = useStompNotifications(user?.userId!);
 
   const router = useRouter();
   const { pathname } = router;

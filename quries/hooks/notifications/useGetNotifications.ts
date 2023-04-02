@@ -1,7 +1,7 @@
-import { TOAST_MESSAGE } from './../../../constants/contstant';
-import { TResponse, TNotifications } from './../../../lib/types/types';
+import { TOAST_MESSAGE } from '../../../constants/contstant';
+import { TResponse, TNotifications } from '../../../lib/types/types';
 import { ApiError } from 'next/dist/server/api-utils';
-import { QueryKeys } from './../../key';
+import { QueryKeys } from '../../key';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { notificationsApi } from '../../../services/api';
 import { toast } from 'react-toastify';
@@ -27,7 +27,7 @@ const fetchNotifications: TFetchNotifications<
   }
 };
 
-const useNotifications = () => {
+const useGetNotifications = () => {
   const {
     isSuccess,
     data: notifications,
@@ -50,4 +50,4 @@ const useNotifications = () => {
   return { notifications, hasNextPage, fetchNextPage, isSuccess };
 };
 
-export default useNotifications;
+export default useGetNotifications;

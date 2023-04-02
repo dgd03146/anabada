@@ -11,7 +11,7 @@ let stompClient: CompatClient;
 let isConnected = false;
 const subscriptions: { [key: string]: StompSubscription } = {};
 
-export const useStomp = (url: string, callback?: () => void) => {
+export const useWebSocketStomp = (url: string, callback?: () => void) => {
   const connect = useCallback(() => {
     if (!socketClient) {
       socketClient = new SockJS(url);

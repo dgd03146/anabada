@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PICKER } from '../constants/contstant';
 import MapSearch from '../components/map/search';
 import KakaoMap from '../components/map';
-import { useNotificationStomp } from '../lib/hooks/socket/useNotificationStomp';
+import { useStompNotifications } from '../lib/hooks/socket/useStompNotifications';
 import useUser from '../quries/hooks/user/useUser';
 import { notificationsApi } from '../services/api';
 import { Cookies } from 'react-cookie';
@@ -36,7 +36,7 @@ const Home = () => {
   // FIXME: enabled 옵션 줘야할 듯?
   const user = useUser();
 
-  const { setNotificationsBadge } = useNotificationStomp(user?.userId || '');
+  const { setNotificationsBadge } = useStompNotifications(user?.userId || '');
 
   // FIXME: 제대로 동작할지? notification에서 해야하지 않나
   useEffect(() => {
