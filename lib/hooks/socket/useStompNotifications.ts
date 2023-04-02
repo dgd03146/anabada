@@ -1,14 +1,14 @@
-import { TNotification } from './../../types/types';
+import { TNotification } from '../../types/types';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useStomp } from './useStomp';
+import { useWebSocketStomp } from './useWebSocketStomp';
 import { notificationsApi, SOCKET_SERVER_URL } from '../../../services/api';
 
 const socketServerURL = SOCKET_SERVER_URL;
 
-export const useNotificationStomp = (userId: string) => {
+export const useStompNotifications = (userId?: string) => {
   const { subscribe, isConnected, unsubscribe, disconnect } =
-    useStomp(socketServerURL);
+    useWebSocketStomp(socketServerURL);
 
   // 알림 뱃지가 있는지 state
   const [notificationsBadge, setNotificationsBadge] = useState({
@@ -34,7 +34,7 @@ export const useNotificationStomp = (userId: string) => {
   }, [userId, isConnected]);
 
   const unsubscribeNotification = useCallback(() => {
-    unsubscribe(notificationsApi.topicUrl(userId));
+    userId && unsubscribe(notificationsApi.topicUrl(userId));
   }, []);
 
   return {

@@ -6,36 +6,29 @@ import NoData from '../../components/layout/noData';
 import React from 'react';
 import { useInView } from 'react-intersection-observer/useInView';
 import useDeleteAllnotifications from '../../quries/hooks/notifications/useDeleteAllnotifications';
-import useNotifications from '../../quries/hooks/notifications/useNotifications';
+import useGetNotifications from '../../quries/hooks/notifications/useGetNotifications';
 import useUser from '../../quries/hooks/user/useUser';
-import { useNotificationStomp } from '../../lib/hooks/socket/useNotificationStomp';
+import { useStompNotifications } from '../../lib/hooks/socket/useStompNotifications';
 import {
   Container,
   NotiAllDelete,
   NotificationContainer,
   NotificationWrapper
 } from './style';
+import useFetchOnScroll from '../../lib/hooks/notification/usefetchOnscroll';
 
 const Notifications = () => {
-  const { ref, inView } = useInView();
-
   const { user } = useUser();
-  // fetcher
+  const userId = user && user.userId;
   const { notifications, hasNextPage, fetchNextPage, isSuccess } =
-    useNotifications();
-
+    useGetNotifications();
   const { onDelteAllNotifications } = useDeleteAllnotifications();
-
-  const { setNotificationsBadge } = useNotificationStomp(user?.userId!);
-
-  useEffect(() => {
-    setNotificationsBadge((prev) => {
-      return { ...prev, isBadge: true };
-    });
-    if (inView) {
-      fetchNextPage();
-    }
-  }, [inView, notifications]);
+  const { setNotificationsBadge } = useStompNotifications(userId);
+  const { ref } = useFetchOnScroll({
+    notifications,
+    fetchNextPage,
+    setNotificationsBadge
+  });
 
   const handleAllDelete = () => {
     const res = window.confirm('전체 알림을 삭제하시겠습니까?');
