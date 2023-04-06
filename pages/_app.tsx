@@ -16,6 +16,7 @@ import {
 import { defaultQueryClientOptions } from '../quries/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
+import Layout from '../components/layout';
 
 export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<
   P,
@@ -29,8 +30,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  // const getLayout = Component.getLayout ?? ((page) => page);
-
+  const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
   const [queryClient] = useState(() => new QueryClient());
 
   // TODO: withAuthWrapper
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <Hydrate state={pageProps.dehydratedState}>
           <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <Component {...pageProps} />
+            {getLayout(<Component {...pageProps} />)}
             <ToastContainer />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
