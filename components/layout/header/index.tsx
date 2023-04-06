@@ -17,10 +17,7 @@ import {
 } from './style';
 import useUser from '../../../quries/hooks/user/useUser';
 import { useStompNotifications } from '../../../lib/hooks/socket/useStompNotifications';
-
-// type THeaderProps = {
-//   notifications: TCheckNotifications;
-// };
+import Image from 'next/image';
 
 const Header = () => {
   const { user } = useUser();
@@ -38,40 +35,40 @@ const Header = () => {
   const { profileImg } = user || {};
 
   // scroll event handler
-  // const handleScroll = () => {
-  //   const scrollY = window.scrollY ?? 0;
-  //   const visualViewport = window.visualViewport;
-  //   const scrollHeight = document.getElementById('root')?.scrollHeight ?? 0;
+  const handleScroll = () => {
+    const scrollY = window.scrollY ?? 0;
+    const visualViewport = window.visualViewport;
+    const scrollHeight = document.getElementById('root')?.scrollHeight ?? 0;
 
-  //   setValueY((prev) => {
-  //     const scrollDiff = prev - scrollY;
-  //     const isScrollingUp = scrollDiff > 0;
-  //     const isScrollingDown = scrollDiff < 0;
+    setValueY((prev) => {
+      const scrollDiff = prev - scrollY;
+      const isScrollingUp = scrollDiff > 0;
+      const isScrollingDown = scrollDiff < 0;
 
-  //     if (scrollY < 20) {
-  //       gapY.current = 0;
-  //     } else if (scrollHeight <= scrollY + (visualViewport?.height ?? 0) + 20) {
-  //       gapY.current = -50;
-  //     } else if (
-  //       (isScrollingUp && gapY.current >= 0) ||
-  //       (isScrollingDown && gapY.current <= -50)
-  //     ) {
-  //       timer.current = null;
-  //     } else {
-  //       gapY.current += Math.abs(scrollDiff) * (isScrollingUp ? 1 : -1);
-  //       gapY.current = Math.min(0, Math.max(-50, gapY.current));
-  //       timer.current = null;
-  //     }
+      if (scrollY < 20) {
+        gapY.current = 0;
+      } else if (scrollHeight <= scrollY + (visualViewport?.height ?? 0) + 20) {
+        gapY.current = -50;
+      } else if (
+        (isScrollingUp && gapY.current >= 0) ||
+        (isScrollingDown && gapY.current <= -50)
+      ) {
+        timer.current = null;
+      } else {
+        gapY.current += Math.abs(scrollDiff) * (isScrollingUp ? 1 : -1);
+        gapY.current = Math.min(0, Math.max(-50, gapY.current));
+        timer.current = null;
+      }
 
-  //     return scrollY;
-  //   });
-  // };
+      return scrollY;
+    });
+  };
 
-  // // scroll event binding
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => window.removeEventListener('scroll', handleScroll);
-  // }, []);
+  // scroll event binding
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -79,7 +76,12 @@ const Header = () => {
         <MainHeader pathname={pathname}>
           <Link href="/home">
             <div>
-              <img src="/assets/logo_small.svg" alt=""></img>
+              <Image
+                src="/assets/icons/logo_small.svg"
+                alt="Logo"
+                width={100}
+                height={100}
+              />
             </div>
           </Link>
           <div className="header__user">

@@ -16,6 +16,7 @@ import {
   NotificationWrapper
 } from './style';
 import useFetchOnScroll from '../../lib/hooks/notification/usefetchOnscroll';
+import WithoutLayout from '../../components/hoc/withoutLayout';
 
 const Notifications = () => {
   const { user } = useUser();
@@ -75,4 +76,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default WithoutLayout(Notifications);

@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import { TInputChangeEvent } from '../../../lib/types/types';
 import useUser from '../../../quries/hooks/user/useUser';
 import useChat from '../../../lib/hooks/socket/useChat';
+import WithoutLayout from '../../../components/hoc/withoutLayout';
 
 const Chat = () => {
   const router = useRouter();
@@ -182,7 +183,7 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default WithoutLayout(Chat);
 
 const Container = styled.div`
   /* position: relative; */

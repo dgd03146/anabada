@@ -9,6 +9,7 @@ import Loading from '../../layout/Loading';
 import NoData from '../../layout/NoData';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../../react-query/constants';
+import WithoutLayout from '../../../components/hoc/withoutLayout';
 
 const ChatRoom = () => {
   const navigate = useNavigate();
@@ -143,4 +144,4 @@ const LeftBox = styled.div`
   }
 `;
 
-export default ChatRoom;
+export default WithoutLayout(ChatRoom);
