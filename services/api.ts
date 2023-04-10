@@ -89,12 +89,12 @@ export const userApi = {
   signup(signupData: TSignup) {
     return api.post('users/signup', signupData);
   },
-  emailValidation(email: string) {
+  emailValidation(email?: string) {
     return api.post(`users/validation/email`, {
       email
     });
   },
-  nicknameValidation(nickname: string) {
+  nicknameValidation(nickname?: string) {
     return api.post(`users/validation/nickname`, {
       nickname
     });

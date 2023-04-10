@@ -38,4 +38,5 @@ export const ErrorSpan = styled.span`
   font-size: 0.875rem;
   color: #ff3b30;
   margin-bottom: 0.5rem;
+  white-space: nowrap;
 `;

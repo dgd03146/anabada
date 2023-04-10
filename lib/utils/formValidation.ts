@@ -4,7 +4,7 @@ export const emailValidationRules = {
 };
 
 export const passwordValidationRules = {
-  required: '비밀번호를 입력해주세요!',
+  required: true,
   pattern:
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+])[A-Za-z0-9!@#$%^&*+]{8,20}$/,
   minLength: {
