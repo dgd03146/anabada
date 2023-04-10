@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { TSignupProps } from '..';
-import FormInput from '../../../common/formInput';
+import { FormInput } from '../../style';
 import { ErrorSpan, InputName } from '../style';
 import NicknameValidation from './nicknameValidation';
 

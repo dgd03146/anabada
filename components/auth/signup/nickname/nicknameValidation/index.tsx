@@ -51,7 +51,6 @@ const NicknameValidation = ({
 
   return (
     <NicknameValidationContainer
-      className="login__wrapper-verification login__wrapper-nickname__verification"
       onClick={handleNicknameValidation}
       nickname={nickname}
     >

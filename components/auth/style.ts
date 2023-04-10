@@ -1,3 +1,10 @@
+import {
+  FieldError,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  UseFormRegister
+} from 'react-hook-form';
 import styled from 'styled-components';
 
 export const FormWrapper = styled.div`
@@ -33,4 +40,28 @@ export const FormBtn = styled.button`
   &:active {
     background-color: #026add;
   }
+`;
+
+export type TInputProps = {
+  name: Path<FieldValues>;
+  rules?: RegisterOptions;
+  errors?: FieldError;
+  register?: UseFormRegister<FieldValues>;
+} & React.InputHTMLAttributes<HTMLInputElement>;
+
+export const FormInput = styled.input<TInputProps>`
+  margin-bottom: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #d1d1d6;
+  align-items: flex-start;
+  padding: 12px 10px;
+  border-radius: 0.3125rem;
+  height: 2.5625rem;
+  &:hover {
+    background-color: #f2f2f4;
+  }
+  &:focus-visible {
+    outline: 0.01rem solid #007aff;
+  }
+  outline: ${(props) => (props.errors ? '0.01rem solid #FF3B30' : 'inherit')};
 `;

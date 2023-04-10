@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { TSignupProps } from '..';
 import { TOAST_MESSAGE } from '../../../../constants/contstant';
 import { passwordValidationRules } from '../../../../lib/utils/formValidation';
-import FormInput from '../../../common/formInput';
+import { FormInput } from '../../style';
 import { ErrorSpan, InputName } from '../style';
 import { PasswordBox, PasswordType } from './style';
 

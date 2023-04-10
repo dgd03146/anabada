@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 // import { userAuth } from '../../shared/api';
 import { Cookies } from 'react-cookie';
 // import { userThunk } from '../../redux/auth-slice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import styled from 'styled-components';
 import { TUser } from '../../../lib/types/types';
@@ -12,7 +12,7 @@ import React from 'react';
 import { FormBtn, FormDiv, FormWrapper } from '../style';
 import { FormSection, LoginWelcome } from './style';
 import Link from 'next/link';
-import FormInput from '../../common/formInput';
+import { FormInput } from '../style';
 import {
   emailValidationRules,
   passwordValidationRules
@@ -24,12 +24,16 @@ import { QueryKeys } from '../../../quries/key';
 import {
   EMAIL_MESSAGE,
   LOGIN_MESSAGE,
-  PASSWORD_MESSAGE
+  PASSWORD_MESSAGE,
+  TOAST_MESSAGE
 } from '../../../constants/contstant';
 import Image from 'next/image';
 import useUser from '../../../quries/hooks/user/useUser';
+import WithAuth from '../../hoc/withAuth';
+import { ErrorSpan } from '../signup/style';
+import { setErrorMessages } from '../../../lib/utils/setErrormessage';
 
-type TFormValues = {
+export type TFormValues = {
   email: string;
   password: string;
 };
@@ -47,8 +51,11 @@ const Login = () => {
   const router = useRouter();
   const cookies = new Cookies();
   const queryClient = new QueryClient();
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>();
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>();
 
   const onSumbit = async (loginData: TUser) => {
+    console.log('실행중');
     try {
       const getResponse = await userApi.login(loginData);
       // Save token
@@ -60,22 +67,18 @@ const Login = () => {
 
       // Get user information
       // TODO: accesstoken으로 유저 정보 받아오는것 같은데?
-      const { user } = useUser();
-
+      useUser();
       router.push('/home');
       toast.success(LOGIN_MESSAGE.SUCCESS_LOGIN);
     } catch (err) {
       toast.error(LOGIN_MESSAGE.CHECK_EMAIL_PASSWORD);
     }
   };
+
+  console.log(errors);
+
   const onError = () => {
-    if (errors.email?.type === 'required') {
-      toast.error(EMAIL_MESSAGE.INPUT_EMAIL);
-    } else if (errors.email?.type === 'pattern') {
-      toast.error(EMAIL_MESSAGE.INVALID_EMAIL_FORMAT);
-    } else if (errors.password?.type === 'required') {
-      toast.error(PASSWORD_MESSAGE.INPUT_PASSWORD);
-    }
+    setErrorMessages(errors, setEmailErrorMessage, setPasswordErrorMessage);
   };
 
   return (
@@ -85,8 +88,9 @@ const Login = () => {
           <div>
             <Image
               src={'/assets/icons/logo_big.svg'}
-              width={79}
-              height={208}
+              width={208}
+              height={79}
+              priority
               alt="Logo"
             />
           </div>
@@ -102,13 +106,16 @@ const Login = () => {
               placeholder="이메일"
               {...register('email', emailValidationRules)}
             ></FormInput>
+            {errors.email && <ErrorSpan>{emailErrorMessage}</ErrorSpan>}
             <FormInput
               errors={errors.password}
               type="password"
               placeholder="비밀번호"
               {...register('password', passwordValidationRules)}
             ></FormInput>
-            <FormBtn>로그인</FormBtn>
+            {errors.password && <ErrorSpan>{passwordErrorMessage}</ErrorSpan>}
+
+            <FormBtn type="submit">로그인</FormBtn>
           </form>
           <FormSection>
             <div className="login__wrapper-extra__btn__signup">
@@ -123,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default WithAuth(Login);

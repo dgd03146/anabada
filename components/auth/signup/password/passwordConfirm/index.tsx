@@ -6,7 +6,7 @@ import {
 } from 'react-hook-form';
 import { TSignupProps } from '../..';
 import { TSignup } from '../../../../../lib/types/types';
-import FormInput from '../../../../common/formInput';
+import { FormInput } from '../../../style';
 import { ErrorSpan, InputName } from '../../style';
 import { PasswordBox, PasswordType } from '../style';
 

@@ -22,7 +22,7 @@ import Image from 'next/image';
 const Header = () => {
   const { user } = useUser();
 
-  const { notificationsBadge } = useStompNotifications(user?.userId!);
+  const { notificationsBadge } = useStompNotifications(user?.userId);
 
   const router = useRouter();
   const { pathname } = router;
@@ -74,7 +74,7 @@ const Header = () => {
     <>
       <HeaderWrapper style={{ marginTop: `${gapY.current}px` }}>
         <MainHeader pathname={pathname}>
-          <Link href="/home">
+          <Link href="/">
             <div>
               <Image
                 src="/assets/icons/logo_small.svg"
@@ -119,7 +119,7 @@ const Header = () => {
         </MainHeader>
         <MainNav>
           <NavElement pathname={pathname}>
-            <Link className="header__nav__home" href="/home">
+            <Link className="header__nav__home" href="/">
               서핑스팟
             </Link>
             <Link className="header__nav__posting" href="/posts">
