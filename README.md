@@ -27,7 +27,7 @@
 
 ## 📅 Project Duration
 
-August 5, 2022 to September 15, 2022
+September 2022 ~ Current
 
 
 ## **🔨 Technology and Library**
