@@ -39,12 +39,6 @@ const PasswordConfirm = ({
       <InputName>
         <span>비밀번호 확인</span>
       </InputName>
-      {errors.confirmPassword?.type === 'required' && (
-        <ErrorSpan>{errors.confirmPassword.message}</ErrorSpan>
-      )}
-      {errors.confirmPassword?.type === 'validate' && (
-        <ErrorSpan>{errors.confirmPassword.message}</ErrorSpan>
-      )}
       <PasswordBox>
         <FormInput
           errors={errors.confirmPassword}
@@ -58,6 +52,12 @@ const PasswordConfirm = ({
             }
           })}
         ></FormInput>
+        {errors.confirmPassword?.type === 'required' && (
+          <ErrorSpan>{errors.confirmPassword.message}</ErrorSpan>
+        )}
+        {errors.confirmPassword?.type === 'validate' && (
+          <ErrorSpan>{errors.confirmPassword.message}</ErrorSpan>
+        )}
         <PasswordType onClick={() => handlePasswordType(setPasswordConfirm)}>
           {passwordConfirm.visible ? (
             <span className="material-symbols-outlined">visibility</span>

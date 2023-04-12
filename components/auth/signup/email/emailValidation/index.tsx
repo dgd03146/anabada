@@ -9,6 +9,8 @@ import { EmailValidationContainer } from './style';
 import { toast } from 'react-toastify';
 import { ApiError } from 'next/dist/server/api-utils';
 import { TEmailProps } from '..';
+import { showToast } from '../../../../layout/Toast/style';
+import { AxiosError, AxiosResponse } from 'axios';
 
 type TEmailValidationProps = Omit<TEmailProps, 'register'>;
 
@@ -21,7 +23,7 @@ export const EmailVaidation = ({
 }: TEmailValidationProps) => {
   const handleEmailValidation = async () => {
     if (errors.email?.type === 'pattern') {
-      toast.error('올바른 이메일 형식이 아닙니다.');
+      showToast({ type: 'error', message: EMAIL_MESSAGE.INVALID_EMAIL_FORMAT });
       return;
     }
 
@@ -34,15 +36,21 @@ export const EmailVaidation = ({
         setEmail(true);
         // FIXME: errors.email null로 바꿔야 하나?
         errors.email = undefined;
-        toast.success(EMAIL_MESSAGE.EMAIL_CHECKED_MESSAGE);
-      } else if (response.status === 409) {
+        showToast({
+          type: 'success',
+          message: EMAIL_MESSAGE.EMAIL_CHECKED_MESSAGE
+        });
+      } else if (response instanceof AxiosError<AxiosResponse>) {
         throw new Error(EMAIL_MESSAGE.EMAIL_ALREADY_TAKEN);
       } else {
         throw new Error(TOAST_MESSAGE.GENERIC_ERROR);
       }
     } catch (err) {
-      if (err instanceof ApiError) {
-        toast.error(err.message);
+      if (err instanceof Error) {
+        showToast({
+          type: 'error',
+          message: err.message
+        });
       }
     }
   };

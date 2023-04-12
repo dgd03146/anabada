@@ -12,7 +12,7 @@ export type TUser = {
 
 export type TLogin = Pick<TUser, 'email' | 'password'>;
 
-export type TSignup = Omit<TUser, 'userId'>;
+export type TSignup = Omit<TUser, 'userId'> & { confirmPassword?: string };
 
 // Event
 export type TInputChangeEvent = React.ChangeEvent<HTMLInputElement>;

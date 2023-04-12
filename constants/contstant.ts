@@ -28,6 +28,10 @@ export const AMENITY_CHECK = {
   sleep: false
 };
 
+export const SIGNUP_MESSAGE = {
+  SUCCESS_SIGNUP: '회원가입에 성공했습니다'
+};
+
 export const LOGIN_MESSAGE = {
   SUCCESS_LOGIN: '로그인에 성공했습니다.',
   CHECK_EMAIL_PASSWORD: '이메일과 비밀번호를 확인해주세요'
@@ -39,6 +43,11 @@ export const EMAIL_MESSAGE = {
   INPUT_EMAIL: '이메일을 입력해주세요',
   INVALID_EMAIL_FORMAT: '형식에 맞게 메일 주소를 입력하세요',
   EMAIL_CHECK_MESSAGE: '이메일 중복확인을 해주세요'
+};
+
+export const BEACH_MESSAGE = {
+  BEACH_CHECK_MESSAGE: '서핑 스팟을 입력해주세요!',
+  BEACH_ERROR_MESSAGE: '서핑 스팟을 찾을 수 없습니다'
 };
 
 export const PASSWORD_MESSAGE = {

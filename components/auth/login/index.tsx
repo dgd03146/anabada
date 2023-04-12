@@ -32,6 +32,8 @@ import useUser from '../../../quries/hooks/user/useUser';
 import WithAuth from '../../hoc/withAuth';
 import { ErrorSpan } from '../signup/style';
 import { setErrorMessages } from '../../../lib/utils/setErrormessage';
+import { showToast } from '../../layout/Toast/style';
+import { useLogin } from '../../../quries/hooks/user/useLogin';
 
 export type TFormValues = {
   email: string;
@@ -54,28 +56,29 @@ const Login = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>();
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>();
 
+  const { onLogin } = useLogin();
+
   const onSumbit = async (loginData: TUser) => {
-    console.log('실행중');
-    try {
-      const getResponse = await userApi.login(loginData);
-      // Save token
-      cookies.set('refreshToken', getResponse.headers.refreshtoken);
-      queryClient.setQueryData(
-        [QueryKeys.accessToken],
-        getResponse.headers.authorization
-      );
-
-      // Get user information
-      // TODO: accesstoken으로 유저 정보 받아오는것 같은데?
-      useUser();
-      router.push('/home');
-      toast.success(LOGIN_MESSAGE.SUCCESS_LOGIN);
-    } catch (err) {
-      toast.error(LOGIN_MESSAGE.CHECK_EMAIL_PASSWORD);
-    }
+    onLogin(loginData);
+    // try {
+    //   const getResponse = await userApi.login(loginData);
+    //   // Save token
+    //   cookies.set('refreshToken', getResponse.headers.refreshtoken);
+    //   queryClient.setQueryData(
+    //     [QueryKeys.accessToken],
+    //     getResponse.headers.authorization
+    //   );
+    //   console.log('이거 까지는 실행됨?');
+    //   // Get user information
+    //   // TODO: accesstoken으로 유저 정보 받아오는것 같은데?
+    //   useUser();
+    //   console.log('이거 까지 실행됨?2');
+    //   router.push('/');
+    //   showToast({ type: 'success', message: LOGIN_MESSAGE.SUCCESS_LOGIN });
+    // } catch (err) {
+    //   showToast({ type: 'error', message: LOGIN_MESSAGE.CHECK_EMAIL_PASSWORD });
+    // }
   };
-
-  console.log(errors);
 
   const onError = () => {
     setErrorMessages(errors, setEmailErrorMessage, setPasswordErrorMessage);
