@@ -34,7 +34,7 @@ const Home = () => {
   }, []);
 
   // FIXME: enabled 옵션 줘야할 듯?
-  const user = useUser();
+  const { user } = useUser();
 
   const { setNotificationsBadge } = useStompNotifications(user?.userId || '');
 

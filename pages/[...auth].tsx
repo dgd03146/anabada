@@ -13,17 +13,8 @@ const Page = () => {
   } else if (auth && auth[0] === 'signup') {
     return <Signup />;
   } else {
-    // Handle 404 error
     return <NotFound />;
   }
 };
-
-// TODO: 이게 맞나ㅕ?
-// export async function getStaticPaths() {
-//   return {
-//     paths: [{ params: { auth: ['login'] } }, { params: { auth: ['signup'] } }],
-//     fallback: false
-//   };
-// }
 
 export default Page;

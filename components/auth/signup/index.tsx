@@ -11,13 +11,18 @@ import React from 'react';
 import { FormBtn } from '../style';
 import { SignupForm, SignupWrapper } from './style';
 import { useRouter } from 'next/router';
-import { TOAST_MESSAGE } from '../../../constants/contstant';
+import {
+  EMAIL_MESSAGE,
+  SIGNUP_MESSAGE,
+  TOAST_MESSAGE
+} from '../../../constants/contstant';
 import { toast } from 'react-toastify';
 import WithAuth from '../../hoc/withAuth';
 import Email from './email';
 import Password from './password';
 import PasswordConfirm from './password/passwordConfirm';
 import Nickname from './nickname';
+import { showToast } from '../../layout/Toast/style';
 
 export type TSignupProps = {
   errors: FieldErrorsImpl<TSignup>;
@@ -48,19 +53,26 @@ const Signup = () => {
   const onSumbit = async (signupData: TSignup) => {
     try {
       await userApi.signup(signupData);
-      return router.push('/signup/welcome');
+      showToast({ type: 'success', message: SIGNUP_MESSAGE.SUCCESS_SIGNUP });
+      return router.push('/login');
     } catch (err) {
-      toast.error(TOAST_MESSAGE.GENERIC_ERROR);
+      showToast({ type: 'error', message: TOAST_MESSAGE.GENERIC_ERROR });
     }
   };
 
   const onError = () => {
     if (!email) {
-      toast.info(TOAST_MESSAGE.EMAIL_CHECK_MESSAGE);
+      showToast({ type: 'error', message: EMAIL_MESSAGE.EMAIL_CHECK_MESSAGE });
     } else if (!nickname) {
-      toast.info(TOAST_MESSAGE.NICKNAME_CHECK_MESSAGE);
+      showToast({
+        type: 'error',
+        message: TOAST_MESSAGE.NICKNAME_CHECK_MESSAGE
+      });
     } else {
-      toast.error(TOAST_MESSAGE.INVALID_FORM_MESSAGE);
+      showToast({
+        type: 'error',
+        message: TOAST_MESSAGE.INVALID_FORM_MESSAGE
+      });
     }
   };
 

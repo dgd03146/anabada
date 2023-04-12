@@ -11,6 +11,8 @@ import {
   SearchWrapper
 } from './style';
 import { toast } from 'react-toastify';
+import { showToast } from '../../layout/Toast/style';
+import { BEACH_MESSAGE } from '../../../constants/contstant';
 
 const MapSearch = ({ setPicker, spots }: Omit<TMapProps, 'picker'>) => {
   const inputRef = useRef(null);
@@ -23,7 +25,10 @@ const MapSearch = ({ setPicker, spots }: Omit<TMapProps, 'picker'>) => {
     const selectedBeach = inputName.trim();
 
     if (!selectedBeach) {
-      return toast.warn('Please enter a beach name!');
+      return showToast({
+        type: 'success',
+        message: BEACH_MESSAGE.BEACH_CHECK_MESSAGE
+      });
     }
 
     const beachMatch = spots?.find((spot) => spot.beachName === selectedBeach);
@@ -31,7 +36,10 @@ const MapSearch = ({ setPicker, spots }: Omit<TMapProps, 'picker'>) => {
     if (!beachMatch) {
       const firstMatch = searchResult?.[0];
       if (!firstMatch) {
-        return toast.error('No matching beaches found!');
+        return showToast({
+          type: 'success',
+          message: BEACH_MESSAGE.BEACH_ERROR_MESSAGE
+        });
       }
 
       setPicker((prev) => ({

@@ -22,6 +22,7 @@ import {
   ProfileImgDiv,
   UserDiv
 } from './style';
+import { showToast } from '../../layout/Toast/style';
 
 const MyPage = () => {
   const { user } = useUser();
@@ -80,8 +81,10 @@ const MyPage = () => {
           setImgSrc('');
         })
         .catch((err) => {
-          toast.error('취소 실패!');
-          console.error(err);
+          return showToast({
+            type: 'error',
+            message: '프로필 이미지 변경 취소에 실패하였습니다!'
+          });
         });
     }
   };

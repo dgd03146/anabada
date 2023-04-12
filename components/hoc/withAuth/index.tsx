@@ -4,6 +4,7 @@ import React, { useEffect, ComponentType } from 'react';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-toastify';
 import { QueryKeys } from '../../../quries/key';
+import { showToast } from '../../layout/Toast/style';
 
 const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
   const WithAuthWrapper = (props: P) => {
@@ -32,7 +33,10 @@ const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
       if (!isAuthenticated() && shouldBeLogined) {
         router.push('/login');
       } else if (isAuthenticated() && isLogined) {
-        toast.error('비정상적인 접근입니다.');
+        showToast({
+          type: 'error',
+          message: '비정상적인 접근입니다.'
+        });
         router.push('/home');
       }
     };

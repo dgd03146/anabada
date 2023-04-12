@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { TOAST_MESSAGE } from '../../../../../constants/contstant';
 import { ApiError } from 'next/dist/server/api-utils';
 import { TSignupProps } from '../..';
+import { showToast } from '../../../../layout/Toast/style';
+import { AxiosError, AxiosResponse } from 'axios';
 
 type TNicknameValidationProps = Omit<TSignupProps, 'register'> & {
   nickname: boolean;
@@ -35,16 +37,21 @@ const NicknameValidation = ({
         dirtyFields.nickname = false;
         setNickname(true);
         errors.nickname = undefined;
-        toast.success(TOAST_MESSAGE.NICKNAME_CHECKED_MESSAGE);
-      } else {
-        // FIXME: response.reponse.data로 해야하나?
+        showToast({
+          type: 'success',
+          message: TOAST_MESSAGE.NICKNAME_CHECKED_MESSAGE
+        });
+      } else if (response instanceof AxiosError<AxiosResponse>) {
         const errorMessage =
-          errorMessages[response.data] || errorMessages.default;
+          errorMessages[response.response?.data] || response.response?.data;
         throw new Error(errorMessage);
       }
-    } catch (err) {
-      if (err instanceof ApiError) {
-        toast.error(err.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        showToast({
+          type: 'error',
+          message: error.message
+        });
       }
     }
   };
