@@ -13,10 +13,14 @@ import {
   QueryClient,
   QueryClientProvider
 } from '@tanstack/react-query';
-import { defaultQueryClientOptions } from '../quries/queryClient';
+
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import Layout from '../components/layout';
+import { CustomToast } from '../components/layout/Toast/style';
+import QueryClientContainer from '../quries/queryClient';
+import useGetQueryClient from '../quries/queryClient';
+import queryClient from '../quries/queryClient';
 
 export type NextPageWithLayout<P = Record<string, never>, IP = P> = NextPage<
   P,
@@ -31,7 +35,6 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
-  const [queryClient] = useState(() => new QueryClient());
 
   // TODO: withAuthWrapper
   return (
@@ -41,7 +44,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             {getLayout(<Component {...pageProps} />)}
-            <ToastContainer />
+            <CustomToast />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

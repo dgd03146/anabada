@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import Toast from './Toast';
+// import Toast from './Toast';
 import Header from './header';
 import { Container } from './style';
 
@@ -32,7 +32,7 @@ const Layout = ({ children }: TProps) => {
     <>
       <Header />
       <Container>
-        {stateErrTimer && <Toast errorMsg={refErrorMessage.current} />}
+        {/* {stateErrTimer && <Toast errorMsg={refErrorMessage.current} />} */}
         {children}
       </Container>
     </>

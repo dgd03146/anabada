@@ -1,18 +1,20 @@
 import { TLogin, TSignup, TMeet } from './../lib/types/types';
 import { TComment, TUser } from '../lib/types/types';
 import { TPost } from '../lib/types/types';
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../quries/key';
 import { AxiosRequestConfig } from 'axios';
 import { Cookies } from 'react-cookie';
+import queryClient from '../quries/queryClient';
+
 // TODO:  API별로 관심사 분리하기
+
+const cookies = new Cookies();
 
 interface RequestConfig extends AxiosRequestConfig<any> {
   headers?: AxiosRequestHeaders;
 }
-
-const queryClient = new QueryClient();
 
 export const SOCKET_SERVER_URL = `https://${process.env.NEXT_PUBLIC_API_SERVER}/socket`;
 
@@ -24,8 +26,10 @@ export const api = axios.create({
   }
 });
 
-api.interceptors.request.use((config: RequestConfig) => {
-  const accessToken = queryClient.getQueryData<string | null>([QueryKeys.user]);
+api.interceptors.request.use(async (config: RequestConfig) => {
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
 
   if (config.headers && accessToken) {
     config.headers['Authorization'] = accessToken;
@@ -35,7 +39,15 @@ api.interceptors.request.use((config: RequestConfig) => {
 });
 
 api.interceptors.response.use(
-  (config) => {
+  async (config) => {
+    if (config.headers.authorization && config.headers.refreshtoken) {
+      const { authorization, refreshtoken } = config.headers;
+
+      cookies.set('refreshToken', refreshtoken);
+
+      queryClient.setQueryData([QueryKeys.accessToken], authorization);
+    }
+
     return config;
   },
   async (err) => {
@@ -45,7 +57,6 @@ api.interceptors.response.use(
     } = err;
     // 토큰 만료됐을 때 status
     if (status === 500) {
-      // userAxios를 쓰는 경우인데 리프레시 토큰 조차 없는 경우
       const cookies = new Cookies();
       if (cookies.get('refreshToken')) {
         return err;
@@ -55,8 +66,9 @@ api.interceptors.response.use(
       const originalReq = config;
       // Bearer제거 작업
       const getRefresh = cookies.get('refreshToken').split(' ')[1];
+      const queryClient = new QueryClient();
       const accessToken = queryClient.getQueryData<string | null>([
-        QueryKeys.user
+        QueryKeys.accessToken
       ]);
       const getAccess = accessToken && accessToken.split('')[1];
 

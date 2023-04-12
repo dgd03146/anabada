@@ -1,6 +1,9 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { TSignupProps } from '..';
-import { TOAST_MESSAGE } from '../../../../constants/contstant';
+import {
+  PASSWORD_MESSAGE,
+  TOAST_MESSAGE
+} from '../../../../constants/contstant';
 import { passwordValidationRules } from '../../../../lib/utils/formValidation';
 import { FormInput } from '../../style';
 import { ErrorSpan, InputName } from '../style';
@@ -21,7 +24,9 @@ const Password = ({ errors, register }: TPasswordProps) => {
 
   const passwordErrorMessages = {
     required: errors.password && errors.password.message,
-    pattern: TOAST_MESSAGE.PASSWORD_PATTERN_MESSAGE,
+    pattern: PASSWORD_MESSAGE.PASSWORD_PATTERN_MESSAGE,
+    minLength: errors.password && errors.password.message,
+    maxLength: errors.password && errors.password.message,
     validate: !password && errors.password && errors.password.message
   };
   type FormErrorType = keyof typeof passwordErrorMessages;
@@ -49,13 +54,6 @@ const Password = ({ errors, register }: TPasswordProps) => {
       <InputName>
         <span>비밀번호</span>
       </InputName>
-      {errors.password ? (
-        passwordErrorMessage && <ErrorSpan>{passwordErrorMessage}</ErrorSpan>
-      ) : (
-        <span className="login__wrapper__password">
-          {TOAST_MESSAGE.PASSWORD_PATTERN_MESSAGE}
-        </span>
-      )}
       <PasswordBox>
         <FormInput
           errors={errors?.password}
@@ -63,6 +61,13 @@ const Password = ({ errors, register }: TPasswordProps) => {
           placeholder="비밀번호"
           {...register('password', passwordValidationRules)}
         ></FormInput>
+        {errors.password ? (
+          <ErrorSpan>{passwordErrorMessage}</ErrorSpan>
+        ) : (
+          <span className="login__wrapper__password">
+            {PASSWORD_MESSAGE.PASSWORD_PATTERN_MESSAGE}
+          </span>
+        )}
         <PasswordType onClick={() => handlePassword(setPassword)}>
           <span className="material-symbols-outlined">{passwordIcon}</span>
         </PasswordType>
