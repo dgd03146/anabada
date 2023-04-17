@@ -5,7 +5,6 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-import '../../App.css';
 import { postApi } from '../../../../services/api';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
