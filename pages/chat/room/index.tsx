@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Navigate from '../../layout/Navigate';
-import { useRooms } from '../../react-query/hooks/chat/useRooms';
+import Navigate from '../../../components/layout/navigate';
+import { useRooms } from '../../../quries/hooks/chat/rooms/useRooms';
 import { useInView } from 'react-intersection-observer';
-import Loading from '../../layout/Loading';
-import NoData from '../../layout/NoData';
+import Loading from '../../../components/loading';
+import NoData from '../../../components/layout/noData';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../../react-query/constants';
+import { QueryKeys } from '../../../quries/key';
 import WithoutLayout from '../../../components/hoc/withoutLayout';
 
 const ChatRoom = () => {
-  const navigate = useNavigate();
   const nickname = useSelector((state) => state.auth.nickname);
   const profileImg = useSelector((state) => state.auth.profileImg);
 
@@ -22,7 +21,7 @@ const ChatRoom = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    queryClient.invalidateQueries([queryKeys.rooms, nickname], {
+    queryClient.invalidateQueries([QueryKeys.rooms, nickname], {
       refetchType: 'all'
     });
 

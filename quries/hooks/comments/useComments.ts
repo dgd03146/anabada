@@ -3,11 +3,11 @@ import { TComments, TResponse } from '../../../lib/types/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';
 
-type TFetchComments<T> = (pageParam: number, postId: string) => T | Promise<T>;
+type TGetComments<T> = (pageParam: number, postId: string) => T | Promise<T>;
 
-const fetchComments: TFetchComments<TResponse<TComments>> = async (
-  pageParam: number,
-  postId: string
+const getComments: TGetComments<TResponse<TComments>> = async (
+  pageParam,
+  postId
 ) => {
   try {
     const res = await commentsApi.getComments(pageParam, postId);
@@ -29,7 +29,7 @@ const useComments = (postId: string) => {
     [QueryKeys.commentList],
     ({ pageParam = 0 }) => {
       try {
-        return fetchComments(pageParam, postId);
+        return getComments(pageParam, postId);
       } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch comments');
