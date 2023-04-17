@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   // 이게 뭐지?
   swcMinify: true,
+  images: {
+    domains: ['firebasestorage.googleapis.com']
+  },
   compiler: {
     styledComponents:
       true |

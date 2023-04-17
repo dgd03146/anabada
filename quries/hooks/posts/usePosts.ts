@@ -6,6 +6,7 @@ import { QueryKeys } from '../../key';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
 import { showToast } from '../../../components/layout/Toast/style';
+import { AxiosError } from 'axios';
 
 type getPosts<TResult> = (
   pageParam: number,
@@ -25,7 +26,7 @@ export const getPosts: getPosts<TResponse<TPosts>> = async (
     const { content: data, last } = res.data;
     return { data, nextPage: pageParam + 1, last };
   } catch (err) {
-    if (err instanceof ApiError)
+    if (err instanceof AxiosError)
       showToast({ type: 'error', message: err.message });
     throw new Error('Failed to fetch posts');
   }
@@ -50,7 +51,8 @@ export function usePosts() {
       refetchOnWindowFocus: false,
       staleTime: 600000,
       onError(err) {
-        if (err instanceof ApiError) toast.error(err.message);
+        if (err instanceof AxiosError)
+          showToast({ type: 'error', message: err.message });
       }
     }
   );

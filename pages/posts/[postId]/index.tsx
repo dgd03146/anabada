@@ -138,12 +138,14 @@ const Post = () => {
           )}
         </Box>
         <ThumbnailDiv>
-          <Image
-            src={post.thumbnailUrl}
-            alt="Thumbnail"
-            width={16}
-            height={16}
-          />
+          {post.thumbnailUrl && (
+            <Image
+              src={post.thumbnailUrl}
+              alt="Thumbnail"
+              width={16}
+              height={16}
+            />
+          )}
         </ThumbnailDiv>
         <AddressBox>
           <Image

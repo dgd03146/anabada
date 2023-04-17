@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../key';
 import { useRouter } from 'next/router';
 import { postApi } from '../../../services/api';
+import { showToast } from '../../../components/layout/Toast/style';
 
 export type TAddPost = (params: {
   newPost: TPost;
@@ -33,6 +34,10 @@ const useAddPost = () => {
         await queryClient.invalidateQueries([QueryKeys.myPostsList], {
           refetchType: 'all'
         });
+        showToast({
+          type: 'success',
+          message: '게시물을 등록에 성공하였습니다'
+        });
         router.push('/posts'); // Redirect to /posts
       } catch (err) {
         console.log(err);
@@ -40,8 +45,11 @@ const useAddPost = () => {
     },
     onError: (err) => {
       console.log(err);
-      // FIXME: On Error toast UI로 바꾸자
-      alert('게시글 등록에 실패하였습니다');
+
+      showToast({
+        type: 'error',
+        message: '게시물을 등록에 성공하였습니다'
+      });
     }
   });
 
