@@ -5,14 +5,16 @@ import { TPosts, TResponse } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
+import { showToast } from '../../../components/layout/Toast/style';
+import { AxiosError } from 'axios';
 
-type TFetchPosts<TResult> = (
+type getPosts<TResult> = (
   pageParam: number,
   areaSelected: string,
   search: string | null
 ) => TResult | Promise<TResult>;
 
-export const fetchPosts: TFetchPosts<TResponse<TPosts>> = async (
+export const getPosts: getPosts<TResponse<TPosts>> = async (
   pageParam = 0,
   areaSelected = 'ALL',
   search = ''
@@ -24,7 +26,8 @@ export const fetchPosts: TFetchPosts<TResponse<TPosts>> = async (
     const { content: data, last } = res.data;
     return { data, nextPage: pageParam + 1, last };
   } catch (err) {
-    if (err instanceof ApiError) toast.error(err.message);
+    if (err instanceof AxiosError)
+      showToast({ type: 'error', message: err.message });
     throw new Error('Failed to fetch posts');
   }
 };
@@ -41,14 +44,15 @@ export function usePosts() {
     isLoading
   } = useInfiniteQuery(
     [QueryKeys.posts, areaSelected, search],
-    ({ pageParam = 0 }) => fetchPosts(pageParam, areaSelected, search),
+    ({ pageParam = 0 }) => getPosts(pageParam, areaSelected, search),
     {
       getNextPageParam: (lastPage) =>
         !lastPage?.last ? lastPage?.nextPage : undefined,
       refetchOnWindowFocus: false,
       staleTime: 600000,
       onError(err) {
-        if (err instanceof ApiError) toast.error(err.message);
+        if (err instanceof AxiosError)
+          showToast({ type: 'error', message: err.message });
       }
     }
   );

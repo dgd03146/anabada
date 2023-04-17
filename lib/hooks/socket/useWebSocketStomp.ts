@@ -59,7 +59,7 @@ export const useWebSocketStomp = (url: string, callback?: () => void) => {
   );
 
   const unsubscribe = useCallback((path: string) => {
-    subscriptions[path].unsubscribe();
+    subscriptions[path]?.unsubscribe();
     delete subscriptions[path];
   }, []);
 

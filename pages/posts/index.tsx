@@ -1,33 +1,33 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 import Masonry from 'react-masonry-css';
 import { TbPencil } from 'react-icons/tb';
-import { fetchPosts, usePosts } from '../../quries/hooks/posts/usePosts';
+import { getPosts, usePosts } from '../../quries/hooks/posts/usePosts';
 import { TEvent, TKeyEvent, TPost, TSelectEvent } from '../../lib/types/types';
 import { BREAK_POINTS } from '../../constants/contstant';
 import Loading from '../../components/loading';
 import NoData from '../../components/layout/noData';
 import PostSkeletonContainer from '../../components/posts/post/container';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { dehydrate, QueryClient, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';
 import { MainDiv, PostBtn, PostDiv } from './style';
 import AreaSelector from '../../components/common/areaSelector';
 
 // FIXME: prefetch 고려해보자
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
+// export async function getStaticProps() {
+//   const queryClient = new QueryClient();
 
-  queryClient.prefetchInfiniteQuery([QueryKeys.posts], ({ pageParam = 0 }) =>
-    fetchPosts(pageParam, 'ALL', '')
-  );
+//   queryClient.prefetchInfiniteQuery([QueryKeys.posts], ({ pageParam = 0 }) =>
+//     fetchPosts(pageParam, 'ALL', '')
+//   );
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient)
-    }
-  };
-}
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient)
+//     }
+//   };
+// }
 
 const Posts = () => {
   const { ref, inView } = useInView();
@@ -42,7 +42,14 @@ const Posts = () => {
     setAreaSelected
   } = usePosts();
 
-  const accesstoken = localStorage.getItem('accessToken');
+  const queryClient = useQueryClient();
+
+  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
+
+  const isUser = !!accessToken;
 
   useEffect(() => {
     if (inView) {
@@ -98,9 +105,9 @@ const Posts = () => {
           {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
         </PostDiv>
       </MainDiv>
-      {accesstoken && (
+      {isUser && (
         <PostBtn>
-          <Link to="/postAdd">
+          <Link href="/posts/add">
             <TbPencil />
           </Link>
         </PostBtn>

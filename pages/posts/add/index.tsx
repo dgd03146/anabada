@@ -8,7 +8,7 @@ import { AmenityInfo } from '../../../data/amenityinfo';
 import useAddPost from '../../../quries/hooks/posts/useAddPost';
 import { TPost } from '../../../lib/types/types';
 import { flatten } from 'lodash';
-import { storage } from '../../../firebase/firebase';
+
 import { Categories } from '../../../components/common/categories';
 import {
   AmenityButton,
@@ -73,12 +73,14 @@ const PostAdd = () => {
   };
 
   const onSubmit = async (formData: TPost) => {
+    console.log('실행중 111');
     try {
       const thumbnailUrl = await uploadThumbnailImage(
+        postId,
         formData.postImg,
-        imgSrc,
-        storage
+        imgSrc
       );
+      console.log('실행중 222');
       const amenity = Object.values(check).filter(Boolean).join(' ');
       const newPost: TPost = {
         title: formData.title,
@@ -112,7 +114,7 @@ const PostAdd = () => {
           <label>대표 이미지 등록</label>
           <ImageLabel>
             <Image
-              src={imgSrc ? imgSrc : '/assets/readyImage.png'}
+              src={imgSrc ? imgSrc : '/assets/illustrations/readyImage.png'}
               alt="Ready Image"
               width={400}
               height={400}

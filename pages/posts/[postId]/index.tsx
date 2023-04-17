@@ -27,9 +27,15 @@ import {
 import NoData from '../../../components/layout/noData';
 import useUser from '../../../quries/hooks/user/useUser';
 import PostAdd from '../add';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../../../quries/key';
 
 const Post = () => {
-  const accessToken = localStorage.getItem('accessToken');
+  const queryClient = useQueryClient();
+  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
   const router = useRouter();
   const postId = router.query.postId as string;
 
@@ -132,12 +138,14 @@ const Post = () => {
           )}
         </Box>
         <ThumbnailDiv>
-          <Image
-            src={post.thumbnailUrl}
-            alt="Thumbnail"
-            width={16}
-            height={16}
-          />
+          {post.thumbnailUrl && (
+            <Image
+              src={post.thumbnailUrl}
+              alt="Thumbnail"
+              width={16}
+              height={16}
+            />
+          )}
         </ThumbnailDiv>
         <AddressBox>
           <Image
@@ -174,7 +182,6 @@ const Post = () => {
           )}
         </ButtonContainer>
         <Comments
-          accessToken={accessToken}
           profileImg={profileImg}
           nickname={nickname}
           post={post}
