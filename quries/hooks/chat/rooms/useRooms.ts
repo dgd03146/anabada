@@ -1,8 +1,9 @@
 import { TResponse, TRooms } from './../../../../lib/types/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { chatApi } from '../../../../services/api';
 import { QueryKeys } from '../../../key';
 import useUser from '../../user/useUser';
+import { useEffect } from 'react';
 
 type TGetRooms<T> = (pageParam: number) => T | Promise<T>;
 
@@ -19,7 +20,14 @@ const getAllRooms: TGetRooms<TResponse<TRooms>> = async (pageParam) => {
 
 export function useRooms() {
   const { user } = useUser();
-  const { nickname } = user || {};
+  const nickname = user?.nickname;
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries([QueryKeys.rooms, nickname], {
+      refetchType: 'all'
+    });
+  }, []);
 
   // 모임 전체 게시글 useQuery
   const {

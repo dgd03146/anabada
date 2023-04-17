@@ -165,11 +165,11 @@ export type TMessages = TMessage[];
 
 export type TRoom = {
   roomId: string;
-  senderNickname: String;
-  senderProfileImg: String;
-  receiverNickname: String;
-  receiverProfileImg: String;
-  lastMsg: String;
+  senderNickname: string;
+  senderProfileImg: string;
+  receiverNickname: string;
+  receiverProfileImg: string;
+  lastMsg: string;
 };
 
 export type TRooms = TRoom[];
