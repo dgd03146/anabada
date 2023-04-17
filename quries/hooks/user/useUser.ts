@@ -1,7 +1,6 @@
 import { QueryKeys } from '../../key';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '../../../services/api';
-import { toast } from 'react-toastify';
 import { showToast } from '../../../components/layout/Toast/style';
 
 const getUserData = async () => {

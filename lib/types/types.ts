@@ -162,3 +162,14 @@ export type TMessage = {
 };
 
 export type TMessages = TMessage[];
+
+export type TRoom = {
+  roomId: string;
+  senderNickname: string;
+  senderProfileImg: string;
+  receiverNickname: string;
+  receiverProfileImg: string;
+  lastMsg: string;
+};
+
+export type TRooms = TRoom[];
