@@ -8,22 +8,20 @@ import { useState } from 'react';
 //   // TODO: 토스트 UI 만들기
 // };
 
-// export const defaultQueryClientOptions = {
-//   queries: {
-//     onError: queryErrorHandler,
-//     staleTime: 600000, // 10minutes
-//     cacheTime: 900000, // 15minutes
-//     refetchOnMount: false,
-//     refetchOnWindowFocus: false,
-//     refetchOnReconnect: false,
-//     suspense: true
-//   },
-//   // TODO: mutation 옵션 설정
-//   mutations: {
-//     onError: queryErrorHandler
-//   }
-// };
-
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // onError: queryErrorHandler,
+      staleTime: 600000, // 10minutes
+      cacheTime: 900000, // 15minutes
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false
+    }
+    // mutations: {
+    //   //   onError: queryErrorHandler
+    //   // }
+  }
+});
 
 export default queryClient;
