@@ -95,7 +95,7 @@ const MeetAdd = () => {
             <Image
               className="noneImg"
               alt="thumbnail"
-              src={imgSrc ? imgSrc : '/assets/readyImage.png'}
+              src={imgSrc ? imgSrc : '/assets/illustrations/readyImage.png'}
               width={300}
               height={200}
             />

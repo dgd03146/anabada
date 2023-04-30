@@ -23,17 +23,13 @@ export type TSelectEvent = React.ChangeEvent<HTMLSelectElement>;
 // Spot
 export type TSpot = typeof PICKER;
 
-// Post
-export type TPostImg = {
-  file: File;
-  name: string;
-};
-
 type NamedBlob = Blob & { readonly name: string };
 type NamedUint8Array = Uint8Array & { readonly name: string };
 type NamedArrayBuffer = ArrayBuffer & { readonly name: string };
 
 export type ThumbnailFile = NamedBlob | NamedUint8Array | NamedArrayBuffer;
+
+export type TPostImg = ThumbnailFile;
 
 export type TMeet = {
   thunderPostId: string;
@@ -91,10 +87,11 @@ export type TPost = {
   area?: string;
   address?: string;
   content?: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
   nickname?: string;
   profileImg?: string;
   likeCount?: number;
+  liked?: boolean;
   isLiked?: boolean;
   postImg?: TPostImg[];
   after?: string;

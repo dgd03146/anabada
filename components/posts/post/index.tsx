@@ -11,6 +11,8 @@ type TPostProps = {
 const Post = memo(({ post }: TPostProps) => {
   const router = useRouter();
 
+  const thumbnailImage = post.thumbnailUrl;
+
   return (
     <PostInfoBox
       onClick={() => {
@@ -18,31 +20,30 @@ const Post = memo(({ post }: TPostProps) => {
       }}
     >
       <ImageBox>
-        <div className="infoBox">
-          <span>{post.likeCount}</span>
-          {post.isLiked ? (
-            <Image
-              src="/assets/icons/heart.svg"
-              alt="Red heart icon"
-              width={24}
-              height={24}
-              style={{ fill: 'red' }}
-            />
-          ) : (
-            <Image
-              src="/assets/icons/brown-heart.svg"
-              alt="Brown heart icon"
-              width={24}
-              height={24}
-              style={{ fill: 'rgb(51,37,21)' }}
-            />
-          )}
-        </div>
+        <Image
+          src={
+            thumbnailImage
+              ? thumbnailImage
+              : '/assets/illustrations/defaultImage.jpg'
+          }
+          alt="Thumbnail"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '100%', height: 'auto' }}
+        />
       </ImageBox>
       <PostInfo>
         <h2>{post.title}</h2>
         <UserInfo>
-          <img src={post.profileImg} alt="" />
+          {post.profileImg && (
+            <Image
+              src={post.profileImg}
+              alt="Profile Image"
+              width={50}
+              height={50}
+            />
+          )}
           <h3>{post.nickname}</h3>
         </UserInfo>
       </PostInfo>

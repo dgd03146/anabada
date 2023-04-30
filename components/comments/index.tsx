@@ -9,26 +9,27 @@ import {
   NoDataDiv,
   WriteComment
 } from './style';
-import { useInView } from 'react-intersection-observer/useInView';
+import { useInView } from 'react-intersection-observer';
 import useComments from '../../quries/hooks/comments/useComments';
 import { flatten } from 'lodash';
 import { FiInbox } from 'react-icons/fi';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../../quries/key';
 
 type TCommentsProps = {
-  accessToken: string | null;
   nickname?: string;
   profileImg?: string;
   post: TPost;
   postId: string;
 };
 
-const Comments = ({
-  accessToken,
-  nickname,
-  profileImg,
-  post,
-  postId
-}: TCommentsProps) => {
+const Comments = ({ nickname, profileImg, post, postId }: TCommentsProps) => {
+  const queryClient = useQueryClient();
+  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
+
   const { comments, fetchNextPage, isFetchingNextPage } = useComments(postId);
 
   const allComments = flatten(comments?.pages.map((page) => page.data));
