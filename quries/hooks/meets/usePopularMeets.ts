@@ -1,5 +1,5 @@
 import { QueryKeys } from './../../key';
-import { TMeets } from './../../../lib/types/types';
+import { TMeet, TMeets } from './../../../lib/types/types';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { meetsApi } from '../../../services/api';
@@ -9,9 +9,10 @@ import { ApiError } from 'next/dist/server/api-utils';
 type TfetchPopularMeets<TResult> = (area: string) => TResult | Promise<TResult>;
 
 // 인기 모임 게시글
-const fetchPopularMeets: TfetchPopularMeets<TMeets> = async (area) => {
+const fetchPopularMeets: TfetchPopularMeets<TMeet[]> = async (area) => {
   try {
     const res = await meetsApi.getPopularMeets(area);
+
     return res.data;
   } catch (err) {
     if (err instanceof ApiError) toast.error(err.message);
@@ -27,7 +28,6 @@ export function usePopularMeets() {
     [QueryKeys.popularMeets, popularAreaSelected],
     () => fetchPopularMeets(popularAreaSelected),
     {
-      suspense: true,
       onError: (error) => {
         console.error(error);
         toast.error('인기 모임 게시글을 불러오는 중 오류가 발생했습니다');

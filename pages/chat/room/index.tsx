@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import Navigate from '../../../components/layout/navigate';
 import { useRooms } from '../../../quries/hooks/chat/rooms/useRooms';
 import { useInView } from 'react-intersection-observer';

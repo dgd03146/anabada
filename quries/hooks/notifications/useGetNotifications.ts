@@ -41,9 +41,7 @@ const useGetNotifications = () => {
         !lastPage?.last ? lastPage?.nextPage : undefined,
       onError(err) {
         if (err instanceof ApiError) toast.error(err.message);
-      },
-      // FIXME: suspense 사용?
-      suspense: true
+      }
     }
   );
 
