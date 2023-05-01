@@ -12,13 +12,13 @@ const MeetInfo = ({ meet }: TMeetInfoProps) => {
     <Container>
       <h2>모집 정보</h2>
       <div className="meetInfo">
-        <Image
-          src={'/assets/icons/info.svg'}
-          width={16}
-          height={16}
-          alt="info svg"
-        />
         <div>
+          <Image
+            src={'/assets/icons/info.svg'}
+            width={16}
+            height={16}
+            alt="info svg"
+          />
           <p>
             인원 {meet?.currentMember} / {meet?.goalMember}
           </p>
@@ -38,7 +38,7 @@ const MeetInfo = ({ meet }: TMeetInfoProps) => {
             src={'/assets/icons/period.svg'}
             width={16}
             height={16}
-            alt="date svg"
+            alt="Period svg"
           />
           <p>모집 기간</p>
           <p>~ {meet?.endDate}</p>

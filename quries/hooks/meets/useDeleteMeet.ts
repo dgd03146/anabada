@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { toast } from 'react-toastify';
 import { meetsApi } from '../../../services/api';
+import { showToast } from '../../../components/layout/Toast/style';
 
 const deleteMeetPost = async (thunderPostId: string) => {
   try {
@@ -24,13 +25,14 @@ export function useDeleteMeet() {
       try {
         await queryClient.invalidateQueries([QueryKeys.meets]);
         await queryClient.invalidateQueries([QueryKeys.allMeets]);
+        showToast({ type: 'success', message: '모임 삭제에 성공하였습니다' });
         router.push('/meets');
       } catch (err) {
         if (err instanceof ApiError) toast.error(err.message);
       }
     },
     onError: () => {
-      toast.error('모임 삭제에 실패하였습니다.');
+      toast.error('모임 삭제에 실패하였습니다');
     }
   });
 

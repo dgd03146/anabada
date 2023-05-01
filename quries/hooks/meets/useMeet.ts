@@ -27,9 +27,7 @@ export function useMeet(thunderPostId: string) {
     [QueryKeys.detailMeet, thunderPostId],
     () => getMeet(thunderPostId),
     {
-      suspense: true,
       onSuccess: (data) => {
-        toast.success('모임 정보를 불러왔습니다');
         setIsLiked(data.isLiked);
         setIsJoined(data.isJoined);
       },

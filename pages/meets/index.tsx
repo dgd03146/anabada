@@ -1,10 +1,8 @@
 import React from 'react';
-
 import Image from 'next/image';
 import Meet from '../../components/meets';
 import PopularMeets from '../../components/meets/popularMeets';
 import NoData from '../../components/layout/noData';
-
 import { TbPencil } from 'react-icons/tb';
 import { usePopularMeets } from '../../quries/hooks/meets/usePopularMeets';
 import AreaSelector from '../../components/common/areaSelector';
@@ -13,10 +11,16 @@ import { useRouter } from 'next/router';
 import { useMeets } from '../../quries/hooks/meets/useMeets';
 import Link from 'next/link';
 import { MeetsContainer, MeetsPostsContainer, PostBtn } from './style';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../../quries/key';
 
 const Meets = () => {
   const router = useRouter();
-  const accesstoken = localStorage.getItem('accessToken');
+  const queryClient = useQueryClient();
+  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
   const { meets, areaSelected, setAreaSelected } = useMeets();
   const { popularMeets, setPopularAreaSelected } = usePopularMeets();
 
@@ -36,7 +40,7 @@ const Meets = () => {
           <h2>오픈 모임 리스트</h2>
           <button onClick={() => router.push('/meets/all')}>
             <Image
-              src="/assets/rightArrow.svg"
+              src="/assets/icons/rightArrow.svg"
               alt="Right Arrow"
               width={9}
               height={14}
@@ -50,7 +54,7 @@ const Meets = () => {
           return <Meet key={meet.thunderPostId} meet={meet} />;
         })}
       </MeetsPostsContainer>
-      {accesstoken && (
+      {accessToken && (
         <PostBtn>
           <Link href="/meets/add">
             <TbPencil />

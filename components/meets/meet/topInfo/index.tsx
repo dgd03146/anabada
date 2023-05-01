@@ -8,21 +8,29 @@ import React from 'react';
 import { SelectContainer } from './style';
 import { useDeleteMeet } from '../../../../quries/hooks/meets/useDeleteMeet';
 import { TMeet } from '../../../../lib/types/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../../../../quries/key';
 
 type TMeetTopInfoProps = {
   meet?: TMeet;
-  accessToken: string | null;
+
   isCurrentUser: boolean;
   nickname?: string;
 };
 
 const MeetTopInfo = ({
   meet,
-  accessToken,
+
   isCurrentUser,
   nickname
 }: TMeetTopInfoProps) => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
+  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
+  const accessToken = queryClient.getQueryData<string | null>([
+    QueryKeys.accessToken
+  ]);
 
   const { onDelete } = useDeleteMeet();
   const [showModal, setShowModal] = useState(false);
@@ -49,26 +57,8 @@ const MeetTopInfo = ({
             />
           )}
           <p className="nickname">{meet?.nickname}</p>
-          <Image
-            src="/aseets/icons/clock.svg"
-            alt="created at"
-            width={2}
-            height={10}
-          />
           <p>{meet?.createdAt}</p>
-          <Image
-            src="/aseets/icons/clock.svg"
-            alt="after"
-            width={2}
-            height={10}
-          />
           <p>{meet?.after}</p>
-          <Image
-            src="/aseets/icons/eye.svg"
-            alt="view count"
-            width={2}
-            height={10}
-          />
           <p>조회 {meet?.viewCount}</p>
         </div>
         {accessToken && isCurrentUser && (
@@ -84,18 +74,18 @@ const MeetTopInfo = ({
         {showModal && (
           <SelectContainer>
             {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
-            <div
+            <button
               className="editBtn"
               onClick={() => {
                 // FIXME: edit 페이지
-                router.push(`/meet/edit/${meet?.thunderPostId}`);
+                router.push(`/meets/edit/${meet?.thunderPostId}`);
               }}
             >
               수정하기
               <FiEdit2 />
-            </div>
+            </button>
             {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
-            <div
+            <button
               className="deleteBtn"
               onClick={() => {
                 const result = window.confirm('정말 삭제하시겠습니까?');
@@ -107,7 +97,7 @@ const MeetTopInfo = ({
             >
               삭제하기
               <RiDeleteBin5Line />
-            </div>
+            </button>
           </SelectContainer>
         )}
       </div>

@@ -30,7 +30,6 @@ export function useMeets() {
     [QueryKeys.meets, areaSelected],
     ({ pageParam = 0 }) => fetchMeets(pageParam, areaSelected),
     {
-      suspense: true,
       onError: () => {
         toast.error('모임 정보를 불러오는 중 오류가 발생했습니다!');
       }

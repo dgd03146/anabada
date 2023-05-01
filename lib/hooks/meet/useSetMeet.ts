@@ -5,13 +5,16 @@ import { useRouter } from 'next/router';
 import { useForm, UseFormSetValue } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { TMeetWithThumbnailFile } from '../../../pages/meets/add';
+import useUser from '../../../quries/hooks/user/useUser';
 
 export const useSetMeet = (
   thunderPostId: string,
-  nickname?: string,
+
   setValue?: UseFormSetValue<TMeetWithThumbnailFile>
 ) => {
   const router = useRouter();
+  const { user } = useUser();
+  const nickname = user?.nickname;
 
   const [imgSrc, setImgSrc] = useState('');
 

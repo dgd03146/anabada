@@ -1,19 +1,25 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
-const PopularMeets = ({ popularMeets }) => {
-  const navigate = useNavigate();
-  const difference = useCallback((date1, date2) => {
+import { useRouter } from 'next/router';
+import { TMeet } from '../../../lib/types/types';
+
+type TPopularMeetsProps = {
+  popularMeets?: TMeet[];
+};
+
+const PopularMeets = ({ popularMeets }: TPopularMeetsProps) => {
+  const router = useRouter();
+  const difference = useCallback((startDate: Date, endDate: Date) => {
     const date1utc = Date.UTC(
-      date1.getFullYear(),
-      date1.getMonth(),
-      date1.getDate()
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
     );
     const date2utc = Date.UTC(
-      date2.getFullYear(),
-      date2.getMonth(),
-      date2.getDate()
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
     );
     const day = 1000 * 60 * 60 * 24;
     return (date2utc - date1utc) / day;
@@ -26,11 +32,11 @@ const PopularMeets = ({ popularMeets }) => {
     <PopularPostsContainer>
       <h2>인기모임🔥</h2>
       <div className="meetsBox">
-        {popularMeets.map((meet) => (
+        {popularMeets?.map((meet) => (
           <div
             className="meetBox"
             key={meet.thunderPostId}
-            onClick={() => navigate(`/meets/${meet.thunderPostId}`)}
+            onClick={() => router.push(`/meets/${meet.thunderPostId}`)}
           >
             <div className="meetImageWrapper">
               <img src={meet.thumbnailUrl} alt="thumbnail" />

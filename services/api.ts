@@ -12,9 +12,9 @@ import queryClient from '../quries/queryClient';
 
 const cookies = new Cookies();
 
-interface RequestConfig extends AxiosRequestConfig<any> {
-  headers?: AxiosRequestHeaders;
-}
+// interface RequestConfig extends AxiosRequestConfig<any> {
+//   headers?: AxiosRequestHeaders;
+// }
 
 export const SOCKET_SERVER_URL = `https://${process.env.NEXT_PUBLIC_API_SERVER}/socket`;
 
@@ -26,10 +26,12 @@ export const api = axios.create({
   }
 });
 
-api.interceptors.request.use(async (config: RequestConfig) => {
+api.interceptors.request.use(async (config: AxiosRequestConfig) => {
   const accessToken = queryClient.getQueryData<string | null>([
     QueryKeys.accessToken
   ]);
+
+  console.log(accessToken, 'accessToken');
 
   if (config.headers && accessToken) {
     config.headers['Authorization'] = accessToken;
@@ -66,22 +68,16 @@ api.interceptors.response.use(
       const originalReq = config;
       // Bearer제거 작업
       const getRefresh = cookies.get('refreshToken').split(' ')[1];
-      const queryClient = new QueryClient();
+
       const accessToken = queryClient.getQueryData<string | null>([
         QueryKeys.accessToken
       ]);
       const getAccess = accessToken && accessToken.split('')[1];
 
       // refresh요청
-      const response = await api.post(
-        '/reissue',
-        {},
-        {
-          headers: {
-            AccessToken: getAccess as string,
-            RefreshToken: getRefresh
-          }
-        }
+      const response = await userApi.refreshUser(
+        getAccess as string,
+        getRefresh
       );
       const newAccess = response.headers.authorization;
       queryClient.setQueryData<string | null>([QueryKeys.user], newAccess);
@@ -114,6 +110,18 @@ export const userApi = {
 
   getUser() {
     return api.get<TUser>(`users/info`);
+  },
+  refreshUser(AccessToken: string, RefreshToken: string) {
+    return api.post(
+      'users/reissue',
+      {},
+      {
+        headers: {
+          AccessToken,
+          RefreshToken
+        }
+      }
+    );
   }
 };
 
