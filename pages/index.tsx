@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PICKER } from '../constants/contstant';
 import MapSearch from '../components/map/search';
 import KakaoMap from '../components/map';
-import { useStompNotifications } from '../lib/hooks/socket/useStompNotifications';
+import { useNotifications } from '../lib/hooks/socket/useNotifications';
 import useUser from '../quries/hooks/user/useUser';
 import { notificationsApi } from '../services/api';
 import { useSpots } from '../quries/hooks/spots/useSpots';
@@ -26,30 +26,6 @@ const Home = () => {
       useUser();
     }
   }, []);
-
-  const { user } = useUser();
-
-  const { setNotificationsBadge } = useStompNotifications(user?.userId || '');
-
-  // FIXME: 제대로 동작할지? notification에서 해야하지 않나
-  useEffect(() => {
-    // 로그인을 했을 때 최초 쌓인 뱃지 요청하기(이후는 소캣 이용해서 업데이트 된다)
-    if (refreshToken !== undefined && accessToken) {
-      notificationsApi
-        .checkNotifications({
-          // accesstoken 넣어줄 필요 없지 않나?
-          Authorization: accessToken as unknown as string
-        })
-        .then((res) => {
-          return setNotificationsBadge((prev) => {
-            return {
-              ...prev,
-              isBadge: res.data?.badge
-            };
-          });
-        });
-    }
-  }, [refreshToken]);
 
   return (
     <>

@@ -93,10 +93,11 @@ const MyPage = () => {
           <ProfileImgDiv>
             {profileImg && (
               <Image
-                width={200}
-                height={200}
+                width={64}
+                height={64}
                 src={imgSrc ? imgSrc : profileImg}
                 alt="profile"
+                style={{ borderRadius: '50%' }}
               ></Image>
             )}
             <button

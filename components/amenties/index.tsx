@@ -6,30 +6,30 @@ type TAmenityProps = {
 
 const AmentyInfo = ({ amenities }: TAmenityProps) => {
   return (
-    <ul>
+    <div>
       {amenities.map((amenity, index) => {
         if (amenity === 'true') {
           switch (index) {
             case 0:
-              return <li key="airgun">💨 에어건이 있어요</li>;
+              return <p key="airgun">💨 에어건이 있어요</p>;
             case 1:
-              return <li key="surfingShop">🏄 서핑샵이 있어요</li>;
+              return <p key="surfingShop">🏄 서핑샵이 있어요</p>;
             case 2:
-              return <li key="showerFacility">🛀 샤워시설이 있어요</li>;
+              return <p key="showerFacility">🛀 샤워시설이 있어요</p>;
             case 3:
-              return <li key="restaurant">🍽 식당 카페가 있어요</li>;
+              return <p key="restaurant">🍽 식당 카페가 있어요</p>;
             case 4:
-              return <li key="parking">🚘 주차장이 있어요</li>;
+              return <p key="parking">🚘 주차장이 있어요</p>;
             case 5:
-              return <li key="accommodation">🏨 숙박시설이 있어요</li>;
+              return <p key="accommodation">🏨 숙박시설이 있어요</p>;
             default:
-              return <li></li>;
+              return <p></p>;
           }
         } else {
-          return <li></li>;
+          return <p></p>;
         }
       })}
-    </ul>
+    </div>
   );
 };
 

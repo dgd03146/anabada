@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer/useInView';
 import useDeleteAllnotifications from '../../quries/hooks/notifications/useDeleteAllnotifications';
 import useGetNotifications from '../../quries/hooks/notifications/useGetNotifications';
 import useUser from '../../quries/hooks/user/useUser';
-import { useStompNotifications } from '../../lib/hooks/socket/useStompNotifications';
+import { useNotifications } from '../../lib/hooks/socket/useNotifications';
 import {
   Container,
   NotiAllDelete,
@@ -24,7 +24,7 @@ const Notifications = () => {
   const { notifications, hasNextPage, fetchNextPage, isSuccess } =
     useGetNotifications();
   const { onDelteAllNotifications } = useDeleteAllnotifications();
-  const { setNotificationsBadge } = useStompNotifications(userId);
+  const { setNotificationsBadge } = useNotifications(userId);
   const { ref } = useFetchOnScroll({
     notifications,
     fetchNextPage,

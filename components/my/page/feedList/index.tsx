@@ -1,14 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { MY_PAGES } from '../../../../constants/contstant';
 import { AllBtn, Btn, BtnDiv, SelectDiv } from './style';
 
 type TProps = {
   type: 'posts' | 'meets';
 };
-
-// TODO: BLOG에다가 변환과정 쓰기
 
 const FeedList = ({ type }: TProps) => {
   const router = useRouter();
@@ -48,6 +45,12 @@ const FeedList = ({ type }: TProps) => {
         {type === 'meets' && (
           <>
             <Btn onClick={() => handleBtnClick('myHostMeet')}>
+              <Image
+                src="/assets/icons/host.svg"
+                width={24}
+                height={24}
+                alt="Host"
+              />
               <label>주최 모임</label>
             </Btn>
             <Btn onClick={() => handleBtnClick('myJoinMeet')}>
@@ -64,7 +67,7 @@ const FeedList = ({ type }: TProps) => {
                 src="/assets/icons/likeMeets.svg"
                 width={24}
                 height={24}
-                alt="Join"
+                alt="likeMeets"
               />
               <label>좋아요 모임</label>
             </Btn>
