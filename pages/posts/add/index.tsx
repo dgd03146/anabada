@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { AMENITY_CHECK } from '../../../constants/contstant';
-import { postApi } from '../../../services/api';
 import { AmenityInfo } from '../../../data/amenityinfo';
 import useAddPost from '../../../quries/hooks/posts/useAddPost';
 import { TPost } from '../../../lib/types/types';
@@ -73,14 +72,17 @@ const PostAdd = () => {
   };
 
   const onSubmit = async (formData: TPost) => {
-    console.log('실행중 111');
     try {
+      const confirmed = window.confirm('게시물을 등록하시겠습니까?');
+
+      if (!confirmed) return;
+
       const thumbnailUrl = await uploadThumbnailImage(
         postId,
         formData.postImg,
         imgSrc
       );
-      console.log('실행중 222');
+
       const amenity = Object.values(check).filter(Boolean).join(' ');
       const newPost: TPost = {
         title: formData.title,

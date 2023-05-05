@@ -72,7 +72,7 @@ const MyMeets = () => {
         {myMeets &&
           myMeets?.pages.map((page) => {
             return page.data.map((meet) => (
-              <Meet key={meet.thunderpostId} meet={meet} />
+              <Meet key={meet.thunderPostId} meet={meet} />
             ));
           })}
         {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}

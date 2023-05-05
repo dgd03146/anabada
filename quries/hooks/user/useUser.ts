@@ -21,12 +21,6 @@ const useUser = () => {
   const accessToken = useGetToken();
 
   const { data: user } = useQuery([QueryKeys.user], getUserData, {
-    onSuccess() {
-      showToast({
-        type: 'success',
-        message: '유저 정보를 성공적으로 불러왔습니다.'
-      });
-    },
     onError: () => {
       showToast({
         type: 'error',

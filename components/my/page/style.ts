@@ -18,11 +18,11 @@ export const ProfileDiv = styled.div`
 
 export const ProfileImgDiv = styled.div`
   position: relative;
-  img {
+  /* img {
     height: 4rem;
     width: 4rem;
     border-radius: 4rem;
-  }
+  } */
   button {
     position: absolute;
     border-radius: 1rem;

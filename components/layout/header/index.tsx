@@ -16,13 +16,13 @@ import {
   NotificationContainer
 } from './style';
 import useUser from '../../../quries/hooks/user/useUser';
-import { useStompNotifications } from '../../../lib/hooks/socket/useStompNotifications';
+import { useNotifications } from '../../../lib/hooks/socket/useNotifications';
 import Image from 'next/image';
 
 const Header = () => {
   const { user } = useUser();
 
-  const { notificationsBadge } = useStompNotifications(user?.userId);
+  const { notificationsBadge } = useNotifications(user?.userId);
 
   const router = useRouter();
   const { pathname } = router;
@@ -107,10 +107,10 @@ const Header = () => {
                       <div className="notification__red"></div>
                     </NotificationContainer>
                   </Link>
-                  <Link href="/room">
+                  <Link href="/chat/room">
                     <BsFillChatDotsFill />
                   </Link>
-                  <Link href="/mypage">
+                  <Link href="/my/page">
                     <img src={profileImg} alt="" />
                   </Link>
                 </div>

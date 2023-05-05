@@ -74,26 +74,8 @@ const Post = () => {
           <UserBox>
             <img src={post.profileImg} alt="" />
             <span className="nickname">{post.nickname}</span>
-            <Image
-              src="/assets/icons/divider.svg"
-              alt="Divider"
-              width={2}
-              height={10}
-            />
             <span>{post.createdAt}</span>
-            <Image
-              src="/assets/icons/divider.svg"
-              alt="Divider"
-              width={2}
-              height={10}
-            />
             <span>{post.after}</span>
-            <Image
-              src="/assets/icons/divider.svg"
-              alt="Divider"
-              width={2}
-              height={10}
-            />
             <span>조회 {post.viewCount}</span>
           </UserBox>
           {accessToken && isCurrentUser && (
