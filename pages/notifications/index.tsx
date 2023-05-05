@@ -38,17 +38,19 @@ const Notifications = () => {
     }
   };
 
+  console.log(notifications, 'notifications');
+
   return (
     <Container>
       <NotificationWrapper>
         <Navigate text={'알림'} />
-        {notifications?.pages[0].data.content.length === 0 && (
+        {!notifications?.pages[0].data && (
           <NoData text={'알림'} notification={true} />
         )}
         <NotificationContainer>
           {isSuccess &&
             notifications?.pages.map((page, pageIndex) => {
-              const content = page.data.content;
+              const content = page.data?.content;
               return content?.map((noti, notiIndex) => {
                 if (
                   notiIndex === content.length - 1 &&
