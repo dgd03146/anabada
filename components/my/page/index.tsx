@@ -23,6 +23,7 @@ import {
   UserDiv
 } from './style';
 import { showToast } from '../../layout/Toast/style';
+import { removeToken } from '../../../services/token';
 
 const MyPage = () => {
   const { user } = useUser();
@@ -35,11 +36,7 @@ const MyPage = () => {
   const [imgSrc, setImgSrc] = useState<string>('');
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    // TODO: 클래스로 만들어서 관리.
-    const cookies = new Cookies();
-    cookies.remove('refreshToken');
-
+    removeToken();
     router.push('/home');
   };
 

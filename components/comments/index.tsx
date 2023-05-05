@@ -13,8 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import useComments from '../../quries/hooks/comments/useComments';
 import { flatten } from 'lodash';
 import { FiInbox } from 'react-icons/fi';
-import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '../../quries/key';
+import useGetToken from '../../lib/hooks/token/useGetToken';
 
 type TCommentsProps = {
   nickname?: string;
@@ -24,11 +23,7 @@ type TCommentsProps = {
 };
 
 const Comments = ({ nickname, profileImg, post, postId }: TCommentsProps) => {
-  const queryClient = useQueryClient();
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+  const accessToken = useGetToken();
 
   const { comments, fetchNextPage, isFetchingNextPage } = useComments(postId);
 

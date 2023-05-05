@@ -11,16 +11,16 @@ import { ViewComments } from './style';
 import EditComment from './editComment';
 import NoEditComment from './noEditComment';
 
+import useUser from '../../../quries/hooks/user/useUser';
+
 type TCommentProps = {
   comment: TComment;
   key?: string;
 };
 
 const Comment = ({ comment, key }: TCommentProps) => {
-  // FIXME: nickname 리덕스에서 말고 바꿔야함
-  const nickname = 'nickname';
-  // const nickname = useSelector((state) => state.auth.nickname);
-  const accessToken = localStorage.getItem('accessToken');
+  const { user } = useUser();
+  const nickname = user?.nickname;
 
   const [updatedContent, setUpdatedContent] = useState(comment.content);
 
@@ -45,7 +45,6 @@ const Comment = ({ comment, key }: TCommentProps) => {
         <NoEditComment
           comment={comment}
           nickname={nickname}
-          accessToken={accessToken}
           setUpdatedContent={setUpdatedContent}
           onToggleEdit={onToggleEdit}
         />

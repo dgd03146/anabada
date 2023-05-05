@@ -10,6 +10,7 @@ import { useDeleteMeet } from '../../../../quries/hooks/meets/useDeleteMeet';
 import { TMeet } from '../../../../lib/types/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../../../quries/key';
+import useGetToken from '../../../../lib/hooks/token/useGetToken';
 
 type TMeetTopInfoProps = {
   meet?: TMeet;
@@ -25,12 +26,7 @@ const MeetTopInfo = ({
   nickname
 }: TMeetTopInfoProps) => {
   const router = useRouter();
-
-  const queryClient = useQueryClient();
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+  const accessToken = useGetToken();
 
   const { onDelete } = useDeleteMeet();
   const [showModal, setShowModal] = useState(false);
@@ -73,7 +69,6 @@ const MeetTopInfo = ({
         )}
         {showModal && (
           <SelectContainer>
-            {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
             <button
               className="editBtn"
               onClick={() => {
@@ -84,13 +79,12 @@ const MeetTopInfo = ({
               수정하기
               <FiEdit2 />
             </button>
-            {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
+
             <button
               className="deleteBtn"
               onClick={() => {
                 const result = window.confirm('정말 삭제하시겠습니까?');
                 if (result) {
-                  // FIXME: ! 안 사용하고 싶은디
                   onDelete(meet?.thunderPostId!);
                 }
               }}

@@ -2,7 +2,8 @@ import { QueryKeys } from '../../key';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { userApi } from '../../../services/api';
 import { showToast } from '../../../components/layout/Toast/style';
-import { getAccessToken } from '../../../services/token';
+import { getToken } from '../../../services/token';
+import useGetToken from '../../../lib/hooks/token/useGetToken';
 
 const getUserData = async () => {
   try {
@@ -17,9 +18,7 @@ const getUserData = async () => {
 };
 
 const useUser = () => {
-  const queryClient = useQueryClient();
-
-  const accessToken = queryClient.getQueryData([QueryKeys.accessToken]);
+  const accessToken = useGetToken();
 
   const { data: user } = useQuery([QueryKeys.user], getUserData, {
     onSuccess() {

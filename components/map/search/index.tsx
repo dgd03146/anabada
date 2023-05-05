@@ -13,9 +13,12 @@ import {
 import { toast } from 'react-toastify';
 import { showToast } from '../../layout/Toast/style';
 import { BEACH_MESSAGE } from '../../../constants/contstant';
+import { useSpots } from '../../../quries/hooks/spots/useSpots';
 
-const MapSearch = ({ setPicker, spots }: Omit<TMapProps, 'picker'>) => {
+const MapSearch = ({ setPicker }: Omit<TMapProps, 'picker' | 'spots'>) => {
   const inputRef = useRef(null);
+  const spots = useSpots();
+
   const [inputName, setInputName] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>();
 
