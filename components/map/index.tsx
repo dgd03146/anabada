@@ -32,7 +32,6 @@ import Head from 'next/head';
 export type TMapProps = {
   picker: TSpot;
   setPicker: Dispatch<SetStateAction<TSpot>>;
-  spots: TSpot[];
 };
 
 const KakaoMap = ({ picker, setPicker }: TMapProps) => {

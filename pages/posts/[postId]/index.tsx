@@ -27,15 +27,11 @@ import {
 import NoData from '../../../components/layout/noData';
 import useUser from '../../../quries/hooks/user/useUser';
 import PostAdd from '../add';
-import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '../../../quries/key';
+import useGetToken from '../../../lib/hooks/token/useGetToken';
 
 const Post = () => {
-  const queryClient = useQueryClient();
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+  const accessToken = useGetToken();
+
   const router = useRouter();
   const postId = router.query.postId as string;
 

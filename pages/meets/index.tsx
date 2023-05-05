@@ -11,16 +11,11 @@ import { useRouter } from 'next/router';
 import { useMeets } from '../../quries/hooks/meets/useMeets';
 import Link from 'next/link';
 import { MeetsContainer, MeetsPostsContainer, PostBtn } from './style';
-import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '../../quries/key';
+import useGetToken from '../../lib/hooks/token/useGetToken';
 
 const Meets = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+  const accessToken = useGetToken();
   const { meets, areaSelected, setAreaSelected } = useMeets();
   const { popularMeets, setPopularAreaSelected } = usePopularMeets();
 

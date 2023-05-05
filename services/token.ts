@@ -1,17 +1,25 @@
-import { QueryKeys } from '../quries/key';
-import queryClient from '../quries/queryClient';
+import { Cookies } from 'react-cookie';
 
-export const getAccessToken = () => {
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+const cookies = new Cookies();
+
+export const getToken = () => {
+  const accessToken = localStorage.getItem('accessToken');
   return accessToken;
 };
 
-export const setAccessToken = (authorization: string) => {
-  queryClient.setQueryData([QueryKeys.accessToken], authorization);
+export const setToken = (authorization: string) => {
+  localStorage.setItem('accessToken', authorization);
 };
 
-export const removeAccessToken = () => {
-  queryClient.setQueryData([QueryKeys.accessToken], null);
+export const removeToken = () => {
+  cookies.remove('refreshToken');
+  localStorage.removeItem('accessToken');
+};
+
+export const getRefreshToken = () => {
+  return cookies.get('refreshToken');
+};
+
+export const setRefreshToken = (refreshToken: string) => {
+  cookies.set('refreshToken', refreshToken);
 };

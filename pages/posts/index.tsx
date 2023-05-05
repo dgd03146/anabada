@@ -13,6 +13,7 @@ import { dehydrate, QueryClient, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';
 import { MainDiv, PostBtn, PostDiv } from './style';
 import AreaSelector from '../../components/common/areaSelector';
+import useGetToken from '../../lib/hooks/token/useGetToken';
 
 // FIXME: prefetch 고려해보자
 // export async function getStaticProps() {
@@ -42,14 +43,7 @@ const Posts = () => {
     setAreaSelected
   } = usePosts();
 
-  const queryClient = useQueryClient();
-
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
-
-  const isUser = !!accessToken;
+  const accessToken = useGetToken();
 
   useEffect(() => {
     if (inView) {
@@ -105,7 +99,7 @@ const Posts = () => {
           {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
         </PostDiv>
       </MainDiv>
-      {isUser && (
+      {accessToken && (
         <PostBtn>
           <Link href="/posts/add">
             <TbPencil />

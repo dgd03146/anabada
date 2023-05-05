@@ -10,9 +10,10 @@ import { useAllMeets } from '../../../quries/hooks/meets/useAllMeets';
 import AreaSelector from '../../../components/common/areaSelector';
 import { TEvent, TKeyEvent, TSelectEvent } from '../../../lib/types/types';
 import { MeetAddBtn, MeetAllContainer } from './style';
+import useGetToken from '../../../lib/hooks/token/useGetToken';
 
 const MeetsAll = () => {
-  const accesstoken = localStorage.getItem('accessToken');
+  const accesstoken = useGetToken();
   const { ref, inView } = useInView();
 
   const {
