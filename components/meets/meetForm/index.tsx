@@ -65,7 +65,6 @@ const MeetForm = () => {
         ...formData,
         thumbnailUrl
       };
-
       onAdd({ newMeet, thunderPostId });
     } catch (err) {
       if (err instanceof ApiError) {

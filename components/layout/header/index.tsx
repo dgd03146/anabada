@@ -18,17 +18,19 @@ import {
 import useUser from '../../../quries/hooks/user/useUser';
 import { useNotifications } from '../../../lib/hooks/socket/useNotifications';
 import Image from 'next/image';
+import { getRefreshToken } from '../../../services/token';
+import useGetToken from '../../../lib/hooks/token/useGetToken';
 
 const Header = () => {
   const { user } = useUser();
+  const refreshToken = getRefreshToken();
 
   const { notificationsBadge } = useNotifications(user?.userId);
 
   const router = useRouter();
   const { pathname } = router;
   const timer = useRef(null);
-  const cookies = new Cookies();
-  const getCookies = cookies.get('refreshToken');
+
   const [, setValueY] = useState(0);
   const gapY = useRef(0);
 
@@ -86,7 +88,31 @@ const Header = () => {
             </div>
           </Link>
           <div className="header__user">
-            {getCookies === undefined ? (
+            {refreshToken ? (
+              <div className="header__user__info header__user__info-islogin">
+                <Link href="/notifications">
+                  <NotificationContainer noti={notificationsBadge?.isBadge}>
+                    <GrNotification />
+                    <div className="notification__red"></div>
+                  </NotificationContainer>
+                </Link>
+                <Link href="/chat/room">
+                  <BsFillChatDotsFill />
+                </Link>
+                <Link href="/my/page">
+                  <Image
+                    src={
+                      profileImg
+                        ? profileImg
+                        : '/assets/illustrations/defaultImage.jpg'
+                    }
+                    alt="Profile Image"
+                    width={50}
+                    height={50}
+                  />
+                </Link>
+              </div>
+            ) : (
               <>
                 <Link href="/login">
                   <div className="header__user__login">로그인</div>
@@ -97,23 +123,6 @@ const Header = () => {
                 <Link href="/signup">
                   <div className="header__user__signup">회원가입</div>
                 </Link>
-              </>
-            ) : (
-              <>
-                <div className="header__user__info header__user__info-islogin">
-                  <Link href="/notifications">
-                    <NotificationContainer noti={notificationsBadge?.isBadge}>
-                      <GrNotification />
-                      <div className="notification__red"></div>
-                    </NotificationContainer>
-                  </Link>
-                  <Link href="/chat/room">
-                    <BsFillChatDotsFill />
-                  </Link>
-                  <Link href="/my/page">
-                    <img src={profileImg} alt="" />
-                  </Link>
-                </div>
               </>
             )}
           </div>

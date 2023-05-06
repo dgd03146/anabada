@@ -55,17 +55,11 @@ export const UserBox = styled.div`
   }
 `;
 
-export const ThumbnailDiv = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-
-  display: flex;
-  justify-content: center;
-  width: 100%;
+export const ImageWrapper = styled.div`
   img {
-    min-width: 100px;
-    max-width: 800px;
+    width: 100%;
+    height: 100%;
+    position: relative !important;
     object-fit: cover;
   }
 `;

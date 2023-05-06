@@ -37,7 +37,7 @@ const MyPage = () => {
 
   const handleLogout = () => {
     removeToken();
-    router.push('/home');
+    router.push('/');
   };
 
   const handleImg = async () => {

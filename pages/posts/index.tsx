@@ -8,7 +8,7 @@ import { TEvent, TKeyEvent, TPost, TSelectEvent } from '../../lib/types/types';
 import { BREAK_POINTS } from '../../constants/contstant';
 import Loading from '../../components/loading';
 import NoData from '../../components/layout/noData';
-import PostSkeletonContainer from '../../components/posts/post/container';
+import PostContainer from '../../components/posts/post/container';
 import { dehydrate, QueryClient, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';
 import { MainDiv, PostBtn, PostDiv } from './style';
@@ -87,7 +87,7 @@ const Posts = () => {
           >
             {posts?.pages.map((page) => {
               return page?.data.map((post: TPost) => (
-                <PostSkeletonContainer
+                <PostContainer
                   key={post.postId}
                   post={post}
                   isFetching={isFetching}

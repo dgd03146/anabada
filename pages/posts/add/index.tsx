@@ -74,7 +74,6 @@ const PostAdd = () => {
   const onSubmit = async (formData: TPost) => {
     try {
       const confirmed = window.confirm('게시물을 등록하시겠습니까?');
-
       if (!confirmed) return;
 
       const thumbnailUrl = await uploadThumbnailImage(
