@@ -29,26 +29,20 @@ const useAddPost = () => {
 
   const { mutate: onAdd } = useMutation(createPost, {
     onSuccess: async () => {
-      try {
-        await queryClient.invalidateQueries([QueryKeys.posts]);
-        await queryClient.invalidateQueries([QueryKeys.myPostsList], {
-          refetchType: 'all'
-        });
-        showToast({
-          type: 'success',
-          message: '게시물을 등록에 성공하였습니다'
-        });
-        router.push('/posts'); // Redirect to /posts
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    onError: (err) => {
-      console.log(err);
+      // await Promise.all([
+      await queryClient.invalidateQueries([QueryKeys.posts]);
+      await queryClient.invalidateQueries([QueryKeys.myPostsList]);
 
       showToast({
+        type: 'success',
+        message: '게시물 등록에 성공하였습니다'
+      });
+      return router.push('/posts'); // Redirect to /posts
+    },
+    onError: () => {
+      showToast({
         type: 'error',
-        message: '게시물을 등록에 성공하였습니다'
+        message: '게시물 등록에 실패하였습니다'
       });
     }
   });

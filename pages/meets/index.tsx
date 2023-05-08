@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { useMeets } from '../../quries/hooks/meets/useMeets';
 import Link from 'next/link';
 import { MeetsContainer, MeetsPostsContainer, PostBtn } from './style';
-import useGetToken from '../../lib/hooks/token/useGetToken';
+import useGetToken from '../../lib/hooks/user/useGetToken';
 
 const Meets = () => {
   const router = useRouter();

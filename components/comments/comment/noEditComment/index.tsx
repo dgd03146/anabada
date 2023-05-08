@@ -12,7 +12,7 @@ import {
   CommentNickname,
   SelectContainer
 } from '../style';
-import useGetToken from '../../../../lib/hooks/token/useGetToken';
+import useGetToken from '../../../../lib/hooks/user/useGetToken';
 
 type TNoEditCommentProps = {
   comment: TComment;

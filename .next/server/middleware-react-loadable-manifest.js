@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={"..\\components\\layout\\index.tsx -> ./header":{"id":"..\\components\\layout\\index.tsx -> ./header","files":["static/chunks/components_layout_header_index_tsx.js"]}}
+self.__REACT_LOADABLE_MANIFEST={"..\\components\\layout\\header\\index.tsx -> ./userHeader/index":{"id":"..\\components\\layout\\header\\index.tsx -> ./userHeader/index","files":["static/chunks/components_layout_header_userHeader_index_tsx.js"]}}

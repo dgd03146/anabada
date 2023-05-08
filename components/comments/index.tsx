@@ -13,7 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import useComments from '../../quries/hooks/comments/useComments';
 import { flatten } from 'lodash';
 import { FiInbox } from 'react-icons/fi';
-import useGetToken from '../../lib/hooks/token/useGetToken';
+import useGetToken from '../../lib/hooks/user/useGetToken';
 
 type TCommentsProps = {
   nickname?: string;

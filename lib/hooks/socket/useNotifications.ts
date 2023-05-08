@@ -4,7 +4,7 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
 
 import { notificationsApi, SOCKET_SERVER_URL } from '../../../services/api';
-import useGetToken from '../token/useGetToken';
+import useGetToken from '../user/useGetToken';
 import { getRefreshToken } from '../../../services/token';
 
 const socketServerURL = SOCKET_SERVER_URL;

@@ -1,6 +1,6 @@
 import { userApi } from '../../../services/api';
 import { TLogin } from '../../../lib/types/types';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { ApiError } from 'next/dist/server/api-utils';
@@ -30,6 +30,7 @@ export function useLogin() {
     {
       onSuccess: async () => {
         showToast({ type: 'success', message: LOGIN_MESSAGE.SUCCESS_LOGIN });
+
         router.push('/');
       },
       onError: (err) => {

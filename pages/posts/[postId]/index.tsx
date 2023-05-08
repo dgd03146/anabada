@@ -20,14 +20,15 @@ import {
   HeartBtn,
   PostBox,
   SelectContainer,
-  ThumbnailDiv,
+  ImageWrapper,
   TitleDiv,
   UserBox
 } from './style';
 import NoData from '../../../components/layout/noData';
 import useUser from '../../../quries/hooks/user/useUser';
 import PostAdd from '../add';
-import useGetToken from '../../../lib/hooks/token/useGetToken';
+import useGetToken from '../../../lib/hooks/user/useGetToken';
+import Loading from '../../../components/loading';
 
 const Post = () => {
   const accessToken = useGetToken();
@@ -58,11 +59,14 @@ const Post = () => {
     setShowModal((prev) => !prev);
   };
 
+  console.log(post, 'post');
+
   if (isEdit) {
     return <PostAdd />;
   } else {
     if (!post) {
-      return <NoData text="포스트" post={true} />;
+      // FIXME: Suspense 적용
+      return <Loading />;
     }
     return (
       <>
@@ -115,16 +119,12 @@ const Post = () => {
             </SelectContainer>
           )}
         </Box>
-        <ThumbnailDiv>
+
+        <ImageWrapper>
           {post.thumbnailUrl && (
-            <Image
-              src={post.thumbnailUrl}
-              alt="Thumbnail"
-              width={16}
-              height={16}
-            />
+            <Image src={post.thumbnailUrl} alt="Thumbnail" fill />
           )}
-        </ThumbnailDiv>
+        </ImageWrapper>
         <AddressBox>
           <Image
             src="/assets/icons/address.svg"

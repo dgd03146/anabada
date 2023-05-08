@@ -24,6 +24,8 @@ import {
 } from './style';
 import { showToast } from '../../layout/Toast/style';
 import { removeToken } from '../../../services/token';
+import { LOGIN_MESSAGE } from '../../../constants/contstant';
+import { useQueryClient } from '@tanstack/react-query';
 
 const MyPage = () => {
   const { user } = useUser();
@@ -36,8 +38,14 @@ const MyPage = () => {
   const [imgSrc, setImgSrc] = useState<string>('');
 
   const handleLogout = () => {
-    removeToken();
-    router.push('/home');
+    try {
+      removeToken();
+      showToast({ type: 'success', message: LOGIN_MESSAGE.SUCCESS_LOGOUT });
+
+      router.push('/');
+    } catch {
+      showToast({ type: 'error', message: LOGIN_MESSAGE.FAIL_LOGOUT });
+    }
   };
 
   const handleImg = async () => {

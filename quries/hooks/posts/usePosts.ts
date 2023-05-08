@@ -48,8 +48,7 @@ export function usePosts() {
     {
       getNextPageParam: (lastPage) =>
         !lastPage?.last ? lastPage?.nextPage : undefined,
-      refetchOnWindowFocus: false,
-      staleTime: 600000,
+      staleTime: 60000,
       onError(err) {
         if (err instanceof AxiosError)
           showToast({ type: 'error', message: err.message });

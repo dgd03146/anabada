@@ -14,7 +14,7 @@ const PostSkeletonContainer = memo(
   ({ isFetching, isLoading, post }: TContainerProps) => {
     return (
       <div style={{ cursor: 'pointer' }}>
-        {isFetching && <SkeletonItem />}
+        {/* {isFetching && <SkeletonItem />} */}
         {!isLoading && <Post post={post} />}
       </div>
     );

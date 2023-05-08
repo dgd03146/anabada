@@ -10,7 +10,7 @@ import { useDeleteMeet } from '../../../../quries/hooks/meets/useDeleteMeet';
 import { TMeet } from '../../../../lib/types/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../../../quries/key';
-import useGetToken from '../../../../lib/hooks/token/useGetToken';
+import useGetToken from '../../../../lib/hooks/user/useGetToken';
 
 type TMeetTopInfoProps = {
   meet?: TMeet;

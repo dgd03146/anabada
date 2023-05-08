@@ -74,14 +74,6 @@ export const Container = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  /* display: flex;
-  justify-content: center;
-  width: 100%; */
-  /* img {
-    min-width: 100px;
-    max-width: 800px;
-    object-fit: cover;
-  } */
   img {
     width: 100%;
     height: 100%;
