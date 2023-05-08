@@ -33,8 +33,11 @@ export const SIGNUP_MESSAGE = {
 };
 
 export const LOGIN_MESSAGE = {
-  SUCCESS_LOGIN: '로그인에 성공했습니다.',
-  CHECK_EMAIL_PASSWORD: '이메일과 비밀번호를 확인해주세요'
+  SUCCESS_LOGIN: '로그인에 성공하였습니다.',
+  CHECK_EMAIL_PASSWORD: '이메일과 비밀번호를 확인해주세요',
+  FAIL_LOGIN: '로그인에 실패하였습니다. 다시 시도해주세요',
+  SUCCESS_LOGOUT: '로그아웃이 되었습니다',
+  FAIL_LOGOUT: '로그아웃에 실패하였습니다'
 };
 
 export const EMAIL_MESSAGE = {

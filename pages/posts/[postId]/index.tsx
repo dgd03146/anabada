@@ -27,7 +27,7 @@ import {
 import NoData from '../../../components/layout/noData';
 import useUser from '../../../quries/hooks/user/useUser';
 import PostAdd from '../add';
-import useGetToken from '../../../lib/hooks/token/useGetToken';
+import useGetToken from '../../../lib/hooks/user/useGetToken';
 import Loading from '../../../components/loading';
 
 const Post = () => {

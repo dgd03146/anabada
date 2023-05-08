@@ -9,7 +9,7 @@ import { notificationsApi } from '../services/api';
 import { useSpots } from '../quries/hooks/spots/useSpots';
 import Loading from '../components/loading';
 import { getRefreshToken } from '../services/token';
-import useGetToken from '../lib/hooks/token/useGetToken';
+import useGetToken from '../lib/hooks/user/useGetToken';
 
 const Home = () => {
   const [picker, setPicker] = useState(PICKER);

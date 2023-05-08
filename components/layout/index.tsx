@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import { Container } from './style';
 import dynamic from 'next/dynamic';
-// import Header from './header';
+import Header from './header';
 
-const DynamicHeader = dynamic(() => import('./header'), {
-  ssr: false
-});
+// const DynamicHeader = dynamic(() => import('./header'), {
+//   ssr: false
+// });
 
 type TProps = {
   children: ReactNode;
@@ -14,7 +14,7 @@ type TProps = {
 const Layout = ({ children }: TProps) => {
   return (
     <>
-      <DynamicHeader />
+      <Header />
       <Container>{children}</Container>
     </>
   );

@@ -13,7 +13,7 @@ import { dehydrate, QueryClient, useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../quries/key';
 import { MainDiv, PostBtn, PostDiv } from './style';
 import AreaSelector from '../../components/common/areaSelector';
-import useGetToken from '../../lib/hooks/token/useGetToken';
+import useGetToken from '../../lib/hooks/user/useGetToken';
 
 // FIXME: prefetch 고려해보자
 // export async function getStaticProps() {

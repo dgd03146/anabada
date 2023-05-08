@@ -10,7 +10,7 @@ import { useAllMeets } from '../../../quries/hooks/meets/useAllMeets';
 import AreaSelector from '../../../components/common/areaSelector';
 import { TEvent, TKeyEvent, TSelectEvent } from '../../../lib/types/types';
 import { MeetAddBtn, MeetAllContainer } from './style';
-import useGetToken from '../../../lib/hooks/token/useGetToken';
+import useGetToken from '../../../lib/hooks/user/useGetToken';
 
 const MeetsAll = () => {
   const accesstoken = useGetToken();
