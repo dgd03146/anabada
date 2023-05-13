@@ -32,6 +32,7 @@ import useGetToken from '../../lib/hooks/user/useGetToken';
 
 const Posts = () => {
   const { ref, inView } = useInView();
+
   const {
     posts,
     fetchNextPage,

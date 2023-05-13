@@ -127,11 +127,11 @@ export const postApi = {
   },
 
   getPosts(pageParam: number, areaSelected: string) {
-    return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=6`);
+    return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=9`);
   },
   getSearchPosts(pageParam: number, areaSelected: string, keyword: string) {
     return api.get(
-      `/posts/search?area=${areaSelected}&keyword=${keyword}&page=${pageParam}&size=6`
+      `/posts/search?area=${areaSelected}&keyword=${keyword}&page=${pageParam}&size=9`
     );
   },
   getPostDetail(postId: string) {

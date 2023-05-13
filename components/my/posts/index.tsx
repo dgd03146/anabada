@@ -12,6 +12,7 @@ import { BtnDiv, PostContainer, PostDiv } from './style';
 
 const MyPosts = () => {
   const { ref, inView } = useInView();
+
   const router = useRouter();
 
   const query = router.query;
