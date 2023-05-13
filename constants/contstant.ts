@@ -15,7 +15,9 @@ export const PICKER = {
 
 export const BREAK_POINTS = {
   default: 3,
-  1100: 3,
+  1600: 2,
+  1280: 2,
+  900: 3,
   700: 2
 };
 

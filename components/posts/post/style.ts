@@ -15,43 +15,12 @@ export const PostInfoBox = styled.div`
   }
 `;
 
-export const ImageBox = styled.div`
-  display: flex;
-  position: relative;
-
-  div {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: transparent;
-    bottom: 1.630625rem;
-    right: 0.755625rem;
-  }
-  span {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #ff2d55;
-  }
-
-  p {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #ffffff;
-  }
-
+export const ImageWrapper = styled.div`
   img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    object-fit: contain;
-    border-radius: 0.8125rem;
-    margin-bottom: 0.875rem;
-
     width: 100%;
-
-    /* FIXME: 스켈레톤으로 바꿔야함 */
-    min-height: 8rem;
+    height: 100%;
+    position: relative !important;
+    object-fit: cover;
   }
 `;
 
@@ -63,10 +32,9 @@ export const PostInfo = styled.div`
   h2 {
     display: block;
 
-    display: -webkit-box;
     -webkit-line-clamp: 2; //원하는 라인수
     -webkit-box-orient: vertical;
-    white-space: pre-wrap;
+    white-space: pre-line;
     overflow: hidden;
     text-overflow: ellipsis;
 

@@ -23,6 +23,8 @@ const useSetPost = (
         try {
           const postInfo = await postApi.getPostDetail(`${postId}`);
 
+          console.log(postInfo, 'postInfo');
+
           if (postInfo.data.nickname !== nickname) {
             alert('수정 권한이 없습니다.');
             router.back();
@@ -38,6 +40,8 @@ const useSetPost = (
             amenity,
             thumbnailUrl
           } = postInfo.data;
+
+          console.log(content, '✨✨✨');
 
           const valuesToSet = {
             title: title,
@@ -57,6 +61,7 @@ const useSetPost = (
           setImgSrc(thumbnailUrl);
 
           const htmlString = content;
+          console.log(htmlString, 'htmlString');
           editorRef.current?.getInstance().setHTML(htmlString);
         } catch (err) {
           console.error(err);

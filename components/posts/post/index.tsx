@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import { TPost } from '../../../lib/types/types';
 import Image from 'next/image';
-import { ImageBox, PostInfo, PostInfoBox, UserInfo } from './style';
+import { ImageWrapper, PostInfo, PostInfoBox, UserInfo } from './style';
 
 type TPostProps = {
   post: TPost;
@@ -19,7 +19,7 @@ const Post = memo(({ post }: TPostProps) => {
         router.push(`/posts/${post.postId}`);
       }}
     >
-      <ImageBox>
+      <ImageWrapper>
         <Image
           src={
             thumbnailImage
@@ -27,12 +27,9 @@ const Post = memo(({ post }: TPostProps) => {
               : '/assets/illustrations/defaultImage.jpg'
           }
           alt="Thumbnail"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: '100%', height: 'auto' }}
+          fill
         />
-      </ImageBox>
+      </ImageWrapper>
       <PostInfo>
         <h2>{post.title}</h2>
         <UserInfo>

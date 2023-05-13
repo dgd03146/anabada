@@ -125,6 +125,7 @@ export const PostBox = styled.div`
   font-size: 0.9375rem;
   font-weight: 400;
 `;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;

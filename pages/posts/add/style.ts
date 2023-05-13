@@ -134,6 +134,7 @@ export const AmenityButton = styled.button<ButtonProps>`
       color: white;
       border: none;
     `}
+
   &:hover {
     color: ${(props) => (props.check ? 'white' : 'black')};
     background-color: ${(props) => (props.check ? '#007AFF' : 'transparent')};
