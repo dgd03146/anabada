@@ -24,11 +24,11 @@ import Image from 'next/image';
 import { Editor } from '@toast-ui/react-editor';
 import { uploadThumbnailImage } from '../../../lib/utils/uploadThubnailImage';
 import useSetPost from '../../../lib/hooks/post/useSetPost';
-import Loading from '../../../components/loading';
+import LoadingSpinner from '../../../components/loading';
 
 const ToastEditor = dynamic(
   () => import('../../../components/posts/post/editor'),
-  { ssr: false, loading: () => <Loading /> }
+  { ssr: false, loading: () => <LoadingSpinner /> }
 );
 
 const PostAdd = () => {
@@ -43,8 +43,6 @@ const PostAdd = () => {
 
   const [imgSrc, setImgSrc] = useState('');
   const [check, setCheck] = useState<{ [key: string]: boolean }>(AMENITY_CHECK);
-
-  console.log(check, 'check🧨🎇🎆');
 
   const [content, setContent] = useState('');
   const editorRef = useRef<Editor | null>(null);

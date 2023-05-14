@@ -1,8 +1,8 @@
 import { TPost } from '../../../lib/types/types';
 import { QueryKeys } from './../../key';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { queryClient } from '../../queryClient';
+
 import { postApi } from '../../../services/api';
 import { ApiError } from 'next/dist/server/api-utils';
 import { toast } from 'react-toastify';
@@ -27,6 +27,8 @@ const toggleLike: TToggleLike = async ({ setLiked, post }) => {
 };
 
 const useLike = () => {
+  const queryClient = useQueryClient();
+
   const { mutate: onToggleLike } = useMutation(
     (params: TToggleLikeParams) => toggleLike(params),
     {

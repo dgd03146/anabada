@@ -4,7 +4,7 @@ import Meet from '../../meets';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 
-import Loading from '../../loading';
+import LoadingSpinner from '../../loading';
 import { NoDataMyPage } from '../../layout/noData/myPage';
 
 import React from 'react';
@@ -75,7 +75,7 @@ const MyMeets = () => {
               <Meet key={meet.thunderPostId} meet={meet} />
             ));
           })}
-        {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
+        {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref}></div>}
       </MeetAllContainer>
     </>
   );

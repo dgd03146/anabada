@@ -28,7 +28,6 @@ export const getPosts: getPosts<TResponse<TPosts>> = async (
   } catch (err) {
     if (err instanceof AxiosError)
       showToast({ type: 'error', message: err.message });
-    throw new Error('Failed to fetch posts');
   }
 };
 
@@ -49,6 +48,7 @@ export function usePosts() {
       getNextPageParam: (lastPage) =>
         !lastPage?.last ? lastPage?.nextPage : undefined,
       staleTime: 60000,
+      suspense: false,
       onError(err) {
         if (err instanceof AxiosError)
           showToast({ type: 'error', message: err.message });

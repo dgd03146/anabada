@@ -6,15 +6,8 @@ import { getToken } from '../../../services/token';
 import useGetToken from '../../../lib/hooks/user/useGetToken';
 
 const getUserData = async () => {
-  try {
-    const response = await userApi.getUser();
-    return response.data;
-  } catch (err) {
-    showToast({
-      type: 'error',
-      message: '유저 정보를 불러오지 못 했습니다.'
-    });
-  }
+  const response = await userApi.getUser();
+  return response.data;
 };
 
 const useUser = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import CircleLoader from 'react-spinners/CircleLoader';
 import styled from 'styled-components';
 
-const Loading = () => {
+const LoadingSpinner = () => {
   return (
     <Container>
       <img src={'/assets/illustrations/waterwave.gif'} alt="" />
@@ -10,10 +10,12 @@ const Loading = () => {
   );
 };
 
-export const InfiniteLoading = () => {
-  <LoadingContainer>
-    <CircleLoader color="#007AFF" size={100} speedMultiplier={1} />;
-  </LoadingContainer>;
+export const InfiniteLoadingSpinner = () => {
+  return (
+    <LoadingContainer>
+      <CircleLoader color="#007AFF" size={50} speedMultiplier={1} />;
+    </LoadingContainer>
+  );
 };
 
 const Container = styled.div`
@@ -39,4 +41,4 @@ const LoadingContainer = styled.div`
   width: 100%;
 `;
 
-export default Loading;
+export default LoadingSpinner;

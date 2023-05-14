@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import Loading from '../../loading';
-import Post from '../../posts/post';
+import LoadingSpinner from '../../loading';
+import Info from '../../posts/post/info/postInfo';
 import { NoDataMyPage } from '../../layout/noData/myPage';
 
 import Masonry from 'react-masonry-css';
@@ -72,12 +72,12 @@ const MyPosts = () => {
                   router.push(`/posts/${post.postId}`);
                 }}
               >
-                <Post post={post} />
+                <Info post={post} />
               </PostContainer>
             ));
           })}
         </Masonry>
-        {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
+        {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref}></div>}
       </PostDiv>
     </>
   );

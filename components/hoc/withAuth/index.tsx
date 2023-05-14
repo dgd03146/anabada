@@ -4,6 +4,7 @@ import React, { useEffect, ComponentType } from 'react';
 import { showToast } from '../../layout/Toast/style';
 
 import { getRefreshToken, getToken } from '../../../services/token';
+import useGetToken from '../../../lib/hooks/user/useGetToken';
 
 const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
   const WithAuthWrapper = (props: P) => {
@@ -17,7 +18,7 @@ const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
       pathname.endsWith('/add') ||
       pathname.endsWith('/edit');
 
-    const accessToken = getToken();
+    const accessToken = useGetToken();
     const refreshToken = getRefreshToken();
 
     const isAuthenticated = () => {

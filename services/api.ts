@@ -23,6 +23,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(async (config: AxiosRequestConfig) => {
   const accessToken = getToken();
+  console.log(accessToken, 'accesstToken');
 
   if (config.headers && accessToken) {
     config.headers['Authorization'] = accessToken;
@@ -36,19 +37,16 @@ api.interceptors.response.use(
     if (config.headers.authorization && config.headers.refreshtoken) {
       const { authorization, refreshtoken } = config.headers;
 
-      console.log('🚗', authorization, '🚙', refreshtoken);
       setToken(authorization);
       setRefreshToken(refreshtoken);
     }
     return config;
   },
   async (err) => {
-    const {
-      config,
-      response: { status }
-    } = err;
+    const { config, response } = err;
     // 토큰 만료됐을 때 status
-    if (status === 500) {
+
+    if (response?.status === 500) {
       const cookies = new Cookies();
       if (cookies.get('refreshToken')) {
         return err;
