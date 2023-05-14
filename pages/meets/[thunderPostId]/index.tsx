@@ -14,7 +14,7 @@ import {
 } from './style';
 import MeetInfo from '../../../components/meets/meet/info';
 import MeetTopInfo from '../../../components/meets/meet/topInfo';
-import Loading from '../../../components/loading';
+import LoadingSpinner from '../../../components/loading';
 
 const Meet = () => {
   // TODO: NEXT.JS PRERENDERING 필요
@@ -37,7 +37,7 @@ const Meet = () => {
   }, []);
 
   if (!meet) {
-    return <Loading />;
+    return <LoadingSpinner />;
   }
   return (
     <Container>

@@ -50,14 +50,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Hydrate state={pageProps.dehydratedState}>
             {getLayout(<Component {...pageProps} />)}
-            <CustomToast />
-          </ThemeProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </Hydrate>
+          </Hydrate>
+          <CustomToast />
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );

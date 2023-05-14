@@ -1,8 +1,8 @@
 import { ApiError } from 'next/dist/server/api-utils';
 import { TOAST_MESSAGE } from './../../../constants/contstant';
 import { QueryKeys } from './../../key';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../queryClient';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { notificationsApi } from '../../../services/api';
 import { toast } from 'react-toastify';
 
@@ -15,6 +15,8 @@ const deleteAllNotifications = async () => {
 };
 
 const useDeleteAllnotifications = () => {
+  const queryClient = useQueryClient();
+
   const { mutate: onDelteAllNotifications } = useMutation(
     deleteAllNotifications,
     {

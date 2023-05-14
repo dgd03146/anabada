@@ -1,8 +1,8 @@
 import { TComment } from '../../../lib/types/types';
 import { commentsApi } from '../../../services/api';
 import { QueryKeys } from './../../key';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../queryClient';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 type TEditComment = (updatedComment: TComment) => Promise<void>;
@@ -22,6 +22,8 @@ const editComment: TEditComment = async (updatedComment) => {
 
 const useEditComment = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const queryClient = useQueryClient();
+
   const { mutate: onEditComment } = useMutation(editComment, {
     onSuccess: () => {
       try {

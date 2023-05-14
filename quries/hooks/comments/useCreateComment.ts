@@ -2,8 +2,8 @@ import { TComment } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 import { commentsApi } from '../../../services/api';
 import { postApi } from '../../../services/api';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../queryClient';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { RefObject } from 'react';
 
 type TCommentParams = {
@@ -24,6 +24,8 @@ const createComment: TCreateComment = async ({ postId, newComment }) => {
 const useCreateComment = (
   writeRef: RefObject<HTMLInputElement | HTMLTextAreaElement>
 ) => {
+  const queryClient = useQueryClient();
+
   const { mutate: onCreateComment } = useMutation(
     (params: TCommentParams) => createComment(params),
     {

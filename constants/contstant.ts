@@ -15,7 +15,9 @@ export const PICKER = {
 
 export const BREAK_POINTS = {
   default: 3,
-  1100: 3,
+  1600: 2,
+  1280: 2,
+  900: 3,
   700: 2
 };
 
@@ -110,3 +112,6 @@ export const MY_PAGES = {
     iconHeight: 24
   }
 };
+
+export const BlurDataURL =
+  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg==';

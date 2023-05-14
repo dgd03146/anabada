@@ -3,17 +3,18 @@ import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
 export const getToken = () => {
-  const accessToken = localStorage.getItem('accessToken');
-  return accessToken;
+  // const accessToken = localStorage.getItem('accessToken');
+  return cookies.get('accessToken');
 };
 
 export const setToken = (authorization: string) => {
-  localStorage.setItem('accessToken', authorization);
+  cookies.set('accessToken', authorization);
 };
 
 export const removeToken = () => {
   cookies.remove('refreshToken');
-  localStorage.removeItem('accessToken');
+  cookies.remove('accessToken');
+  // localStorage.removeItem('accessToken');
 };
 
 export const getRefreshToken = () => {

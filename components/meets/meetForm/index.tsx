@@ -28,9 +28,8 @@ const MeetForm = () => {
   });
 
   const router = useRouter();
-  console.log(router.query, '라우터 쿼리');
+
   const thunderPostId = router.query.thunderPostId as string;
-  console.log(thunderPostId, 'thunderPostId');
   const { imgSrc, setImgSrc } = useSetMeet(thunderPostId, setValue);
 
   const { onAdd } = useAddMeet();

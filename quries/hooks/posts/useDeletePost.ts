@@ -1,10 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { postApi } from '../../../services/api';
 import { QueryKeys } from '../../key';
-import { queryClient } from '../../queryClient';
 
 const postDelete = async (postId: string) => {
   try {
@@ -15,6 +14,7 @@ const postDelete = async (postId: string) => {
 };
 
 const useDeletePost = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { mutate: onDelete } = useMutation(postDelete, {
     onSuccess: async () => {

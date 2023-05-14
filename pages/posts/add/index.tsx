@@ -7,7 +7,7 @@ import { AmenityInfo } from '../../../data/amenityinfo';
 import useAddPost from '../../../quries/hooks/posts/useAddPost';
 import { TPost } from '../../../lib/types/types';
 import { flatten } from 'lodash';
-
+import dynamic from 'next/dynamic';
 import { Categories } from '../../../components/common/categories';
 import {
   AmenityButton,
@@ -22,9 +22,14 @@ import { toast } from 'react-toastify';
 import { ApiError } from 'next/dist/server/api-utils';
 import Image from 'next/image';
 import { Editor } from '@toast-ui/react-editor';
-import PostEditor from '../../../components/posts/post/editor';
 import { uploadThumbnailImage } from '../../../lib/utils/uploadThubnailImage';
 import useSetPost from '../../../lib/hooks/post/useSetPost';
+import LoadingSpinner from '../../../components/loading';
+
+const ToastEditor = dynamic(
+  () => import('../../../components/posts/post/editor'),
+  { ssr: false, loading: () => <LoadingSpinner /> }
+);
 
 const PostAdd = () => {
   const {
@@ -38,12 +43,14 @@ const PostAdd = () => {
 
   const [imgSrc, setImgSrc] = useState('');
   const [check, setCheck] = useState<{ [key: string]: boolean }>(AMENITY_CHECK);
+
   const [content, setContent] = useState('');
   const editorRef = useRef<Editor | null>(null);
 
   const router = useRouter();
   const postId = router.query.postId as string;
   const flattenedAmenities = flatten(AmenityInfo);
+  console.log(AmenityInfo, ' amenity info');
 
   const { onAdd } = useAddPost();
   useSetPost(setValue, setImgSrc, editorRef, postId);
@@ -83,6 +90,7 @@ const PostAdd = () => {
       );
 
       const amenity = Object.values(check).filter(Boolean).join(' ');
+
       const newPost: TPost = {
         title: formData.title,
         area: formData.area,
@@ -174,7 +182,7 @@ const PostAdd = () => {
             ))}
           </SelectAmenity>
         </Container>
-        <PostEditor setContent={setContent} editorRef={editorRef} />
+        <ToastEditor setContent={setContent} editorRef={editorRef} />
         <PostBtnDiv>
           <button type="submit" disabled={!isValid}>
             게시글 {postId ? '수정' : '등록'} 하기
