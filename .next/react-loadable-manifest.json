@@ -5,18 +5,6 @@
       "static/chunks/components_layout_header_userHeader_index_tsx.js"
     ]
   },
-  "posts\\[postId]\\index.tsx -> ../../../components/posts/post": {
-    "id": "posts\\[postId]\\index.tsx -> ../../../components/posts/post",
-    "files": [
-      "static/chunks/components_posts_post_index_tsx.js"
-    ]
-  },
-  "posts\\add\\viewer\\index.tsx -> @toast-ui/react-editor": {
-    "id": "posts\\add\\viewer\\index.tsx -> @toast-ui/react-editor",
-    "files": [
-      "static/chunks/node_modules_toast-ui_react-editor_dist_esm_index_js.js"
-    ]
-  },
   "posts\\index.tsx -> ../../components/posts": {
     "id": "posts\\index.tsx -> ../../components/posts",
     "files": [

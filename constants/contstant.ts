@@ -112,3 +112,6 @@ export const MY_PAGES = {
     iconHeight: 24
   }
 };
+
+export const BlurDataURL =
+  'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg==';

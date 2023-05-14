@@ -8,6 +8,7 @@ import {
   PostInfoBox,
   UserInfo
 } from './style';
+import { BlurDataURL } from '../../../../constants/contstant';
 
 type TPostProps = {
   post: TPost;
@@ -33,6 +34,8 @@ const Info = memo(({ post }: TPostProps) => {
           }
           alt="Thumbnail"
           fill
+          placeholder="blur"
+          blurDataURL={BlurDataURL}
         />
       </ImageWrapper>
       <PostInfo>

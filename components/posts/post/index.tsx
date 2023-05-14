@@ -30,6 +30,7 @@ import LoadingSpinner from '../../../components/loading';
 import PostViewer from '../../../pages/posts/add/viewer';
 
 import useGetToken from '../../../lib/hooks/user/useGetToken';
+import { BlurDataURL } from '../../../constants/contstant';
 
 const PostContainer = () => {
   const accessToken = useGetToken();
@@ -71,7 +72,14 @@ const PostContainer = () => {
       </TitleDiv>
       <Box>
         <UserBox>
-          <img src={post.profileImg} alt="" />
+          <Image
+            src={post.profileImg}
+            alt="Profile Image"
+            width={50}
+            height={50}
+            placeholder="blur"
+            blurDataURL={BlurDataURL}
+          />
           <span className="nickname">{post.nickname}</span>
           <span>{post.createdAt}</span>
           <span>{post.after}</span>
@@ -117,7 +125,13 @@ const PostContainer = () => {
 
       <ImageWrapper>
         {post.thumbnailUrl && (
-          <Image src={post.thumbnailUrl} alt="Thumbnail" fill />
+          <Image
+            src={post.thumbnailUrl}
+            alt="Thumbnail"
+            fill
+            placeholder="blur"
+            blurDataURL={BlurDataURL}
+          />
         )}
       </ImageWrapper>
       <AddressBox>
