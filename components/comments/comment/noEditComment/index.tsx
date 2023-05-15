@@ -3,7 +3,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import { FiEdit2, FiMoreHorizontal } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import comment from '..';
 import useDeleteComment from '../../../../quries/hooks/comments/useDeleteComment';
 import { TComment } from '../../../../lib/types/types';
 import {
@@ -13,11 +12,12 @@ import {
   CommentNickname,
   SelectContainer
 } from '../style';
+import useGetToken from '../../../../lib/hooks/user/useGetToken';
 
 type TNoEditCommentProps = {
   comment: TComment;
-  accessToken: string | null;
-  nickname: string;
+
+  nickname?: string;
   onToggleEdit: () => void;
 
   setUpdatedContent: Dispatch<SetStateAction<string | undefined>>;
@@ -25,12 +25,12 @@ type TNoEditCommentProps = {
 
 const NoEditComment = ({
   comment,
-  accessToken,
   onToggleEdit,
   nickname,
   setUpdatedContent
 }: TNoEditCommentProps) => {
   const [showModal, setShowModal] = useState(false);
+  const accessToken = useGetToken();
 
   const { onDeleteComment } = useDeleteComment();
   const onShowModal = () => {

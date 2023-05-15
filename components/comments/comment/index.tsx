@@ -11,16 +11,17 @@ import { ViewComments } from './style';
 import EditComment from './editComment';
 import NoEditComment from './noEditComment';
 
+import useUser from '../../../quries/hooks/user/useUser';
+import Image from 'next/image';
+
 type TCommentProps = {
   comment: TComment;
   key?: string;
 };
 
 const Comment = ({ comment, key }: TCommentProps) => {
-  // FIXME: nickname 리덕스에서 말고 바꿔야함
-  const nickname = 'nickname';
-  // const nickname = useSelector((state) => state.auth.nickname);
-  const accessToken = localStorage.getItem('accessToken');
+  const { user } = useUser();
+  const nickname = user?.nickname;
 
   const [updatedContent, setUpdatedContent] = useState(comment.content);
 
@@ -32,7 +33,12 @@ const Comment = ({ comment, key }: TCommentProps) => {
 
   return (
     <ViewComments>
-      <img src={comment.profileImg} alt="" />
+      <Image
+        src={comment.profileImg}
+        alt="Profile Image"
+        width={50}
+        height={50}
+      />
       {isEdit ? (
         <EditComment
           comment={comment}
@@ -45,7 +51,6 @@ const Comment = ({ comment, key }: TCommentProps) => {
         <NoEditComment
           comment={comment}
           nickname={nickname}
-          accessToken={accessToken}
           setUpdatedContent={setUpdatedContent}
           onToggleEdit={onToggleEdit}
         />

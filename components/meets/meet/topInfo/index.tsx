@@ -8,21 +8,26 @@ import React from 'react';
 import { SelectContainer } from './style';
 import { useDeleteMeet } from '../../../../quries/hooks/meets/useDeleteMeet';
 import { TMeet } from '../../../../lib/types/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '../../../../quries/key';
+import useGetToken from '../../../../lib/hooks/user/useGetToken';
+import { BlurDataURL } from '../../../../constants/contstant';
 
 type TMeetTopInfoProps = {
   meet?: TMeet;
-  accessToken: string | null;
+
   isCurrentUser: boolean;
   nickname?: string;
 };
 
 const MeetTopInfo = ({
   meet,
-  accessToken,
+
   isCurrentUser,
   nickname
 }: TMeetTopInfoProps) => {
   const router = useRouter();
+  const accessToken = useGetToken();
 
   const { onDelete } = useDeleteMeet();
   const [showModal, setShowModal] = useState(false);
@@ -46,29 +51,13 @@ const MeetTopInfo = ({
               alt="profileUrl"
               width={50}
               height={50}
+              placeholder="blur"
+              blurDataURL={BlurDataURL}
             />
           )}
           <p className="nickname">{meet?.nickname}</p>
-          <Image
-            src="/aseets/icons/clock.svg"
-            alt="created at"
-            width={2}
-            height={10}
-          />
           <p>{meet?.createdAt}</p>
-          <Image
-            src="/aseets/icons/clock.svg"
-            alt="after"
-            width={2}
-            height={10}
-          />
           <p>{meet?.after}</p>
-          <Image
-            src="/aseets/icons/eye.svg"
-            alt="view count"
-            width={2}
-            height={10}
-          />
           <p>조회 {meet?.viewCount}</p>
         </div>
         {accessToken && isCurrentUser && (
@@ -83,31 +72,29 @@ const MeetTopInfo = ({
         )}
         {showModal && (
           <SelectContainer>
-            {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
-            <div
+            <button
               className="editBtn"
               onClick={() => {
                 // FIXME: edit 페이지
-                router.push(`/meet/edit/${meet?.thunderPostId}`);
+                router.push(`/meets/edit/${meet?.thunderPostId}`);
               }}
             >
               수정하기
               <FiEdit2 />
-            </div>
-            {/* FIXME: BUTTON으로 바꿔야하지 않나? */}
-            <div
+            </button>
+
+            <button
               className="deleteBtn"
               onClick={() => {
                 const result = window.confirm('정말 삭제하시겠습니까?');
                 if (result) {
-                  // FIXME: ! 안 사용하고 싶은디
                   onDelete(meet?.thunderPostId!);
                 }
               }}
             >
               삭제하기
               <RiDeleteBin5Line />
-            </div>
+            </button>
           </SelectContainer>
         )}
       </div>

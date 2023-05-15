@@ -6,15 +6,10 @@ import { QueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../quries/key';
 import { AxiosRequestConfig } from 'axios';
 import { Cookies } from 'react-cookie';
-import queryClient from '../quries/queryClient';
+
+import { getToken, setRefreshToken, setToken } from './token';
 
 // TODO:  API별로 관심사 분리하기
-
-const cookies = new Cookies();
-
-interface RequestConfig extends AxiosRequestConfig<any> {
-  headers?: AxiosRequestHeaders;
-}
 
 export const SOCKET_SERVER_URL = `https://${process.env.NEXT_PUBLIC_API_SERVER}/socket`;
 
@@ -26,10 +21,8 @@ export const api = axios.create({
   }
 });
 
-api.interceptors.request.use(async (config: RequestConfig) => {
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+api.interceptors.request.use(async (config: AxiosRequestConfig) => {
+  const accessToken = getToken();
 
   if (config.headers && accessToken) {
     config.headers['Authorization'] = accessToken;
@@ -43,20 +36,16 @@ api.interceptors.response.use(
     if (config.headers.authorization && config.headers.refreshtoken) {
       const { authorization, refreshtoken } = config.headers;
 
-      cookies.set('refreshToken', refreshtoken);
-
-      queryClient.setQueryData([QueryKeys.accessToken], authorization);
+      setToken(authorization);
+      setRefreshToken(refreshtoken);
     }
-
     return config;
   },
   async (err) => {
-    const {
-      config,
-      response: { status }
-    } = err;
+    const { config, response } = err;
     // 토큰 만료됐을 때 status
-    if (status === 500) {
+
+    if (response?.status === 500) {
       const cookies = new Cookies();
       if (cookies.get('refreshToken')) {
         return err;
@@ -66,25 +55,17 @@ api.interceptors.response.use(
       const originalReq = config;
       // Bearer제거 작업
       const getRefresh = cookies.get('refreshToken').split(' ')[1];
-      const queryClient = new QueryClient();
-      const accessToken = queryClient.getQueryData<string | null>([
-        QueryKeys.accessToken
-      ]);
+      const accessToken = getToken();
       const getAccess = accessToken && accessToken.split('')[1];
 
       // refresh요청
-      const response = await api.post(
-        '/reissue',
-        {},
-        {
-          headers: {
-            AccessToken: getAccess as string,
-            RefreshToken: getRefresh
-          }
-        }
+      const response = await userApi.refreshUser(
+        getAccess as string,
+        getRefresh
       );
+
       const newAccess = response.headers.authorization;
-      queryClient.setQueryData<string | null>([QueryKeys.user], newAccess);
+      setToken(newAccess);
 
       // 새로 발급 받은 토큰으로 config 변경
       originalReq.headers.Authorization = newAccess;
@@ -111,9 +92,23 @@ export const userApi = {
       nickname
     });
   },
-
   getUser() {
     return api.get<TUser>(`users/info`);
+  },
+  refreshUser(AccessToken: string, RefreshToken: string) {
+    return api.post(
+      'users/reissue',
+      {},
+      {
+        headers: {
+          AccessToken,
+          RefreshToken
+        }
+      }
+    );
+  },
+  refresh() {
+    return api.post('users/reissue');
   }
 };
 
@@ -129,11 +124,11 @@ export const postApi = {
   },
 
   getPosts(pageParam: number, areaSelected: string) {
-    return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=6`);
+    return api.get(`/posts?area=${areaSelected}&page=${pageParam}&size=9`);
   },
   getSearchPosts(pageParam: number, areaSelected: string, keyword: string) {
     return api.get(
-      `/posts/search?area=${areaSelected}&keyword=${keyword}&page=${pageParam}&size=6`
+      `/posts/search?area=${areaSelected}&keyword=${keyword}&page=${pageParam}&size=9`
     );
   },
   getPostDetail(postId: string) {

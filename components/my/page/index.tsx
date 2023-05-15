@@ -23,6 +23,9 @@ import {
   UserDiv
 } from './style';
 import { showToast } from '../../layout/Toast/style';
+import { removeToken } from '../../../services/token';
+import { LOGIN_MESSAGE } from '../../../constants/contstant';
+import { useQueryClient } from '@tanstack/react-query';
 
 const MyPage = () => {
   const { user } = useUser();
@@ -35,12 +38,14 @@ const MyPage = () => {
   const [imgSrc, setImgSrc] = useState<string>('');
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    // TODO: 클래스로 만들어서 관리.
-    const cookies = new Cookies();
-    cookies.remove('refreshToken');
+    try {
+      removeToken();
+      showToast({ type: 'success', message: LOGIN_MESSAGE.SUCCESS_LOGOUT });
 
-    router.push('/home');
+      router.push('/');
+    } catch {
+      showToast({ type: 'error', message: LOGIN_MESSAGE.FAIL_LOGOUT });
+    }
   };
 
   const handleImg = async () => {
@@ -96,10 +101,11 @@ const MyPage = () => {
           <ProfileImgDiv>
             {profileImg && (
               <Image
-                width={200}
-                height={200}
+                width={64}
+                height={64}
                 src={imgSrc ? imgSrc : profileImg}
                 alt="profile"
+                style={{ borderRadius: '50%' }}
               ></Image>
             )}
             <button

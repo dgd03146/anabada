@@ -1,8 +1,8 @@
 import { TComment } from '../../../lib/types/types';
 import { commentsApi } from '../../../services/api';
 import { QueryKeys } from './../../key';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../../queryClient';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { useState } from 'react';
 
 const deleteComment = async (commentId: string) => {
@@ -18,6 +18,8 @@ const deleteComment = async (commentId: string) => {
 };
 
 const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+
   const { mutateAsync: onDeleteComment } = useMutation(deleteComment, {
     onSuccess: () => {
       try {

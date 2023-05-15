@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import Navigate from '../../../components/layout/navigate';
 import { useRooms } from '../../../quries/hooks/chat/rooms/useRooms';
 import { useInView } from 'react-intersection-observer';
-import Loading from '../../../components/loading';
+import LoadingSpinner from '../../../components/loading';
 import NoData from '../../../components/layout/noData';
 import WithoutLayout from '../../../components/hoc/withoutLayout';
 import useUser from '../../../quries/hooks/user/useUser';
@@ -64,7 +64,7 @@ const ChatRoom = () => {
           );
         });
       })}
-      {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref}></div>}
     </Container>
   );
 };

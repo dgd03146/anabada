@@ -30,11 +30,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/meets": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/meets.js"
-    ],
     "/posts": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

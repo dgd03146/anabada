@@ -2,6 +2,8 @@ import { Client, StompHeaders } from '@stomp/stompjs';
 import React, { useState, useEffect, Dispatch } from 'react';
 import SockJS from 'sockjs-client';
 import { chatApi } from '../../../services/api';
+import { getToken } from '../../../services/token';
+import useGetToken from '../user/useGetToken';
 
 const useChat = (
   clientRef: React.MutableRefObject<Client | null>,
@@ -9,7 +11,7 @@ const useChat = (
   __setRoomId: Dispatch<React.SetStateAction<string | null>>
 ) => {
   // FIXME: class로 변경
-  const token = localStorage.getItem('accessToken');
+  const token = useGetToken();
   const accessToken = token ?? '';
   const headers: StompHeaders = { accessToken };
 

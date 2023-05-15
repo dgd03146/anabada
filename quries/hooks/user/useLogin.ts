@@ -1,17 +1,13 @@
 import { userApi } from '../../../services/api';
-import { TLogin, TUser } from '../../../lib/types/types';
+import { TLogin } from '../../../lib/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { QueryKeys } from '../../key';
 import { ApiError } from 'next/dist/server/api-utils';
 import { AxiosError, AxiosResponseHeaders } from 'axios';
-import { Cookies } from 'react-cookie';
-import useUser from './useUser';
 import { showToast } from '../../../components/layout/Toast/style';
 import { LOGIN_MESSAGE } from '../../../constants/contstant';
 
-// export type TPostLogin = (params: TLogin) => Promise<TUser | undefined>;
 export type TPostLogin = (
   params: TLogin
 ) => Promise<AxiosResponseHeaders | undefined>;
@@ -27,16 +23,14 @@ const postLogin: TPostLogin = async ({ email, password }) => {
 };
 
 export function useLogin() {
-  const cookies = new Cookies();
   const router = useRouter();
-  const queryClient = useQueryClient();
+
   const { mutate: onLogin } = useMutation(
     (params: TLogin) => postLogin(params),
     {
       onSuccess: async () => {
-        // console.log(accessToken, 'userUser안 액세스토큰');
-        // useUser(accessToken);
         showToast({ type: 'success', message: LOGIN_MESSAGE.SUCCESS_LOGIN });
+
         router.push('/');
       },
       onError: (err) => {

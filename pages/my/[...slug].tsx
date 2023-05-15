@@ -19,16 +19,16 @@ const DynamicPage = () => {
   }
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: [
-      { params: { slug: ['page'] } },
-      { params: { slug: ['meets'] } },
-      { params: { slug: ['posts'] } }
-    ],
-    // FIXME: fallback : false?
-    fallback: false
-  };
-}
+// export async function getStaticPaths() {
+//   return {
+//     paths: [
+//       { params: { slug: ['page'] } },
+//       { params: { slug: ['meets'] } },
+//       { params: { slug: ['posts'] } }
+//     ],
+//     // FIXME: fallback : false?
+//     fallback: false
+//   };
+// }
 
 export default DynamicPage;

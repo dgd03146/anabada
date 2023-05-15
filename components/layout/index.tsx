@@ -1,40 +1,21 @@
-import { ReactNode, useCallback, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
-// import Toast from './Toast';
-import Header from './header';
+import { ReactNode } from 'react';
 import { Container } from './style';
+import dynamic from 'next/dynamic';
+import Header from './header';
+
+// const DynamicHeader = dynamic(() => import('./header'), {
+//   ssr: false
+// });
 
 type TProps = {
   children: ReactNode;
 };
 
 const Layout = ({ children }: TProps) => {
-  const refErrorTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const refErrorMessage = useRef('');
-  const [stateErrTimer, setStateErrTiemr] = useState(false);
-
-  const alertHandler = useCallback(
-    (errorMessage = '') => {
-      if (refErrorTimer.current === null) {
-        setStateErrTiemr(true);
-        refErrorMessage.current = errorMessage;
-        refErrorTimer.current = setTimeout(() => {
-          setStateErrTiemr(false);
-          return (refErrorTimer.current = null);
-        }, 3500);
-      }
-    },
-    [refErrorTimer]
-  );
-
   return (
     <>
       <Header />
-      <Container>
-        {/* {stateErrTimer && <Toast errorMsg={refErrorMessage.current} />} */}
-        {children}
-      </Container>
+      <Container>{children}</Container>
     </>
   );
 };

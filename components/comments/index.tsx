@@ -13,8 +13,9 @@ import { useInView } from 'react-intersection-observer';
 import useComments from '../../quries/hooks/comments/useComments';
 import { flatten } from 'lodash';
 import { FiInbox } from 'react-icons/fi';
-import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '../../quries/key';
+import useGetToken from '../../lib/hooks/user/useGetToken';
+import { InfiniteLoadingSpinner } from '../loading';
+import Image from 'next/image';
 
 type TCommentsProps = {
   nickname?: string;
@@ -24,11 +25,7 @@ type TCommentsProps = {
 };
 
 const Comments = ({ nickname, profileImg, post, postId }: TCommentsProps) => {
-  const queryClient = useQueryClient();
-  // FIXME: 서비스에서 함수로 관리하면 좋을듯? GET SET
-  const accessToken = queryClient.getQueryData<string | null>([
-    QueryKeys.accessToken
-  ]);
+  const accessToken = useGetToken();
 
   const { comments, fetchNextPage, isFetchingNextPage } = useComments(postId);
 
@@ -48,59 +45,57 @@ const Comments = ({ nickname, profileImg, post, postId }: TCommentsProps) => {
   }, [inView]);
 
   return (
-    <>
-      <CommentBox>
-        <CountBox>
-          <span>댓글 {post.totalComment}개</span>
-          <span>좋아요 {post.likeCount}개</span>
-        </CountBox>
-        <Divider />
-        {accessToken && nickname && (
-          <WriteComment>
-            <img src={profileImg} alt="" />
-            <input
-              type="text"
-              placeholder="댓글 내용을 입력하세요."
-              ref={writeRef}
-              onChange={(e) => {
-                setNewContent(e.currentTarget.value);
-              }}
-              onKeyUp={(e) => {
-                e.currentTarget.value.length > 0
-                  ? setIsValid(true)
-                  : setIsValid(false);
-              }}
-            />
-            <button
-              type="submit"
-              disabled={isValid === false}
-              onClick={() => {
-                const newComment = {
-                  content: newContent
-                };
-                onCreateComment({ postId, newComment });
-              }}
-            >
-              게시
-            </button>
-          </WriteComment>
-        )}
-        {allComments.map((comment) => (
-          <Comment comment={comment} key={comment.commentId} />
-        ))}
-        {/* TODO: 댓글 로딩 스피너 만들어야함 */}
-        {isFetchingNextPage ? <p>스피너</p> : <div ref={ref} />}
-        {comments?.pages[0].data.length === 0 && (
-          <NoDataDiv>
-            <div>
-              <FiInbox />
-              <p>아직 댓글이 없습니다.</p>
-              <p>첫 댓글을 작성해 보세요.</p>
-            </div>
-          </NoDataDiv>
-        )}
-      </CommentBox>
-    </>
+    <CommentBox>
+      <CountBox>
+        <span>댓글 {post?.totalComment}개</span>
+        <span>좋아요 {post?.likeCount}개</span>
+      </CountBox>
+      <Divider />
+      {accessToken && nickname && (
+        <WriteComment>
+          <Image src={profileImg} alt="Profile Image" width={50} height={50} />
+          <input
+            type="text"
+            placeholder="댓글 내용을 입력하세요."
+            ref={writeRef}
+            onChange={(e) => {
+              setNewContent(e.currentTarget.value);
+            }}
+            onKeyUp={(e) => {
+              e.currentTarget.value.length > 0
+                ? setIsValid(true)
+                : setIsValid(false);
+            }}
+          />
+          <button
+            type="submit"
+            disabled={isValid === false}
+            onClick={() => {
+              const newComment = {
+                content: newContent
+              };
+              onCreateComment({ postId, newComment });
+            }}
+          >
+            게시
+          </button>
+        </WriteComment>
+      )}
+      {allComments.map((comment) => (
+        <Comment comment={comment} key={comment.commentId} />
+      ))}
+
+      {isFetchingNextPage ? <InfiniteLoadingSpinner /> : <div ref={ref} />}
+      {comments?.pages[0].data.length === 0 && (
+        <NoDataDiv>
+          <div>
+            <FiInbox />
+            <p>아직 댓글이 없습니다.</p>
+            <p>첫 댓글을 작성해 보세요.</p>
+          </div>
+        </NoDataDiv>
+      )}
+    </CommentBox>
   );
 };
 

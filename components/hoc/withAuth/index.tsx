@@ -1,14 +1,13 @@
-import { QueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React, { useEffect, ComponentType } from 'react';
-import { Cookies } from 'react-cookie';
-import { toast } from 'react-toastify';
-import { QueryKeys } from '../../../quries/key';
+
 import { showToast } from '../../layout/Toast/style';
+
+import { getRefreshToken, getToken } from '../../../services/token';
+import useGetToken from '../../../lib/hooks/user/useGetToken';
 
 const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
   const WithAuthWrapper = (props: P) => {
-    const cookies = new Cookies();
     const router = useRouter();
     const { pathname } = router;
     const isLogined = pathname === ('/signup' || '/login');
@@ -19,11 +18,8 @@ const WithAuth = <P extends {}>(WrappedComponent: ComponentType<P>) => {
       pathname.endsWith('/add') ||
       pathname.endsWith('/edit');
 
-    const queryClient = new QueryClient();
-
-    const accessToken = queryClient.getQueryData([QueryKeys.accessToken]);
-
-    const refreshToken = cookies.get('refreshToken');
+    const accessToken = useGetToken();
+    const refreshToken = getRefreshToken();
 
     const isAuthenticated = () => {
       return accessToken && refreshToken;

@@ -28,7 +28,7 @@ export const PostDiv = styled.div`
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */
     display: flex;
-    width: auto;
+    width: 100%;
   }
   .my-masonry-grid_column {
     /* padding-left: 10px; */

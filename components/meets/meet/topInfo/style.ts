@@ -22,7 +22,7 @@ export const SelectContainer = styled.div`
   .deleteBtn {
     color: #f54e4e;
   }
-  div {
+  button {
     display: flex;
     align-items: center;
 

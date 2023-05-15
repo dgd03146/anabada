@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import Meet from '../../meets';
+import Meet from '../../meets/meet';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 
-import Loading from '../../loading';
+import LoadingSpinner from '../../loading';
 import { NoDataMyPage } from '../../layout/noData/myPage';
 
 import React from 'react';
@@ -72,10 +72,10 @@ const MyMeets = () => {
         {myMeets &&
           myMeets?.pages.map((page) => {
             return page.data.map((meet) => (
-              <Meet key={meet.thunderpostId} meet={meet} />
+              <Meet key={meet.thunderPostId} meet={meet} />
             ));
           })}
-        {isFetchingNextPage ? <Loading /> : <div ref={ref}></div>}
+        {isFetchingNextPage ? <LoadingSpinner /> : <div ref={ref}></div>}
       </MeetAllContainer>
     </>
   );

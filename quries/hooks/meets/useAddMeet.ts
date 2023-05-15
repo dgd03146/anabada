@@ -35,11 +35,11 @@ export function useAddMeet() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate: onAdd } = useMutation(addMeet, {
-    onSuccess: () => {
+  const { mutateAsync: onAdd } = useMutation(addMeet, {
+    onSuccess: async () => {
       try {
-        queryClient.invalidateQueries([QueryKeys.meets]);
-        queryClient.invalidateQueries([QueryKeys.allMeets]);
+        await queryClient.invalidateQueries([QueryKeys.meets]);
+        await queryClient.invalidateQueries([QueryKeys.allMeets]);
         toast.success('모임 등록에 성공하였습니다.');
         router.push(`/meets`);
       } catch (err) {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { TMeet } from '../../../../lib/types/types';
 import { MembersContainer } from './style';
+import Image from 'next/image';
+import { BlurDataURL } from '../../../../constants/contstant';
 
 type TMembersProps = {
   meet: TMeet;
@@ -11,7 +13,14 @@ export const Members = ({ meet }: TMembersProps) => {
     <MembersContainer>
       <div className="title">참여 인원 목록</div>
       <div className="memberLists">
-        <img src={meet.profileImg} alt="profileImg" />
+        <Image
+          src={meet.profileImg}
+          alt="profileImg"
+          width={50}
+          height={50}
+          placeholder="blur"
+          blurDataURL={BlurDataURL}
+        />
         <div>
           <p>{meet.nickname}</p>
           <p className="host">주최자</p>
@@ -19,7 +28,14 @@ export const Members = ({ meet }: TMembersProps) => {
       </div>
       {meet.members.map((member) => (
         <div className="memberLists" key={member.email}>
-          <img src={member.profileImg} alt="profileImg" />
+          <Image
+            src={member.profileImg}
+            alt="profileImg"
+            width={50}
+            height={50}
+            placeholder="blur"
+            blurDataURL={BlurDataURL}
+          />
           <div>
             <p>{member.nickname}</p>
             {member.nickname && <p className="participant">참여자</p>}

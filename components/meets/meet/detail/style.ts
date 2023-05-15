@@ -74,12 +74,10 @@ export const Container = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
   img {
-    min-width: 100px;
-    max-width: 800px;
+    width: 100%;
+    height: 100%;
+    position: relative !important;
     object-fit: cover;
   }
 `;

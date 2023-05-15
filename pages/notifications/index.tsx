@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer/useInView';
 import useDeleteAllnotifications from '../../quries/hooks/notifications/useDeleteAllnotifications';
 import useGetNotifications from '../../quries/hooks/notifications/useGetNotifications';
 import useUser from '../../quries/hooks/user/useUser';
-import { useStompNotifications } from '../../lib/hooks/socket/useStompNotifications';
+import { useNotifications } from '../../lib/hooks/socket/useNotifications';
 import {
   Container,
   NotiAllDelete,
@@ -24,7 +24,7 @@ const Notifications = () => {
   const { notifications, hasNextPage, fetchNextPage, isSuccess } =
     useGetNotifications();
   const { onDelteAllNotifications } = useDeleteAllnotifications();
-  const { setNotificationsBadge } = useStompNotifications(userId);
+  const { setNotificationsBadge } = useNotifications(userId);
   const { ref } = useFetchOnScroll({
     notifications,
     fetchNextPage,
@@ -38,17 +38,19 @@ const Notifications = () => {
     }
   };
 
+  console.log(notifications, 'notifications');
+
   return (
     <Container>
       <NotificationWrapper>
         <Navigate text={'알림'} />
-        {notifications?.pages[0].data.content.length === 0 && (
+        {!notifications?.pages[0].data && (
           <NoData text={'알림'} notification={true} />
         )}
         <NotificationContainer>
           {isSuccess &&
             notifications?.pages.map((page, pageIndex) => {
-              const content = page.data.content;
+              const content = page.data?.content;
               return content?.map((noti, notiIndex) => {
                 if (
                   notiIndex === content.length - 1 &&
