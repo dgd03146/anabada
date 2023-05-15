@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Meet from '../../../components/meets';
+import Meet from '../../../components/meets/meet';
 import { useInView } from 'react-intersection-observer';
 import Loading from '../../../components/loading';
 import { TbPencil } from 'react-icons/tb';

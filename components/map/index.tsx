@@ -117,7 +117,12 @@ const KakaoMap = ({ picker, setPicker }: TMapProps) => {
                 </div>
                 <ExtraInfoContainer>
                   <div>
-                    <img src="/assets/weatherIcons/map_pin.svg" alt=""></img>
+                    <Image
+                      src="/assets/weatherIcons/map_pin.svg"
+                      alt="Weather Icons"
+                      width={50}
+                      height={50}
+                    ></Image>
                   </div>
                   <div>
                     <span>{picker.beachName}</span>

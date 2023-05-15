@@ -15,6 +15,7 @@ import { flatten } from 'lodash';
 import { FiInbox } from 'react-icons/fi';
 import useGetToken from '../../lib/hooks/user/useGetToken';
 import { InfiniteLoadingSpinner } from '../loading';
+import Image from 'next/image';
 
 type TCommentsProps = {
   nickname?: string;
@@ -52,7 +53,7 @@ const Comments = ({ nickname, profileImg, post, postId }: TCommentsProps) => {
       <Divider />
       {accessToken && nickname && (
         <WriteComment>
-          <img src={profileImg} alt="" />
+          <Image src={profileImg} alt="Profile Image" width={50} height={50} />
           <input
             type="text"
             placeholder="댓글 내용을 입력하세요."

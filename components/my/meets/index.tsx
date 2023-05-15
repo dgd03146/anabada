@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import Meet from '../../meets';
+import Meet from '../../meets/meet';
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 

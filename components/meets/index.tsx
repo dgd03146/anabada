@@ -1,74 +1,66 @@
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import { getDifferenceInDays } from '../../lib/utils/getDiffrenceInDays';
+import React from 'react';
 import Image from 'next/image';
-import { TMeet } from '../../lib/types/types';
-import { LeftWrapper, MeetContinaer, RightWrapper } from './style';
+import Meet from '../../components/meets/meet';
+import PopularMeets from '../../components/meets/popularMeets';
+import NoData from '../../components/layout/noData';
+import { TbPencil } from 'react-icons/tb';
+import { usePopularMeets } from '../../quries/hooks/meets/usePopularMeets';
+import AreaSelector from '../../components/common/areaSelector';
+import { TMeet, TSelectEvent } from '../../lib/types/types';
+import { useRouter } from 'next/router';
+import { useMeets } from '../../quries/hooks/meets/useMeets';
+import Link from 'next/link';
+import { Container, MeetsPostsContainer, PostBtn } from './style';
+import useGetToken from '../../lib/hooks/user/useGetToken';
+import { BlurDataURL } from '../../constants/contstant';
 
-type TMeetProps = {
-  meet: TMeet;
-};
-
-const Meet = ({ meet }: TMeetProps) => {
+const Meets = () => {
   const router = useRouter();
+  const accessToken = useGetToken();
+  const { meets, areaSelected, setAreaSelected } = useMeets();
+  const { popularMeets, setPopularAreaSelected } = usePopularMeets();
 
-  const time = new Date().toISOString();
-  const currentDate = new Date(time.slice(0, 10));
+  const onChangeArea = (e: TSelectEvent) => {
+    setAreaSelected(e.target.value);
+    setPopularAreaSelected(e.target.value);
+  };
 
   return (
-    <MeetContinaer onClick={() => router.push(`/meets/${meet.thunderPostId}`)}>
-      <LeftWrapper>
-        <img src={meet.thumbnailUrl} alt="meetimg" />
-      </LeftWrapper>
-      <RightWrapper>
-        <div className="dateBox">
-          {getDifferenceInDays(currentDate, new Date(meet.endDate)) >= 0 ? (
-            <p className="dDay">
-              D-
-              {getDifferenceInDays(currentDate, new Date(meet.endDate)) === 0
-                ? 'Day'
-                : getDifferenceInDays(currentDate, new Date(meet.endDate))}
-            </p>
-          ) : (
-            <p className="dayClosing">마감</p>
-          )}
-          <p className="endDate"></p>
+    <Container>
+      <AreaSelector areaSelected={areaSelected} onChangeArea={onChangeArea} />
+      <div className="scrollTest">
+        <PopularMeets popularMeets={popularMeets} />
+      </div>
+      <MeetsPostsContainer>
+        <div className="topBox">
+          <h2>오픈 모임 리스트</h2>
+          <button onClick={() => router.push('/meets/all')}>
+            <Image
+              src="/assets/icons/rightArrow.svg"
+              alt="Right Arrow"
+              width={9}
+              height={14}
+              placeholder="blur"
+              blurDataURL={BlurDataURL}
+            />
+          </button>
         </div>
-        <div className="titleDiv">{meet.title}</div>
-        <div className="subBox">
-          <Image
-            src={'/assets/icons/area.svg'}
-            width={16}
-            height={16}
-            alt="Area"
-          />
-          <p className="area">{meet.area}</p>
-          <p className="address">{meet.address}</p>
-        </div>
-        <div className="subBox bottom">
-          <Image
-            src={'/assets/icons/date.svg'}
-            width={16}
-            height={16}
-            alt="Area"
-          />
-          <p>{meet.meetDate}</p>
-        </div>
-        <div className="subBox bottom">
-          <Image
-            src={'/assets/icons/people.svg'}
-            width={16}
-            height={16}
-            alt="Area"
-          />
-          <p>
-            {meet.currentMember} / {meet.goalMember}
-          </p>
-        </div>
-      </RightWrapper>
-    </MeetContinaer>
+        {meets?.content.length === 0 && (
+          <NoData text={'모임'} content={'모임'} />
+        )}
+        {meets?.content.map((meet: TMeet) => {
+          return <Meet key={meet.thunderPostId} meet={meet} />;
+        })}
+      </MeetsPostsContainer>
+      {accessToken && (
+        <PostBtn>
+          <Link href="/meets/add">
+            <TbPencil />
+          </Link>
+        </PostBtn>
+      )}
+    </Container>
   );
 };
 
-export default Meet;
+export default Meets;

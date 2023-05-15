@@ -12,6 +12,7 @@ import EditComment from './editComment';
 import NoEditComment from './noEditComment';
 
 import useUser from '../../../quries/hooks/user/useUser';
+import Image from 'next/image';
 
 type TCommentProps = {
   comment: TComment;
@@ -32,7 +33,12 @@ const Comment = ({ comment, key }: TCommentProps) => {
 
   return (
     <ViewComments>
-      <img src={comment.profileImg} alt="" />
+      <Image
+        src={comment.profileImg}
+        alt="Profile Image"
+        width={50}
+        height={50}
+      />
       {isEdit ? (
         <EditComment
           comment={comment}
