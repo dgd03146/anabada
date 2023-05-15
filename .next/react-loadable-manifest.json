@@ -5,6 +5,12 @@
       "static/chunks/components_layout_header_userHeader_index_tsx.js"
     ]
   },
+  "meets\\index.tsx -> ../../components/meets": {
+    "id": "meets\\index.tsx -> ../../components/meets",
+    "files": [
+      "static/chunks/components_meets_index_tsx.js"
+    ]
+  },
   "posts\\index.tsx -> ../../components/posts": {
     "id": "posts\\index.tsx -> ../../components/posts",
     "files": [

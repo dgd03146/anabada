@@ -47,6 +47,8 @@ const Info = memo(({ post }: TPostProps) => {
               alt="Profile Image"
               width={50}
               height={50}
+              placeholder="blur"
+              blurDataURL={BlurDataURL}
             />
           )}
           <h3>{post.nickname}</h3>

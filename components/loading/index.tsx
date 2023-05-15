@@ -1,11 +1,17 @@
 import React from 'react';
 import CircleLoader from 'react-spinners/CircleLoader';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const LoadingSpinner = () => {
   return (
     <Container>
-      <img src={'/assets/illustrations/waterwave.gif'} alt="" />
+      <Image
+        src={'/assets/illustrations/waterwave.gif'}
+        alt="Loading Spinner"
+        width={100}
+        height={100}
+      />
     </Container>
   );
 };

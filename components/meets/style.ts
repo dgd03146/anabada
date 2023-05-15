@@ -1,186 +1,116 @@
 import styled from 'styled-components';
 
-export const MeetContinaer = styled.div`
-  &:hover {
-    background: #f7faff;
-  }
+export const Container = styled.div`
+  div.scrollTest {
+    overflow-x: auto;
 
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 0.375rem;
+      background-color: rgba(255, 255, 255, 3);
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #ececec;
+      border-radius: 100px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-image: linear-gradient(180deg, #d7e7ee 5%, #217af4 100%);
+      box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+      border-radius: 100px;
+    }
+  }
+`;
+
+export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.625rem;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-
-  width: 100%;
-  /* height: 7.438rem; */
-
-  background: #ffffff;
-  /* default */
-
-  box-shadow: 0.0625rem 0.0625rem 0.5rem rgba(198, 198, 198, 0.42);
-  border-radius: 0.5rem;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-`;
-
-export const LeftWrapper = styled.div`
-  img {
-    width: 10rem;
-    height: 10rem;
-
-    background: url(.jpg), #d9d9d9;
-    border-radius: 0.8125rem;
-
-    @media screen and (max-width: 550px) {
-      width: 5rem;
-      height: 5rem;
-    }
+  padding: 0.875rem 0;
+  gap: 0.875rem;
+  select {
+    padding: 0.625rem;
+    gap: 0.188rem;
+    background: #ffffff;
+    border: 1px solid #c7c7cc;
+    border-radius: 4px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    outline: none;
   }
-`;
-
-export const RightWrapper = styled.div`
-  display: block;
-  flex-direction: column;
-  width: 100%;
-
   div {
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 0.625rem;
-    .dDay {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0.125rem 0.25rem;
-      gap: 0.625rem;
-      margin-right: 0.75rem;
-      /* height: 21px; */
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.625rem 0;
+    gap: 0.625rem;
 
-      background: #ff3b30;
-      border-radius: 0.25rem;
+    background: #f2f2f7;
+    border-radius: 42px;
 
-      /* Inside auto layout */
-
-      flex: none;
-      order: 0;
-      flex-grow: 0;
-
-      font-style: normal;
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 143.84%;
-      /* or 17px */
-
-      color: #ffffff;
-    }
-    .dayClosing {
-      display: flex;
-      text-align: center;
-      flex-direction: row;
-      align-items: flex-start;
-      padding: 0.125rem 0.25rem;
-      gap: 0.625rem;
-      margin-right: 0.75rem;
-
-      background: black;
-      border-radius: 4px;
-
-      /* Inside auto layout */
-
-      flex: none;
-      order: 0;
-      flex-grow: 0;
-
-      font-style: normal;
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 143.84%;
-      /* or 17px */
-
-      color: #ffffff;
-    }
-    .endDate {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 0.8125rem;
-      line-height: 143.84%;
-
-      /* or 17px */
-
-      color: #000000;
-    }
+    flex: none;
+    order: 1;
+    flex-grow: 1;
   }
+  input {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.875;
+    line-height: 1.125rem;
+    /* identical to box height */
 
-  .titleDiv {
-    width: 100%;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 
-    display: -webkit-box;
-    -webkit-line-clamp: 2; //원하는 라인수
-    -webkit-box-orient: vertical;
-    white-space: pre-wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    font-weight: 600;
-    font-size: 0.9375rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #c7c7cc;
   }
+`;
 
-  .subBox {
+export const MeetsPostsContainer = styled.div`
+  div.topBox {
+    margin-top: 1.5625rem;
     display: flex;
-    /* align-items: center; */
-    text-align: center;
-    margin-bottom: 0.5rem;
-    svg {
-      margin-right: 0.5rem;
-    }
-    p.area {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 0.9rem;
-
-      /* identical to box height, or 19px */
-      color: #000000;
-      margin-right: 0.3rem;
-      white-space: nowrap;
-    }
-    p.address {
-      font-style: normal;
-      display: -webkit-box;
-      -webkit-line-clamp: 1; //원하는 라인수
-      -webkit-box-orient: vertical;
-      white-space: pre-wrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    svg:last-child {
-      font-family: 'Pretendard';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 0.8125rem;
-
-      /* identical to box height */
-      margin-right: 0.625rem;
-      color: #8e8e93;
-    }
-    p:last-child {
-      font-family: 'Pretendard';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 0.8125rem;
-
-      /* identical to box height */
-      color: #8e8e93;
-    }
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.625rem;
   }
-  .bottom {
-    margin-bottom: 0.5rem;
+  h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.313rem;
+    line-height: 143.84%;
+    /* or 30px */
+    margin: 0;
+    color: #000000;
+  }
+`;
+
+export const PostBtn = styled.div`
+  position: fixed;
+  bottom: 1.7rem;
+  right: 2.3rem;
+  z-index: 300;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+
+  background-color: #007aff;
+  border-radius: 50%;
+  opacity: 0.9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    font-size: 2rem;
+    color: white;
+    font-weight: 200;
   }
 `;

@@ -11,6 +11,7 @@ import { TMeet } from '../../../../lib/types/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '../../../../quries/key';
 import useGetToken from '../../../../lib/hooks/user/useGetToken';
+import { BlurDataURL } from '../../../../constants/contstant';
 
 type TMeetTopInfoProps = {
   meet?: TMeet;
@@ -50,6 +51,8 @@ const MeetTopInfo = ({
               alt="profileUrl"
               width={50}
               height={50}
+              placeholder="blur"
+              blurDataURL={BlurDataURL}
             />
           )}
           <p className="nickname">{meet?.nickname}</p>
