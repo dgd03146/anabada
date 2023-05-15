@@ -23,7 +23,6 @@ export const api = axios.create({
 
 api.interceptors.request.use(async (config: AxiosRequestConfig) => {
   const accessToken = getToken();
-  console.log(accessToken, 'accesstToken');
 
   if (config.headers && accessToken) {
     config.headers['Authorization'] = accessToken;
