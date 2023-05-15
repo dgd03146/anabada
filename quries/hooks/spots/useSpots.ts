@@ -5,13 +5,9 @@ import { TSpot } from '../../../lib/types/types';
 import { QueryKeys } from '../../key';
 import { toast } from 'react-toastify';
 
-const getSpots = async () => {
-  try {
-    const res = await spotsApi.getSpots();
-    return res.data;
-  } catch (err) {
-    toast.error('지도를 불러오는데 실패하였습니다.');
-  }
+export const getSpots = async () => {
+  const res = await spotsApi.getSpots();
+  return res.data;
 };
 
 export const useSpots = () => {

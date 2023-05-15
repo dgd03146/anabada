@@ -6,10 +6,24 @@ import KakaoMap from '../components/map';
 import { useNotifications } from '../lib/hooks/socket/useNotifications';
 import useUser from '../quries/hooks/user/useUser';
 import { notificationsApi } from '../services/api';
-import { useSpots } from '../quries/hooks/spots/useSpots';
+import { getSpots, useSpots } from '../quries/hooks/spots/useSpots';
 import Loading from '../components/loading';
 import { getRefreshToken } from '../services/token';
 import useGetToken from '../lib/hooks/user/useGetToken';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import { QueryKeys } from '../quries/key';
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery([QueryKeys.spots], getSpots);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient)
+    }
+  };
+}
 
 const Home = () => {
   const [picker, setPicker] = useState(PICKER);
